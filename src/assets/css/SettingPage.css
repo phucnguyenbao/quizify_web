@@ -3,11 +3,11 @@
   font-family: Arial, sans-serif;
 }
 
-.header {
+/* .header {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
-}
+} */
 
 .title {
   color: deeppink;

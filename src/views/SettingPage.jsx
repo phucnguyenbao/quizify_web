@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './SettingPage.css';
+import '../assets/css/SettingPage.css';
 
 const SettingPage = () => {
   const [reportContent, setReportContent] = useState('');
@@ -14,11 +14,6 @@ const SettingPage = () => {
 
   return (
     <div className="setting-container">
-      <div className="header">
-        <span className="title">Quản lý cài đặt và báo cáo</span>
-        <span className="logout">Đăng xuất</span>
-      </div>
-
       <div className="section">
         <h3>Quản lý cài đặt</h3>
         <div className="setting-form">
