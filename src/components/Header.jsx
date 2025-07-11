@@ -1,22 +1,37 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import '../assets/css/Header.css';  // nếu có CSS riêng
+import { NavLink } from 'react-router-dom';
+import '../assets/css/Header.css';
 
 function Header() {
   return (
     <header className="header">
       <nav>
         <ul className="navbar">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/game">Quản lý game</Link></li>
-            <li><Link to="/quiz">Quản lý quiz</Link></li>
-            <li><Link to="/user">Quản lý thành viên</Link></li>
-            <li><Link to="/role">Quản lý phân quyền</Link></li>
-            <li><Link to="/setting">Quản lý báo cáo và cài đặt</Link></li>
-            <li><Link to="/login">Đăng xuất</Link></li>
-
-
-          
+          <div className="nav-left">
+            <li>
+              <NavLink to="/" className={({ isActive }) => (isActive ? 'active-link' : '')}>Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/game" className={({ isActive }) => (isActive ? 'active-link' : '')}>Quản lý game</NavLink>
+            </li>
+            <li>
+              <NavLink to="/quiz" className={({ isActive }) => (isActive ? 'active-link' : '')}>Quản lý quiz</NavLink>
+            </li>
+            <li>
+              <NavLink to="/user" className={({ isActive }) => (isActive ? 'active-link' : '')}>Quản lý thành viên</NavLink>
+            </li>
+            <li>
+              <NavLink to="/role" className={({ isActive }) => (isActive ? 'active-link' : '')}>Quản lý phân quyền</NavLink>
+            </li>
+          </div>
+          <div className="nav-right">
+            <li>
+              <NavLink to="/setting" className={({ isActive }) => (isActive ? 'active-link' : '')}>Quản lý báo cáo và cài đặt</NavLink>
+            </li>
+            <li>
+              <NavLink to="/login" className={({ isActive }) => (isActive ? 'active-link' : '')}>Đăng xuất</NavLink>
+            </li>
+          </div>
         </ul>
       </nav>
     </header>

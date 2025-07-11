@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import '../assets/css/SettingPage.css';
 
 const SettingPage = () => {
-  const [reportContent, setReportContent] = useState('');
-  const [musicModalOpen, setMusicModalOpen] = useState(false);
+    const [reportContent, setReportContent] = useState('');
+    const [musicModalOpen, setMusicModalOpen] = useState(false);
+    const [sound, setSound] = useState('Off');
+    const [theme, setTheme] = useState('Sáng');
 
-  const reports = [
-    { id: 1, title: 'Báo cáo 1', status: 'Đã xử lý', date: '23/06/2025', user: 'Minh', team: 'ODD', replyDate: '23/06/2025' },
-    { id: 2, title: 'Báo cáo 2', status: 'Chưa xem', date: '23/06/2025', user: 'Khánh', team: 'ABD', replyDate: '24/06/2025' },
-    { id: 3, title: 'Báo cáo 3', status: 'Đang xử lý', date: '23/06/2025', user: 'Phúc', team: 'ODD', replyDate: '25/06/2025' },
-    { id: 4, title: 'Báo cáo 4', status: 'Chưa xem', date: '23/06/2025', user: 'Khải', team: 'ABD', replyDate: '26/06/2025' },
-  ];
+    const reports = [
+        { id: 1, title: 'Báo cáo 1', status: 'Đã xử lý', date: '23/06/2025', user: 'Minh', team: 'ODD', replyDate: '23/06/2025' },
+        { id: 2, title: 'Báo cáo 2', status: 'Chưa xem', date: '23/06/2025', user: 'Khánh', team: 'ABD', replyDate: '24/06/2025' },
+        { id: 3, title: 'Báo cáo 3', status: 'Đang xử lý', date: '23/06/2025', user: 'Phúc', team: 'ODD', replyDate: '25/06/2025' },
+        { id: 4, title: 'Báo cáo 4', status: 'Chưa xem', date: '23/06/2025', user: 'Khải', team: 'ABD', replyDate: '26/06/2025' },
+    ];
 
   return (
     <div className="setting-container">
@@ -19,14 +21,43 @@ const SettingPage = () => {
         <div className="setting-form">
           <div className="form-group">
             <label>Âm thanh nền</label>
-            <select>
-              <option>Off</option>
-              <option>On</option>
-            </select>
+           
+     <select
+        value={sound}
+        onChange={(e) => setSound(e.target.value)}
+        style={{
+            backgroundColor: sound === 'On' ? '#a10000' : 'black', // đỏ đậm & xám đậm giống Excel
+            color: 'white',
+            padding: '8px 12px',
+            borderRadius: '6px',
+            border: '1px solid #ccc',
+            fontWeight: 'bold',
+            appearance: 'none', // ẩn mũi tên native (optional)
+        }}
+        >
+        <option
+            value="Off"
+            style={{ backgroundColor: 'black', color: 'white' }}
+        >
+            Off
+        </option>
+        <option
+            value="On"
+            style={{ backgroundColor: '#a10000', color: 'white' }}
+        >
+            On
+        </option>
+        </select>
+
           </div>
           <div className="form-group">
             <label>Nhạc</label>
-            <button onClick={() => setMusicModalOpen(true)}>Chọn nhạc</button>
+            <button
+            style={{ color: 'green' }}
+            onClick={() => setMusicModalOpen(true)}
+            >
+            Chọn nhạc
+            </button>
           </div>
           <div className="form-group">
             <label>Ngôn ngữ</label>
@@ -35,13 +66,25 @@ const SettingPage = () => {
               <option>Tiếng Việt</option>
             </select>
           </div>
-          <div className="form-group">
+            <div className="form-group">
             <label>Giao diện</label>
-            <select>
-              <option>Sáng</option>
-              <option>Tối</option>
+            <select
+                value={theme}
+                onChange={(e) => setTheme(e.target.value)}
+                style={{
+                backgroundColor: theme === 'Tối' ? '#000' : '#fff',
+                color: theme === 'Tối' ? '#fff' : '#000',
+                padding: '8px 12px',
+                borderRadius: '6px',
+                border: '1px solid #ccc',
+                fontWeight: 'bold',
+                }}
+            >
+                <option value="Sáng" style={{ backgroundColor: '#fff', color: '#000' }}>Sáng</option>
+                <option value="Tối" style={{ backgroundColor: '#000', color: '#fff' }}>Tối</option>
             </select>
-          </div>
+            </div>
+
           <div className="form-group">
             <label>Báo cáo</label>
             <input
@@ -51,8 +94,11 @@ const SettingPage = () => {
               placeholder="Nội dung báo cáo"
             />
           </div>
-          <button>Gửi</button>
-          <button>Cancel</button>
+<div className="form-buttons">
+  <button className="button-submit">Gửi</button>
+  <button className="button-cancel">Cancel</button>
+</div>
+
         </div>
       </div>
 
@@ -75,8 +121,32 @@ const SettingPage = () => {
       <div className="section">
         <h3>Quản lý báo cáo</h3>
         <div className="filter-group">
-          <input placeholder="Tìm kiếm..." />
-          <input placeholder="Tìm" />
+          <div style={{ display: 'flex' }}>
+  <input
+    placeholder="Tìm kiếm..."
+    style={{
+      border: '1px solid #ccc',
+      borderRight: 'none',
+      borderRadius: '4px 0 0 4px',
+      padding: '6px 10px',
+      outline: 'none'
+    }}
+  />
+  <button
+    style={{
+      backgroundColor: 'gray',
+      color: 'white',
+      border: '1px solid #ccc',
+      borderLeft: 'none',
+      borderRadius: '0 4px 4px 0',
+      padding: '6px 12px',
+      cursor: 'pointer'
+    }}
+  >
+    Tìm
+  </button>
+</div>
+
           <select>
             <option>Lọc theo trạng thái</option>
             <option>Đã xử lý</option>
@@ -115,8 +185,34 @@ const SettingPage = () => {
                 <td>{r.team}</td>
                 <td>{r.team}</td>
                 <td>{r.replyDate}</td>
-                <td>
-                  <a href="#">Nội dung</a> | <a href="#">Gửi phản hồi</a>
+     
+                  <td>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+    <input
+      type="text"
+      placeholder="Nhập phản hồi..."
+      style={{
+        flex: 1,
+        padding: '4px 8px',
+        borderRadius: '4px',
+        border: '1px solid #ccc'
+      }}
+    />
+    <button
+      style={{
+        backgroundColor: '#1976d2',
+        color: 'white',
+        border: 'none',
+        padding: '6px 10px',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        whiteSpace: 'nowrap'
+      }}
+    >
+      Gửi
+    </button>
+  </div>
+
                 </td>
               </tr>
             ))}
