@@ -193,3 +193,35 @@ th, td {
   cursor: pointer;
   font-weight: 500;
 }
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-bottom: 10px;
+}
+
+.filter-row input,
+.filter-row select {
+  flex: 0 0 90px;
+  max-width: 160px;
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #bfaeae;
+  border-radius: 4px;
+}
+.filter-row button {
+  flex: 0 0 auto;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  background-color: #1976d2;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+.filter-row button:hover {
+  background-color: #125a9c;
+}

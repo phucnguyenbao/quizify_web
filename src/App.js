@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import TestFirebase from './views/TestFirebase';
+import GamePage from './views/GamePage';
 import QuizPage from './views/QuizPage';
 import RolePage from './views/RolePage';
 import SettingPage from './views/SettingPage';
@@ -11,6 +12,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<TestFirebase />} />
+        <Route path="/game" element={<GamePage />} /> 
         <Route path="/quiz" element={<QuizPage />} /> 
         <Route path="/role" element={<RolePage />} /> 
         <Route path="/setting" element={<SettingPage />} /> 
