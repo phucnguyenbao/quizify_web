@@ -2,63 +2,72 @@ import React, { useState } from 'react';
 import '../assets/css/SettingPage.css';
 
 const SettingPage = () => {
-    const [reportContent, setReportContent] = useState('');
-    const [musicModalOpen, setMusicModalOpen] = useState(false);
-    const [sound, setSound] = useState('Off');
-    const [theme, setTheme] = useState('Sáng');
+  const [filterCreateDate, setFilterCreateDate] = useState('');
+  const [reportContent, setReportContent] = useState('');
+  const [musicModalOpen, setMusicModalOpen] = useState(false);
+  const [sound, setSound] = useState('Off');
+  const [theme, setTheme] = useState('Sáng');
+  const [searchReport, setSearchReport] = useState('');
+  const [searchUser, setSearchUser] = useState('');
+  const [searchBan, setSearchBan] = useState('');
+  const [searchTeam, setSearchTeam] = useState('');
+  const [filterReplyDate, setFilterReplyDate] = useState('');
 
-    const reports = [
-        { id: 1, title: 'Báo cáo 1', status: 'Đã xử lý', date: '23/06/2025', user: 'Minh', team: 'ODD', replyDate: '23/06/2025' },
-        { id: 2, title: 'Báo cáo 2', status: 'Chưa xem', date: '23/06/2025', user: 'Khánh', team: 'ABD', replyDate: '24/06/2025' },
-        { id: 3, title: 'Báo cáo 3', status: 'Đang xử lý', date: '23/06/2025', user: 'Phúc', team: 'ODD', replyDate: '25/06/2025' },
-        { id: 4, title: 'Báo cáo 4', status: 'Chưa xem', date: '23/06/2025', user: 'Khải', team: 'ABD', replyDate: '26/06/2025' },
-    ];
+  const reports = [
+    { id: 1, title: 'Báo cáo 1', status: 'Đã xử lý', date: '23/06/2025', user: 'Minh', team: 'ODD', replyDate: '2025-06-23' },
+    { id: 2, title: 'Báo cáo 2', status: 'Chưa xem', date: '23/06/2025', user: 'Khánh', team: 'ABD', replyDate: '2025-06-24' },
+    { id: 3, title: 'Báo cáo 3', status: 'Đang xử lý', date: '23/06/2025', user: 'Phúc', team: 'ODD', replyDate: '2025-06-25' },
+    { id: 4, title: 'Báo cáo 4', status: 'Chưa xem', date: '23/06/2025', user: 'Khải', team: 'ABD', replyDate: '2025-06-26' },
+  ];
+
+  const filteredReports = reports.filter(r =>
+    r.title.toLowerCase().includes(searchReport.toLowerCase()) &&
+    r.user.toLowerCase().includes(searchUser.toLowerCase()) &&
+    r.team.toLowerCase().includes(searchTeam.toLowerCase()) &&
+    r.team.toLowerCase().includes(searchBan.toLowerCase()) &&
+    (filterReplyDate === '' || r.replyDate === filterReplyDate) &&
+    (filterCreateDate === '' || convertToISO(r.date) === filterCreateDate)
+  );
+
+  // Helper để chuẩn hóa ngày "dd/mm/yyyy" -> "yyyy-mm-dd" để so sánh
+  const convertToISO = (dateStr) => {
+    const [d, m, y] = dateStr.split('/');
+    return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+  };
+
+
+  const resetFilters = () => {
+    setSearchReport('');
+    setFilterCreateDate('');
+    setSearchUser('');
+    setSearchBan('');
+    setSearchTeam('');
+    setFilterReplyDate('');
+  };
 
   return (
     <div className="setting-container">
+      {/* Section 1: Settings */}
       <div className="section">
         <h3>Quản lý cài đặt</h3>
         <div className="setting-form">
           <div className="form-group">
             <label>Âm thanh nền</label>
-           
-     <select
-        value={sound}
-        onChange={(e) => setSound(e.target.value)}
-        style={{
-            backgroundColor: sound === 'On' ? '#a10000' : 'black', // đỏ đậm & xám đậm giống Excel
-            color: 'white',
-            padding: '8px 12px',
-            borderRadius: '6px',
-            border: '1px solid #ccc',
-            fontWeight: 'bold',
-            appearance: 'none', // ẩn mũi tên native (optional)
-        }}
-        >
-        <option
-            value="Off"
-            style={{ backgroundColor: 'black', color: 'white' }}
-        >
-            Off
-        </option>
-        <option
-            value="On"
-            style={{ backgroundColor: '#a10000', color: 'white' }}
-        >
-            On
-        </option>
-        </select>
-
+            <select
+              value={sound}
+              onChange={(e) => setSound(e.target.value)}
+              className={`select-sound ${sound === 'On' ? 'sound-on' : 'sound-off'}`}
+            >
+              <option value="Off">Off</option>
+              <option value="On">On</option>
+            </select>
           </div>
+
           <div className="form-group">
             <label>Nhạc</label>
-            <button
-            style={{ color: 'green' }}
-            onClick={() => setMusicModalOpen(true)}
-            >
-            Chọn nhạc
-            </button>
+            <button className="button-music" onClick={() => setMusicModalOpen(true)}>Chọn nhạc</button>
           </div>
+
           <div className="form-group">
             <label>Ngôn ngữ</label>
             <select>
@@ -66,24 +75,18 @@ const SettingPage = () => {
               <option>Tiếng Việt</option>
             </select>
           </div>
-            <div className="form-group">
+
+          <div className="form-group">
             <label>Giao diện</label>
             <select
-                value={theme}
-                onChange={(e) => setTheme(e.target.value)}
-                style={{
-                backgroundColor: theme === 'Tối' ? '#000' : '#fff',
-                color: theme === 'Tối' ? '#fff' : '#000',
-                padding: '8px 12px',
-                borderRadius: '6px',
-                border: '1px solid #ccc',
-                fontWeight: 'bold',
-                }}
+              value={theme}
+              onChange={(e) => setTheme(e.target.value)}
+              className={`select-theme ${theme === 'Sáng' ? 'theme-white' : 'theme-black'}`}
             >
-                <option value="Sáng" style={{ backgroundColor: '#fff', color: '#000' }}>Sáng</option>
-                <option value="Tối" style={{ backgroundColor: '#000', color: '#fff' }}>Tối</option>
+              <option value="Tối">Tối</option>
+              <option value="Sáng">Sáng</option>
             </select>
-            </div>
+          </div>
 
           <div className="form-group">
             <label>Báo cáo</label>
@@ -94,66 +97,58 @@ const SettingPage = () => {
               placeholder="Nội dung báo cáo"
             />
           </div>
-<div className="form-buttons">
-  <button className="button-submit">Gửi</button>
-  <button className="button-cancel">Cancel</button>
-</div>
 
+          <div className="form-buttons">
+            <button className="button-submit">Gửi</button>
+            <button className="button-cancel">Cancel</button>
+          </div>
         </div>
       </div>
 
+      {/* Modal chọn nhạc */}
       {musicModalOpen && (
         <div className="modal">
           <div className="modal-content">
-            <h4>Chọn nhạc</h4>
-            <ul>
-              <li>Thiên lý ơi</li>
-              <li>Đom đóm</li>
-              <li>Hồng nhan</li>
-              <li><a href="#">Tải lên</a></li>
-            </ul>
-            <p><a href="#">Upload ảnh</a></p>
-            <button onClick={() => setMusicModalOpen(false)}>Thoát</button>
+            <div className="popup-row">
+              <div className="popup-label">Chọn nhạc</div>
+              <div className="popup-content">
+                <div>Thiên lý ơi</div>
+                <div>Đom đóm</div>
+                <div>Hồng nhan</div>
+                <div><a href="#">Tải lên</a></div>
+              </div>
+            </div>
+            <div className="popup-row">
+              <div className="popup-label">Upload ảnh</div>
+              <div className="popup-content">
+                <div><a href="#">Tải lên</a></div>
+              </div>
+            </div>
+            <div className="popup-footer">
+              <button className="exit-button" onClick={() => setMusicModalOpen(false)}>Thoát</button>
+            </div>
           </div>
         </div>
       )}
 
+      {/* Section 2: Quản lý báo cáo */}
       <div className="section">
         <h3>Quản lý báo cáo</h3>
         <div className="filter-group">
-          <div style={{ display: 'flex' }}>
-  <input
-    placeholder="Tìm kiếm..."
-    style={{
-      border: '1px solid #ccc',
-      borderRight: 'none',
-      borderRadius: '4px 0 0 4px',
-      padding: '6px 10px',
-      outline: 'none'
-    }}
-  />
-  <button
-    style={{
-      backgroundColor: 'gray',
-      color: 'white',
-      border: '1px solid #ccc',
-      borderLeft: 'none',
-      borderRadius: '0 4px 4px 0',
-      padding: '6px 12px',
-      cursor: 'pointer'
-    }}
-  >
-    Tìm
-  </button>
-</div>
-
+          <input placeholder="Tìm tên báo cáo" value={searchReport} onChange={(e) => setSearchReport(e.target.value)} />
           <select>
             <option>Lọc theo trạng thái</option>
             <option>Đã xử lý</option>
             <option>Chưa xem</option>
             <option>Đang xử lý</option>
           </select>
-          <button>Lọc theo ngày tạo</button>
+          <input type="date" value={filterCreateDate} onChange={(e) => setFilterCreateDate(e.target.value)} />
+          <input placeholder="Người tạo" value={searchUser} onChange={(e) => setSearchUser(e.target.value)} />
+          <input placeholder="Ban" value={searchBan} onChange={(e) => setSearchBan(e.target.value)} />
+          <input placeholder="Team" value={searchTeam} onChange={(e) => setSearchTeam(e.target.value)} />
+          <input type="date" value={filterReplyDate} onChange={(e) => setFilterReplyDate(e.target.value)} />
+          <button>Tìm</button>
+          <button onClick={resetFilters}>Cancel</button>
         </div>
 
         <table className="report-table">
@@ -170,7 +165,7 @@ const SettingPage = () => {
             </tr>
           </thead>
           <tbody>
-            {reports.map((r) => (
+            {filteredReports.map((r) => (
               <tr key={r.id}>
                 <td>{r.title}</td>
                 <td>
@@ -185,34 +180,11 @@ const SettingPage = () => {
                 <td>{r.team}</td>
                 <td>{r.team}</td>
                 <td>{r.replyDate}</td>
-     
-                  <td>
-  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-    <input
-      type="text"
-      placeholder="Nhập phản hồi..."
-      style={{
-        flex: 1,
-        padding: '4px 8px',
-        borderRadius: '4px',
-        border: '1px solid #ccc'
-      }}
-    />
-    <button
-      style={{
-        backgroundColor: '#1976d2',
-        color: 'white',
-        border: 'none',
-        padding: '6px 10px',
-        borderRadius: '4px',
-        cursor: 'pointer',
-        whiteSpace: 'nowrap'
-      }}
-    >
-      Gửi
-    </button>
-  </div>
-
+                <td>
+                  <div className="reply-input-group">
+                    <input type="text" placeholder="Nhập phản hồi..." />
+                    <button>Gửi</button>
+                  </div>
                 </td>
               </tr>
             ))}

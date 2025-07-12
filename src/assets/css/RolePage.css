@@ -1,0 +1,49 @@
+.permission-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.permission-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.permission-table th,
+.permission-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.select-Trống {
+  background-color: white;
+}
+
+.select-Xem {
+  background-color: #c8f7c5; /* xanh nhạt */
+}
+
+.select-Sửa {
+  background-color: #f7c5c5; /* đỏ nhạt */
+}
+
+.save-button-container {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.save-button {
+  padding: 8px 16px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background-color: #125a9c;
+}

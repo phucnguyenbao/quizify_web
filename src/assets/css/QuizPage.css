@@ -1,0 +1,195 @@
+.quiz-management {
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+.add-button {
+  background-color: #1976d2;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  top: 20%;
+  left: 30%;
+  background-color: white;
+  padding: 20px;
+  border: 2px solid #ff9800;
+  border-radius: 8px;
+  z-index: 1000;
+  width: 40%;
+}
+
+.modal button {
+  margin-right: 10px;
+  margin-top: 10px;
+  padding: 6px 12px;
+}
+
+.cancel-button {
+  background-color: #ccc;
+}
+.simple-modal {
+  border: 2px solid orange;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: fit-content;
+  margin: 20px 0 0 0; 
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.simple-modal button {
+  background: none;
+  border: none;
+  color: black;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.simple-modal .cancel-link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 10px;
+}
+.popup-container {
+  border: 2px solid orange;
+  padding: 10px;
+  background-color: white;
+  border-radius: 4px;
+  width: 600px; 
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto; 
+}
+
+.popup-title {
+  font-weight: bold;
+  color: blue;
+  margin-bottom: 10px;
+}
+
+.popup-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px auto;
+}
+
+.popup-content input {
+  padding: 5px;
+  border: 1px solid blue;
+  border-radius: 2px;
+}
+
+.popup-btn {
+  border: 1px solid blue;
+  background-color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.popup-cancel {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.view-quiz-modal {
+  border: 2px solid orange;
+  padding: 16px;
+  border-radius: 6px;
+  background-color: white;
+  margin: 20px auto;
+  width: 95%;
+}
+
+.quiz-section-title {
+  font-weight: bold;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.quiz-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+}
+
+.quiz-table th,
+.quiz-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+.delete-link {
+  color: red;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.quiz-action-links {
+  display: flex;
+  gap: 15px;
+  margin: 10px 0;
+  font-weight: 500;
+}
+
+.action-link {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.cancel-link {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.confirm-wrapper {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.confirm-button {
+  padding: 6px 12px;
+  background-color: #dbe9ff;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+.action-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.action-link {
+  color: blue;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 500;
+}
