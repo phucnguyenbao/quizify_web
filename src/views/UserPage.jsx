@@ -10,7 +10,7 @@ const mockMembers = [
 const mockDepartments = [
     { id: 'dep1', name: 'ODD', leader: 'Minh', members: 10, games: 3 },
     { id: 'dep2', name: 'ABD', leader: 'Khánh', members: 5, games: 2 },
-];00000
+];
 
 const mockGames = [
     { id: 1, name: 'Game 1', openDate: '23/07/2025' },
