@@ -81,19 +81,21 @@ html, body {
   position: absolute;
   top: 60px;
   right: 20px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-  padding: 24px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(240,240,255,0.85));
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  padding: 24px 28px;
   width: 420px;
   font-size: 14px;
   z-index: 1000;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.4s ease;
+  backdrop-filter: blur(12px);
 }
 
 .popup-content {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 20px;
 }
 
@@ -105,88 +107,125 @@ html, body {
   margin-top: 0;
   margin-bottom: 12px;
   font-size: 18px;
-  color: #7c3aed;
+  color: #8b5cf6;
+  font-weight: 700;
 }
 
 .info-left p {
   margin: 6px 0;
-  color: #4b5563;
+  color: #374151;
 }
 
 .info-left p strong {
   color: #111827;
 }
 
-.popup-actions {
-  margin-top: 14px;
+/* Avatar */
+.info-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
 }
 
-.save-btn, .cancel-btn {
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: none;
-  margin-right: 8px;
+.avatar-large {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  background-image: linear-gradient(#fff, #fff),
+    linear-gradient(135deg, #93c5fd, #fbcfe8);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Upload */
+.upload-label {
+  background: #f1f5f9;
+  padding: 8px 14px;
+  border-radius: 10px;
+  color: #3b82f6;
+  font-size: 13px;
   cursor: pointer;
-  font-weight: 500;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05);
+}
+
+.upload-label:hover {
+  background: #e0f2fe;
+  color: #2563eb;
+}
+
+/* Nút hành động */
+.popup-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
 }
 
 .save-btn {
-  background: linear-gradient(135deg, #f472b6, #ec4899);
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
   color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .save-btn:hover {
-  background: linear-gradient(135deg, #ec4899, #db2777);
+  background: linear-gradient(135deg, #fda4af, #a5b4fc);
+  transform: translateY(-2px);
 }
 
 .cancel-btn {
   background: #f3f4f6;
   color: #333;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .cancel-btn:hover {
   background: #e5e7eb;
+  color: #111;
 }
 
-.info-right {
-  flex: 0.8;
-  display: flex;
-  flex-direction: column;
+/* Logout đẹp hơn */
+.logout-section {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.logout-btn {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-}
-
-.avatar-preview {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.avatar-large {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid #93c5fd;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.upload-label {
-  background: #f9fafb;
-  padding: 6px 12px;
-  border: 1px dashed #93c5fd;
-  border-radius: 8px;
-  color: #3b82f6;
-  cursor: pointer;
-  font-size: 13px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
   transition: 0.3s;
 }
 
-.upload-label:hover {
-  background: #e0f2fe;
+.logout-btn:hover {
+  background: transparent;
+  color: #8b5cf6;
+  border: 2px solid #8b5cf6;
+  transform: translateY(-1px);
 }
+
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }

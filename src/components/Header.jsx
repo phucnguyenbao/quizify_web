@@ -7,6 +7,23 @@ function Header() {
   const [showPopup, setShowPopup] = useState(false);
   const popupRef = useRef();
 const [avatar, setAvatar] = useState('https://i.pravatar.cc/150?img=32');
+const [isEditing, setIsEditing] = useState(false);
+const [profile, setProfile] = useState({
+  id: '2211762',
+  firstName: 'Trịnh Trần Phương',
+  lastName: 'Tuấn',
+  phone: '344343334',
+  email: 'tuantran@gmail.com',
+  date: '23/04/2025',
+  role: 'User'
+});
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  setProfile(prev => ({
+    ...prev,
+    [name]: value
+  }));
+};
 
 const handleAvatarChange = (e) => {
   const file = e.target.files[0];
@@ -45,36 +62,71 @@ const handleAvatarChange = (e) => {
           </div>
           <div className="nav-right">
             <li><NavLink to="/setting" className={({ isActive }) => (isActive ? 'active-link' : '')}><Settings size={16}/> Báo cáo</NavLink></li>
-            <li><NavLink to="/login" className={({ isActive }) => (isActive ? 'active-link' : '')}><LogOut size={16}/> Đăng xuất</NavLink></li>
+            {/* <li><NavLink to="/login" className={({ isActive }) => (isActive ? 'active-link' : '')}><LogOut size={16}/> Đăng xuất</NavLink></li> */}
             <li>
               <img src="https://i.pravatar.cc/150?img=32" alt="Avatar" className="avatar" onClick={togglePopup} />
               {showPopup && (
                 <div className="profile-popup" ref={popupRef}>
                   <div className="popup-content">
-                    <div className="info-left">
-                      <h4>Thông tin cá nhân</h4>
-                      <p><strong>Mã nhân viên:</strong> 2211762</p>
-                      <p><strong>Tên:</strong> Tuấn</p>
-                      <p><strong>Họ:</strong> Trịnh Trần Phương</p>
-                      <p><strong>SĐT:</strong> 344343334</p>
-                      <p><strong>Email:</strong> tuantran@gmail.com</p>
-                      <p><strong>Ngày đăng ký:</strong> 23/04/2025</p>
-                      <p><strong>Role:</strong> User</p>
-                      <div className="popup-actions">
-                        <button className="save-btn">Lưu</button>
-                        <button className="cancel-btn">Cancel</button>
-                      </div>
-                    </div>
+                    <div className="popup-content">
+  <div className="info-left">
+    <h4>Thông tin cá nhân</h4>
+    <p><strong>Mã nhân viên:</strong> {profile.id}</p>
+
+    {isEditing ? (
+      <>
+        <p><strong>Tên:</strong> <input name="lastName" value={profile.lastName} onChange={handleChange} /></p>
+        <p><strong>Họ và tên đệm:</strong> <input name="firstName" value={profile.firstName} onChange={handleChange} /></p>
+        <p><strong>SĐT:</strong> <input name="phone" value={profile.phone} onChange={handleChange} /></p>
+        <p><strong>Email:</strong> <input name="email" value={profile.email} onChange={handleChange} /></p>
+      </>
+    ) : (
+      <>
+        <p><strong>Tên:</strong> {profile.lastName}</p>
+        <p><strong>Họ và tên đệm:</strong> {profile.firstName}</p>
+        <p><strong>SĐT:</strong> {profile.phone}</p>
+        <p><strong>Email:</strong> {profile.email}</p>
+      </>
+    )}
+
+    <p><strong>Ngày đăng ký:</strong> {profile.date}</p>
+    <p><strong>Role:</strong> {profile.role}</p>
+
+    <div className="popup-actions">
+      {!isEditing ? (
+        <button className="edit-btn" onClick={() => setIsEditing(true)}>Sửa</button>
+      ) : (
+        <>
+          <button className="save-btn" onClick={() => setIsEditing(false)}>Lưu</button>
+          <button className="cancel-btn" onClick={() => setIsEditing(false)}>Hủy</button>
+        </>
+      )}
+    </div>
+    <div className="logout-section">
+  <NavLink to="/login" className="logout-btn">
+    <LogOut size={16} style={{ marginRight: '6px' }} />
+    Đăng xuất
+  </NavLink>
+</div>
+
+  </div>
+
 <div className="info-right">
-  <p>Chào mừng <strong>Tuấn</strong></p>
+  <p>Chào mừng <strong>{profile.lastName}</strong></p>
   <div className="avatar-preview">
     <img src={avatar} alt="avatar" className="avatar-large" />
-    <label className="upload-label">
-      Chọn ảnh
-      <input type="file" onChange={handleAvatarChange} hidden />
-    </label>
+    {isEditing && (
+      <label className="upload-label">
+        Chọn ảnh
+        <input type="file" onChange={handleAvatarChange} hidden />
+      </label>
+    )}
   </div>
 </div>
+
+  
+</div>
+
 
                   </div>
                 </div>
