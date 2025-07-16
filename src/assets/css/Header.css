@@ -6,7 +6,7 @@ html, body {
 }
 
 .header {
-  background: linear-gradient(90deg, #1F1C2C, #928DAB);
+    background: linear-gradient(90deg, #5138bf, #928DAB);
   padding: 4px 12px; /* Gọn hơn */
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   position: sticky;
@@ -76,4 +76,119 @@ html, body {
 .avatar:hover {
   transform: scale(1.05);
   box-shadow: 0 0 8px rgba(255,255,255,0.4);
+}
+.profile-popup {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  padding: 24px;
+  width: 420px;
+  font-size: 14px;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.popup-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.info-left {
+  flex: 1;
+}
+
+.info-left h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 18px;
+  color: #7c3aed;
+}
+
+.info-left p {
+  margin: 6px 0;
+  color: #4b5563;
+}
+
+.info-left p strong {
+  color: #111827;
+}
+
+.popup-actions {
+  margin-top: 14px;
+}
+
+.save-btn, .cancel-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  margin-right: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, #f472b6, #ec4899);
+  color: white;
+}
+
+.save-btn:hover {
+  background: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+.cancel-btn {
+  background: #f3f4f6;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background: #e5e7eb;
+}
+
+.info-right {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatar-large {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #93c5fd;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.upload-label {
+  background: #f9fafb;
+  padding: 6px 12px;
+  border: 1px dashed #93c5fd;
+  border-radius: 8px;
+  color: #3b82f6;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.3s;
+}
+
+.upload-label:hover {
+  background: #e0f2fe;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

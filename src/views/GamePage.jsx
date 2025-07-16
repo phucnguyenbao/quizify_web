@@ -93,8 +93,10 @@ const GamePage = () => {
     });
   };
   return (
+    
     <div className="game-page">
-      <h2>Quản lý Game</h2>
+      <h2 className="bubble-text">Game management</h2>
+
 
       {/* Bộ lọc */}
       <div className="filter-row">
@@ -142,12 +144,12 @@ const GamePage = () => {
           {filteredGames.map((game, i) => (
             <tr key={i}>
               <td
-  className="game-name"
-  style={{ color: 'blue', cursor: 'pointer', fontWeight: 'bold' }}
-  onClick={() => setDetailGame(game)}
->
-  {game.name}
-</td>
+            className="game-name"
+            style={{ color: 'blue', cursor: 'pointer', fontWeight: 'bold' }}
+            onClick={() => setDetailGame(game)}
+          >
+            {game.name}
+          </td>
 
 
               <td>{game.code}</td>
