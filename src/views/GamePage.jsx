@@ -42,7 +42,7 @@ const GamePage = () => {
   const [tempFilter, setTempFilter] = useState(initialFilters);
   const [selected, setSelected] = useState([]);
   const [detailGame, setDetailGame] = useState(null);
- const [showAddGame, setShowAddGame] = useState(false);
+  const [showAddGame, setShowAddGame] = useState(false);
    const [newGame, setNewGame] = useState({
     name: '', code: '', date: '', deadline: '', avgScore: '', maxScore: '', numMembers: '', quiz: '', status: 'Mở'
   });
