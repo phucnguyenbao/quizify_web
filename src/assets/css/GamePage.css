@@ -1,53 +1,168 @@
-.game-page .green-text {
-  color: blue;
-  font-weight: bold;
-  cursor: pointer;
+/* Global */
+.game-page {
+  padding: 24px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #dbeafe, #e0f7fa);
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  color: #333;
 }
 
+.game-page h2 {
+  text-align: center;
+  margin-bottom: 32px;
+  font-size: 32px;
+  color: #1f2937;
+}
+
+/* Table */
 .game-page table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin-top: 16px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
-.game-page th, .game-page td {
-  border: 1px solid #ccc;
-  padding: 8px;
+.game-page th {
+  background: #f3f4f6;
+  padding: 14px;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.game-page td {
+  padding: 12px;
   text-align: center;
+  color: #4b5563;
+  border-bottom: 1px solid #f1f1f1;
 }
 
-.filters {
+.game-page tr:last-child td {
+  border-bottom: none;
+}
+
+.game-page tr:hover {
+  background: #f9fafb;
+  transition: background 0.3s;
+}
+
+/* Filter & Action */
+.filters, .filter-row {
   display: flex;
-  gap: 10px;
-  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
+.filters input, .filter-row input,
+.filters select, .filter-row select {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+
+.filters input:focus, .filter-row input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 6px rgba(59,130,246,0.3);
+}
+
+.action-buttons {
+  margin-bottom: 12px;
+}
+
+.action-link {
+  margin-right: 14px;
+  color: #3b82f6;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.action-link:hover {
+  color: #1d4ed8;
+}
+
+/* Modal */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .modal-content {
-  background: white;
-  padding: 24px;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 28px;
+  border-radius: 16px;
   width: 80%;
   max-height: 80%;
   overflow-y: auto;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1);
 }
+
+/* Create Game Form */
 .create-table input,
 .create-table select {
   width: 100%;
-  padding: 6px;
+  padding: 10px 12px;
   box-sizing: border-box;
   font-size: 14px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+}
+
+.create-table input:focus,
+.create-table select:focus {
+  outline: none;
+  border-color: #60a5fa;
+  box-shadow: 0 0 5px rgba(96,165,250,0.4);
+}
+
+/* Buttons */
+button, .add-button {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(59,130,246,0.3);
+  transition: all 0.3s;
+}
+
+button:hover, .add-button:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow: 0 6px 14px rgba(59,130,246,0.4);
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+
+/* Name Click */
+.game-name {
+  color: #0ea5e9;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.game-name:hover {
+  color: #0284c7;
 }

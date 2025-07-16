@@ -16,7 +16,7 @@ function App() {
         {/* 2. Thêm Route cho trang đăng nhập */}
         <Route path="/login" element={<LoginPage />} />1
         {/* Các Route hiện có của bạn */}
-        <Route path="/user" element={<UserPage />} /> 
+        <Route path="/" element={<UserPage />} /> 
 
         <Route path="/game" element={<GamePage />} /> 
         <Route path="/quiz" element={<QuizPage />} /> 
