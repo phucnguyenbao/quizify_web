@@ -139,7 +139,7 @@ const RolePage = () => {
 
   return (
     <div className="permission-container">
-      <h2>Quản lý phân quyền hệ thống</h2>
+      <h2 className="bubble-text">Quản lý phân quyền hệ thống</h2>
       <table className="permission-table">
         <thead>
           <tr>

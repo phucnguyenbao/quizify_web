@@ -7,50 +7,38 @@ import ViewQuestionsModal from './components/ViewQuestionsModal';
 
 const QuizManagement = () => {
   const initialFilters = {
-    name: '',
-    code: '',
-    topic: '',
-    date: '',
-    score: '',
-    count: '',
-    numUsers: '',
-    numChoices: ''
+    name: '', code: '', topic: '', date: '',
+    score: '', count: '', numUsers: '', numChoices: ''
   };
 
   const [quizzes, setQuizzes] = useState([
-    {
-      name: 'Quiz 1',
-      code: '234',
-      topic: 'Động vật',
-      date: '2025-07-23',
-      score: 8,
-      count: 15,
-      numUsers: 30,
-      numChoices: 120,
-      questions: ['Con mèo là?', 'Đây là gì?']
-    },
-    {
-      name: 'Quiz 2',
-      code: '343',
-      topic: 'Security',
-      date: '2025-07-23',
-      score: 8,
-      count: 12,
-      numUsers: 20,
-      numChoices: 95,
-      questions: ['HTTPS là gì?', 'XSS là gì?']
-    }
+    { name: 'Quiz 1', code: '234', topic: 'Động vật', date: '2025-07-23', score: 8, count: 15, numUsers: 30, numChoices: 120, questions: ['Con mèo là?', 'Đây là gì?'] },
+    { name: 'Quiz 2', code: '343', topic: 'Security', date: '2025-07-23', score: 8, count: 12, numUsers: 20, numChoices: 95, questions: ['HTTPS là gì?', 'XSS là gì?'] }
   ]);
 
-  const [tempFilter, setTempFilter] = useState(initialFilters);
   const [filters, setFilters] = useState(initialFilters);
+  const [tempFilter, setTempFilter] = useState(initialFilters);
 
+  const [selectedIndexes, setSelectedIndexes] = useState([]);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
+
+  // Popup State
   const [showAddOptionModal, setShowAddOptionModal] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showAIModal, setShowAIModal] = useState(false);
   const [showViewQuestionsModal, setShowViewQuestionsModal] = useState(false);
-  const [selectedIndexes, setSelectedIndexes] = useState([]);
+
+  // ====== Filter & Actions ======
+  const handleFilterChange = (field, value) => {
+    setTempFilter(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSearch = () => setFilters({ ...tempFilter });
+
+  const handleCancel = () => {
+    setTempFilter(initialFilters);
+    setFilters(initialFilters);
+  };
 
   const toggleCheckbox = (index) => {
     setSelectedIndexes(prev =>
@@ -59,46 +47,34 @@ const QuizManagement = () => {
   };
 
   const selectAll = () => setSelectedIndexes(quizzes.map((_, i) => i));
-  
+
   const deleteSelected = () => {
-    const filtered = quizzes.filter((_, i) => !selectedIndexes.includes(i));
-    setQuizzes(filtered);
+    setQuizzes(quizzes.filter((_, i) => !selectedIndexes.includes(i)));
     setSelectedIndexes([]);
   };
 
   const exportSelected = () => {
     const selected = quizzes.filter((_, i) => selectedIndexes.includes(i));
-    alert(`Export ${selected.length} quiz(es). (Xử lý backend sau)`);
+    alert(`Export ${selected.length} quiz(es).`);
   };
 
-  const handleSearch = () => setFilters({ ...tempFilter });
-  const handleCancel = () => {
-    setTempFilter(initialFilters);
-    setFilters(initialFilters);
-  };
-
-  const handleFilterChange = (field, value) => {
-    setTempFilter(prev => ({ ...prev, [field]: value }));
-  };
-
-  const filteredQuizzes = quizzes.filter((q) => {
-    return (
-      q.name.toLowerCase().includes(filters.name.toLowerCase()) &&
-      q.code.toLowerCase().includes(filters.code.toLowerCase()) &&
-      q.topic.toLowerCase().includes(filters.topic.toLowerCase()) &&
-      (filters.date === '' || q.date === filters.date) &&
-      (filters.score === '' || q.score.toString().includes(filters.score)) &&
-      (filters.count === '' || q.count.toString().includes(filters.count)) &&
-      (filters.numUsers === '' || q.numUsers.toString().includes(filters.numUsers)) &&
-      (filters.numChoices === '' || q.numChoices.toString().includes(filters.numChoices))
-    );
-  });
+  // ====== Filtered Data ======
+  const filteredQuizzes = quizzes.filter(q => (
+    q.name.toLowerCase().includes(filters.name.toLowerCase()) &&
+    q.code.toLowerCase().includes(filters.code.toLowerCase()) &&
+    q.topic.toLowerCase().includes(filters.topic.toLowerCase()) &&
+    (filters.date === '' || q.date === filters.date) &&
+    (filters.score === '' || q.score.toString().includes(filters.score)) &&
+    (filters.count === '' || q.count.toString().includes(filters.count)) &&
+    (filters.numUsers === '' || q.numUsers.toString().includes(filters.numUsers)) &&
+    (filters.numChoices === '' || q.numChoices.toString().includes(filters.numChoices))
+  ));
 
   return (
     <div className="quiz-management">
       <h2>Quản lý Quiz</h2>
 
-      {/* === Bộ lọc === */}
+      {/* Filter */}
       <div className="filter-row">
         <input value={tempFilter.name} onChange={(e) => handleFilterChange("name", e.target.value)} placeholder="Tên" />
         <input value={tempFilter.code} onChange={(e) => handleFilterChange("code", e.target.value)} placeholder="Mã" />
@@ -109,10 +85,10 @@ const QuizManagement = () => {
         <input value={tempFilter.numUsers} onChange={(e) => handleFilterChange("numUsers", e.target.value)} placeholder="Người làm" />
         <input value={tempFilter.numChoices} onChange={(e) => handleFilterChange("numChoices", e.target.value)} placeholder="Lượt chọn" />
         <button onClick={handleSearch}>Tìm</button>
-        <button onClick={handleCancel}>Cancel</button>
+        <button onClick={handleCancel}>Hủy</button>
       </div>
 
-      {/* === Các hành động === */}
+      {/* Action Buttons */}
       <div className="action-buttons">
         <span className="action-link" onClick={selectAll}>Chọn hết</span>
         <span className="action-link" onClick={deleteSelected}>Xóa</span>
@@ -120,20 +96,13 @@ const QuizManagement = () => {
         <span className="action-link" onClick={exportSelected}>Export</span>
       </div>
 
-      {/* === Bảng dữ liệu === */}
+      {/* Table */}
       <table>
         <thead>
           <tr>
-            <th>Tên quiz</th>
-            <th>Mã quiz</th>
-            <th>Chủ đề quiz</th>
-            <th>Ngày tạo</th>
-            <th>Điểm trung bình</th>
-            <th>Số lượng câu hỏi</th>
-            <th>Số người làm</th>
-            <th>Số lượt chọn</th>
-            <th>Hành động</th>
-            <th>✓</th>
+            <th>Tên</th><th>Mã</th><th>Chủ đề</th><th>Ngày</th>
+            <th>Điểm</th><th>Câu hỏi</th><th>Người làm</th><th>Lượt chọn</th>
+            <th>Hành động</th><th>✓</th>
           </tr>
         </thead>
         <tbody>
@@ -156,35 +125,51 @@ const QuizManagement = () => {
                 </button>
               </td>
               <td>
-                <input
-                  type="checkbox"
-                  checked={selectedIndexes.includes(idx)}
-                  onChange={() => toggleCheckbox(idx)}
-                />
+                <input type="checkbox" checked={selectedIndexes.includes(idx)} onChange={() => toggleCheckbox(idx)} />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <br />
-      <button className="add-button" onClick={() => setShowAddOptionModal(true)}>Thêm quiz</button>
+      {/* Add Quiz */}
+      <br></br>
+      <button className="add-button" onClick={() => setShowAddOptionModal(true)}>Thêm Quiz</button>
 
-      {/* === Modal === */}
+      {/* === Popups with overlay === */}
       {showAddOptionModal && (
-        <AddOptionModal
-          onClose={() => setShowAddOptionModal(false)}
-          onSelect={(type) => {
-            setShowAddOptionModal(false);
-            if (type === 'upload') setShowUploadModal(true);
-            else if (type === 'ai') setShowAIModal(true);
-          }}
-        />
+        <>
+          <div className="modal-overlay"></div>
+          <AddOptionModal
+            onClose={() => setShowAddOptionModal(false)}
+            onSelect={(type) => {
+              setShowAddOptionModal(false);
+              if (type === 'upload') setShowUploadModal(true);
+              if (type === 'ai') setShowAIModal(true);
+            }}
+          />
+        </>
       )}
-      {showUploadModal && <UploadQuizModal onClose={() => setShowUploadModal(false)} />}
-      {showAIModal && <AIQuizModal onClose={() => setShowAIModal(false)} />}
+
+      {showUploadModal && (
+        <>
+          <div className="modal-overlay"></div>
+          <UploadQuizModal onClose={() => setShowUploadModal(false)} />
+        </>
+      )}
+
+      {showAIModal && (
+        <>
+          <div className="modal-overlay"></div>
+          <AIQuizModal onClose={() => setShowAIModal(false)} />
+        </>
+      )}
+
       {showViewQuestionsModal && selectedQuiz && (
-        <ViewQuestionsModal quiz={selectedQuiz} onClose={() => setShowViewQuestionsModal(false)} />
+        <>
+          <div className="modal-overlay"></div>
+          <ViewQuestionsModal quiz={selectedQuiz} onClose={() => setShowViewQuestionsModal(false)} />
+        </>
       )}
     </div>
   );

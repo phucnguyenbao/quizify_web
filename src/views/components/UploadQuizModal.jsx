@@ -16,12 +16,12 @@ const UploadQuizModal = ({ onClose }) => {
         <input
           type="file"
           onChange={handleFileChange}
-          className="popup-file"
         />
         <button className="popup-btn">Tạo</button>
         <span className="popup-cancel" onClick={onClose}>Cancel</span>
       </div>
     </div>
+
   );
 };
 

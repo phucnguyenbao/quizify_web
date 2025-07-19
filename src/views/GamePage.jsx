@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import '../assets/css/GamePage.css';
+import AddGameModal from './components/AddGame';
 
 const dummyGames = [
   {
@@ -219,52 +220,13 @@ const GamePage = () => {
           </div>
         </div>
       )}
-           {showAddGame && (
-  <div className="modal-overlay" onClick={() => setShowAddGame(false)}>
-    <div className="modal-content" onClick={e => e.stopPropagation()} style={{ minWidth: '750px' }}>
-      <h3 style={{ marginBottom: '16px' }}>Tạo game</h3>
-      <table className="create-table" style={{ border: '2px solid orange', width: '100%' }}>
-        <thead>
-          <tr>
-            
-            <th>Tên</th>
-            <th>Mã phòng</th>
-            <th>Ngày mở</th>
-            <th>Deadline</th>
-            <th>Số lượng thành viên</th>
-            <th>Phòng ban</th>
-            <th>Team</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><input type="text" placeholder="Tên game" /></td>
-            <td><input type="text" placeholder="Mã phòng" /></td>
-            <td><input type="date" /></td>
-            <td><input type="datetime-local" /></td>
-            <td><input type="number" placeholder="Số thành viên" /></td>
-            <td><input type="text" placeholder="Phòng ban" /></td>
-            <td><input type="text" placeholder="Team" /></td>
-          </tr>
-        </tbody>
-      </table>
-      <br></br>
-      <button style={{ color: 'blue' }}>Chọn game</button>
-      <br></br>
-      <br></br>
-    <button style={{ color: 'blue' }}>Chọn quiz</button>
-      <div style={{ marginTop: '16px', textAlign: 'right' }}>
-        <button style={{ marginRight: '10px', color: 'blue', background: 'transparent', border: 'none', cursor: 'pointer' }}
-                onClick={() => alert('Tạo game')}>
-          Tạo game
-        </button>
-        <button style={{ color: 'blue', background: 'transparent', border: 'none', cursor: 'pointer' }}
-                onClick={() => setShowAddGame(false)}>
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
+{showAddGame && (
+  <AddGameModal
+    onClose={() => setShowAddGame(false)}
+    onCreate={handleAddGame}
+    newGame={newGame}
+    onChange={handleNewGameChange}
+  />
 )}
 
     </div>

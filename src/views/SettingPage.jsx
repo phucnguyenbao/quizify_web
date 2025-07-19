@@ -13,28 +13,27 @@ const SettingPage = () => {
   const [searchTeam, setSearchTeam] = useState('');
   const [filterReplyDate, setFilterReplyDate] = useState('');
 
+  // Thêm ban vào dữ liệu
   const reports = [
-    { id: 1, title: 'Báo cáo 1', status: 'Đã xử lý', date: '23/06/2025', user: 'Minh', team: 'ODD', replyDate: '2025-06-23' },
-    { id: 2, title: 'Báo cáo 2', status: 'Chưa xem', date: '23/06/2025', user: 'Khánh', team: 'ABD', replyDate: '2025-06-24' },
-    { id: 3, title: 'Báo cáo 3', status: 'Đang xử lý', date: '23/06/2025', user: 'Phúc', team: 'ODD', replyDate: '2025-06-25' },
-    { id: 4, title: 'Báo cáo 4', status: 'Chưa xem', date: '23/06/2025', user: 'Khải', team: 'ABD', replyDate: '2025-06-26' },
+    { id: 1, title: 'Báo cáo 1', status: 'Đã xử lý', date: '23/06/2025', user: 'Minh', ban: 'Kỹ thuật', team: 'ODD', replyDate: '2025-06-23' },
+    { id: 2, title: 'Báo cáo 2', status: 'Chưa xem', date: '23/06/2025', user: 'Khánh', ban: 'Vận hành', team: 'ABD', replyDate: '2025-06-24' },
+    { id: 3, title: 'Báo cáo 3', status: 'Đang xử lý', date: '23/06/2025', user: 'Phúc', ban: 'Kỹ thuật', team: 'ODD', replyDate: '2025-06-25' },
+    { id: 4, title: 'Báo cáo 4', status: 'Chưa xem', date: '23/06/2025', user: 'Khải', ban: 'Vận hành', team: 'ABD', replyDate: '2025-06-26' },
   ];
 
-  const filteredReports = reports.filter(r =>
-    r.title.toLowerCase().includes(searchReport.toLowerCase()) &&
-    r.user.toLowerCase().includes(searchUser.toLowerCase()) &&
-    r.team.toLowerCase().includes(searchTeam.toLowerCase()) &&
-    r.team.toLowerCase().includes(searchBan.toLowerCase()) &&
-    (filterReplyDate === '' || r.replyDate === filterReplyDate) &&
-    (filterCreateDate === '' || convertToISO(r.date) === filterCreateDate)
-  );
-
-  // Helper để chuẩn hóa ngày "dd/mm/yyyy" -> "yyyy-mm-dd" để so sánh
   const convertToISO = (dateStr) => {
     const [d, m, y] = dateStr.split('/');
     return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
   };
 
+  const filteredReports = reports.filter(r =>
+    r.title.toLowerCase().includes(searchReport.toLowerCase()) &&
+    r.user.toLowerCase().includes(searchUser.toLowerCase()) &&
+    r.team.toLowerCase().includes(searchTeam.toLowerCase()) &&
+    r.ban.toLowerCase().includes(searchBan.toLowerCase()) &&
+    (filterReplyDate === '' || r.replyDate === filterReplyDate) &&
+    (filterCreateDate === '' || convertToISO(r.date) === filterCreateDate)
+  );
 
   const resetFilters = () => {
     setSearchReport('');
@@ -43,6 +42,19 @@ const SettingPage = () => {
     setSearchBan('');
     setSearchTeam('');
     setFilterReplyDate('');
+  };
+
+  const handleSubmitReport = () => {
+    if (reportContent.trim() === '') {
+      alert('Vui lòng nhập nội dung báo cáo');
+      return;
+    }
+    console.log('Đã gửi báo cáo:', reportContent);
+    setReportContent('');
+  };
+
+  const handleUploadMusic = () => {
+    alert('Tính năng upload nhạc đang được phát triển!');
   };
 
   return (
@@ -99,8 +111,8 @@ const SettingPage = () => {
           </div>
 
           <div className="form-buttons">
-            <button className="button-submit">Gửi</button>
-            <button className="button-cancel">Cancel</button>
+            <button className="button-submit" onClick={handleSubmitReport}>Gửi</button>
+            <button className="button-cancel" onClick={() => setReportContent('')}>Cancel</button>
           </div>
         </div>
       </div>
@@ -108,26 +120,14 @@ const SettingPage = () => {
       {/* Modal chọn nhạc */}
       {musicModalOpen && (
         <div className="modal">
-          <div className="modal-content">
-            <div className="popup-row">
               <div className="popup-label">Chọn nhạc</div>
-              <div className="popup-content">
+              <div className="popup-content music-list">
                 <div>Thiên lý ơi</div>
                 <div>Đom đóm</div>
                 <div>Hồng nhan</div>
-                <div><a href="#">Tải lên</a></div>
+                <button className="upload-music" onClick={handleUploadMusic}>Tải nhạc lên</button>
+                 <button className="exit-button" onClick={() => setMusicModalOpen(false)}>Thoát</button>
               </div>
-            </div>
-            <div className="popup-row">
-              <div className="popup-label">Upload ảnh</div>
-              <div className="popup-content">
-                <div><a href="#">Tải lên</a></div>
-              </div>
-            </div>
-            <div className="popup-footer">
-              <button className="exit-button" onClick={() => setMusicModalOpen(false)}>Thoát</button>
-            </div>
-          </div>
         </div>
       )}
 
@@ -136,7 +136,7 @@ const SettingPage = () => {
         <h3>Quản lý báo cáo</h3>
         <div className="filter-group">
           <input placeholder="Tìm tên báo cáo" value={searchReport} onChange={(e) => setSearchReport(e.target.value)} />
-          <select>
+                    <select>
             <option>Lọc theo trạng thái</option>
             <option>Đã xử lý</option>
             <option>Chưa xem</option>
@@ -147,8 +147,8 @@ const SettingPage = () => {
           <input placeholder="Ban" value={searchBan} onChange={(e) => setSearchBan(e.target.value)} />
           <input placeholder="Team" value={searchTeam} onChange={(e) => setSearchTeam(e.target.value)} />
           <input type="date" value={filterReplyDate} onChange={(e) => setFilterReplyDate(e.target.value)} />
-          <button>Tìm</button>
-          <button onClick={resetFilters}>Cancel</button>
+          <button onClick={() => {}}>Tìm</button>
+          <button onClick={resetFilters}>Reset</button>
         </div>
 
         <table className="report-table">
@@ -177,7 +177,7 @@ const SettingPage = () => {
                 </td>
                 <td>{r.date}</td>
                 <td>{r.user}</td>
-                <td>{r.team}</td>
+                <td>{r.ban}</td>
                 <td>{r.team}</td>
                 <td>{r.replyDate}</td>
                 <td>
