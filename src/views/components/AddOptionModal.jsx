@@ -1,4 +1,5 @@
 import React from 'react';
+// Giả sử file QuizPage.css đã có style cho modal. Nếu chưa, bạn có thể tạo file CSS riêng
 import "../../assets/css/QuizPage.css";
 
 const AddOptionModal = ({ onClose, onSelect }) => {
@@ -6,7 +7,11 @@ const AddOptionModal = ({ onClose, onSelect }) => {
     <div className="simple-modal">
       <button onClick={() => onSelect('upload')}>Upload File</button>
       <button onClick={() => onSelect('ai')}>Generate by AI</button>
-      <a href="#" className="cancel-link" onClick={onClose}>Cancel</a>
+
+      {/* FIX: Thay thế thẻ <a> bằng thẻ <button> */}
+      <button className="cancel-link" onClick={onClose}>
+        Cancel
+      </button>
     </div>
   );
 };

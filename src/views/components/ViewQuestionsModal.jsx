@@ -1,5 +1,4 @@
 import React from 'react';
-import "../../assets/css/QuizPage.css";
 
 const ViewQuestionsModal = ({ quiz, onClose }) => {
   return (
@@ -10,8 +9,7 @@ const ViewQuestionsModal = ({ quiz, onClose }) => {
           <tr>
             <th>Quiz Name</th>
             <th>Quiz Code</th>
-            <th>Topic</th>
-            <th>Created Date</th>
+            <th>Topic</th>            <th>Created Date</th>
             <th>Average Score</th>
             <th>Number of Questions</th>
           </tr>

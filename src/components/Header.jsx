@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase/services';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { LogOut, Settings, Users, Gamepad2, ListTodo, Shield } from 'lucide-react';
+import { LogOut, Settings, Users, ListTodo, Shield } from 'lucide-react';
 import '../assets/css/Header.css';
 
 
