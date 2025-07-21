@@ -76,7 +76,6 @@ body {
     margin-top: 30px;
     display: flex;
     justify-content: center;
-    /* === UPDATE: Tăng khoảng cách giữa các nút === */
     gap: 25px;
 }
 
@@ -118,41 +117,18 @@ body {
     font-size: 16px;
 }
 
-/* === UPDATE: Đổi màu nút âm thanh === */
 .btn-toggle.on {
     background-color: lightcoral;
-    /* Màu đỏ nhạt khi ON */
 }
 
 .btn-toggle.off {
     background-color: #cccccc;
-    /* Màu xám khi OFF */
 }
 
-/* --- Quiz Screen (giữ nguyên từ phiên bản trước) --- */
+/* --- Quiz Screen --- */
 .quiz-screen {
     width: 100%;
-    background: linear-gradient(to bottom, #fdf4f5, #eef2f7);
-}
-
-.game-sub-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    font-size: 14px;
-    color: #555;
-}
-
-.game-sub-header>span {
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.user-actions span {
-    margin-left: 20px;
-    cursor: pointer;
-    font-weight: normal;
+    background: #eef2f7;
 }
 
 .timer-bar-container {
@@ -198,11 +174,24 @@ body {
 .quiz-body {
     display: flex;
     gap: 20px;
-    padding: 0 30px 30px 30px;
+    padding: 20px 30px 30px 30px;
 }
 
+/* === UPDATE: Giao diện khu vực câu hỏi === */
 .question-area {
     flex: 3;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.question-area h4 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 30px;
 }
 
 .options-grid {
@@ -211,105 +200,140 @@ body {
     gap: 15px;
 }
 
+/* --- Đây là style cho các ô đáp án ở trạng thái BÌNH THƯỜNG --- */
 .option-box {
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 10px;
-    min-height: 70px;
-    border: 2px solid transparent;
+    gap: 15px;
+    background-color: #fff;
+    border: 2px solid; 
+    /* Nền trắng */
+    /* Viền xám nhạt */
     transition: all 0.2s ease-in-out;
 }
-
-.option-box:nth-child(1) {
-    background-color: #ffeadb;
-    border-color: orange;
+.options-grid .option-box:nth-child(1) {
+    border-color: #ffab91;
 }
 
-.option-box:nth-child(2) {
-    background-color: #ffebe9;
-    border-color: darkred;
+/* Viền màu Cam cho đáp án a) */
+.options-grid .option-box:nth-child(2) {
+    border-color: #80cbc4;
 }
 
-.option-box:nth-child(3) {
-    background-color: #e4f7e8;
-    border-color: limegreen;
+/* Viền màu Xanh ngọc cho đáp án b) */
+.options-grid .option-box:nth-child(3) {
+    border-color: #f48fb1;
 }
 
-.option-box:nth-child(4) {
-    background-color: #fff4d4;
-    border-color: #ffc107;
+/* Viền màu Hồng cho đáp án c) */
+.options-grid .option-box:nth-child(4) {
+    border-color: #b39ddb;
 }
 
+/* Viền màu Tím cho đáp án d) */
+.option-box p {
+    margin: 0;
+    font-weight: 500;
+    color: #333;
+}
+
+.option-box span {
+    font-weight: 500;
+    color: #555;
+}
+
+.option-box:hover {
+    border-color: #a6c1ee;
+    /* Đổi màu viền khi di chuột qua */
+    transform: translateY(-2px);
+}
+
+/* --- Đây là style cho ô đáp án KHI ĐƯỢC CHỌN --- */
 .option-box.selected {
     border-color: #007bff;
-    background-color: #cce5ff;
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+    /* Viền màu xanh dương */
+    background-color: #e7f3ff;
+    /* Nền màu xanh dương nhạt */
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
 }
 
 .question-footer {
-    margin-top: 20px;
+    margin-top: 30px;
     text-align: right;
 }
 
 .next-question-btn {
-    padding: 10px 25px;
+    padding: 12px 30px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 600;
     color: white;
-    background-color: #28a745;
+    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .next-question-btn:hover {
-    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+
+/* --- Question Navigation --- */
 .question-nav {
     flex: 1;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #f8f9fa;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
+}
+
+.question-nav-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 20px;
 }
 
 .nav-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    flex-grow: 1;
+    gap: 15px;
 }
 
 .question-nav .nav-button {
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #333;
-    font-weight: normal;
+    padding: 12px;
+    font-weight: 500;
+    color: white;
+    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+    border: 2px solid transparent;
+    border-radius: 10px;
     cursor: pointer;
-    border-radius: 4px;
     transition: all 0.2s ease-in-out;
+    text-align: center;
+}
+
+.question-nav .nav-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .question-nav .nav-button.answered {
-    background-color: #28a745;
-    color: white;
-    font-weight: bold;
+    background: #28a745;
     border-color: #218838;
 }
 
 .question-nav .nav-button.current {
-    background-color: #007bff;
-    color: white;
     border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
     transform: scale(1.05);
 }
 
@@ -317,35 +341,55 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #ddd;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.nav-pagination span {
+    font-weight: 500;
+    color: #555;
 }
 
 .nav-pagination button {
-    background: none;
-    border: 1px solid #ccc;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 38px;
+    height: 38px;
+    font-size: 20px;
+    color: #555;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .nav-pagination button:disabled {
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 .nav-footer {
-    margin-top: 15px;
+    margin-top: auto;
+    padding-top: 20px;
 }
 
 .btn-submit {
     width: 100%;
     padding: 15px;
-    background-color: #007bff;
+    font-size: 18px;
+    font-weight: 600;
     color: white;
+    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }

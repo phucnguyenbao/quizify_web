@@ -1,21 +1,34 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import '../assets/css/PlayPage.css';
 
-// Dữ liệu mẫu không đổi
+// === UPDATE: Dữ liệu mẫu đã được cập nhật với 20 câu hỏi về Nhật Bản ===
 const dummyQuiz = {
-  title: 'General Knowledge Quiz',
+  title: 'Quiz about Japan',
   questions: [
-    { id: 1, text: 'What is the capital of France?', options: { a: 'London', b: 'Berlin', c: 'Paris', d: 'Madrid' } },
-    { id: 2, text: 'Which planet is known as the Red Planet?', options: { a: 'Earth', b: 'Mars', c: 'Jupiter', d: 'Venus' } },
-    ...Array.from({ length: 18 }, (_, i) => ({
-      id: i + 3,
-      text: `This is sample question number ${i + 3}?`,
-      options: { a: `Option A${i + 3}`, b: `Option B${i + 3}`, c: `Option C${i + 3}`, d: `Option D${i + 3}` }
-    }))
+    { id: 1, text: "What flower is Japan's national emblem?", options: { a: 'Rose', b: 'Lotus', c: 'Cherry Blossom', d: 'Chrysanthemum' }, answer: 'c' },
+    { id: 2, text: 'Kimono is the traditional Japanese garment.', options: { a: 'True', b: 'False' }, answer: 'a' },
+    { id: 3, text: "Who is commemorated during the Obon festival in Japan?", options: { a: 'Gods', b: "Ancestors' spirits", c: 'The Emperor', d: 'Patron saints' }, answer: 'b' },
+    { id: 4, text: "What is Japan's most famous traditional dish worldwide?", options: { a: 'Mochi', b: 'Sushi', c: 'Takoyaki', d: 'Ramen' }, answer: 'b' },
+    { id: 5, text: 'A Geisha is:', options: { a: 'A warrior', b: 'A theater actor', c: 'A traditional female artist', d: 'A queen' }, answer: 'c' },
+    { id: 6, text: 'Sumo is a traditional sport originating from Japan.', options: { a: 'True', b: 'False' }, answer: 'a' },
+    { id: 7, text: 'What is the suffix "-san" used for in Japanese?', options: { a: 'Informal address', b: 'A polite and respectful title', c: "A famous person's name", d: 'A profession' }, answer: 'b' },
+    { id: 8, text: 'Which city is the former imperial capital of Japan?', options: { a: 'Tokyo', b: 'Osaka', c: 'Kyoto', d: 'Sapporo' }, answer: 'c' },
+    { id: 9, text: 'What is the famous Japanese tea ceremony called?', options: { a: 'Chado (The Way of Tea)', b: 'Ikebana', c: 'Bon Odori', d: 'Noh' }, answer: 'a' },
+    { id: 10, text: 'What is a "Torii" in Japanese culture?', options: { a: 'A type of food', b: 'A traditional shrine gate', c: 'A martial art', d: 'A costume' }, answer: 'b' },
+    { id: 11, text: 'The Tanabata festival is associated with what story?', options: { a: 'The story of Altair and Vega', b: 'The legend of Mount Fuji', c: 'The Sun Goddess', d: 'The legend of a carp becoming a dragon' }, answer: 'a' },
+    { id: 12, text: 'On what occasion do the Japanese typically eat soba noodles?', options: { a: 'Birthdays', b: 'Summer festivals', c: "New Year's Eve", d: 'Mid-Autumn festival' }, answer: 'c' },
+    { id: 13, text: 'What does the culture of "Omotenashi" represent in Japan?', options: { a: 'Competition', b: 'Selfless hospitality', c: 'Conservatism', d: 'Business ethics' }, answer: 'b' },
+    { id: 14, text: 'How many distinct seasons does Japan have?', options: { a: '2', b: '3', c: '4', d: '5' }, answer: 'c' },
+    { id: 15, text: 'What is the art of "Ikebana"?', options: { a: 'Tea ceremony', b: 'Paper folding', c: 'Flower arrangement', d: 'Calligraphy' }, answer: 'c' },
+    { id: 16, text: 'The Japanese typically bow when:', options: { a: 'Eating', b: 'Communicating and greeting', c: 'Going to sleep', d: 'Exercising' }, answer: 'b' },
+    { id: 17, text: 'The Hanami festival is an occasion for:', options: { a: 'Eating free sushi', b: 'Watching fireworks', c: 'Viewing cherry blossoms', d: 'Giving gifts' }, answer: 'c' },
+    { id: 18, text: 'Anime and Manga are characteristic of what aspect of Japanese culture?', options: { a: 'Ancient literature', b: 'Popular entertainment', c: 'Politics', d: 'Religion' }, answer: 'b' },
+    { id: 19, text: 'The Japanese typically take off their shoes when entering a house.', options: { a: 'True', b: 'False' }, answer: 'a' },
+    { id: 20, text: 'What is the name of the highest mountain in Japan?', options: { a: 'Mount Takao', b: 'Mount Fuji', c: 'Mount Aso', d: 'Mount Rokko' }, answer: 'b' }
   ]
 };
 
-// --- WAITING ROOM COMPONENT (Không thay đổi logic) ---
+// --- WAITING ROOM COMPONENT (Không thay đổi) ---
 export const WaitingRoom = ({ game, onStartQuiz, onExit }) => {
   const [soundOn, setSoundOn] = useState(true);
   if (!game) return null;
@@ -43,7 +56,7 @@ export const WaitingRoom = ({ game, onStartQuiz, onExit }) => {
 };
 
 
-// --- QUIZ SCREEN COMPONENT (Đã thêm logic tự động chuyển trang) ---
+// --- QUIZ SCREEN COMPONENT (Logic không đổi) ---
 export const QuizScreen = ({ game, onFinish }) => {
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -96,14 +109,12 @@ export const QuizScreen = ({ game, onFinish }) => {
     };
   }, [currentQ, handleNextQuestion]);
 
-  // === UPDATE: Tự động chuyển trang điều hướng khi câu hỏi thay đổi ===
   useEffect(() => {
     const newPage = Math.floor(currentQ / QUESTIONS_PER_PAGE);
     if (newPage !== navPage) {
       setNavPage(newPage);
     }
   }, [currentQ, navPage, QUESTIONS_PER_PAGE]);
-
 
   const formatTime = (seconds) => `00:${seconds.toString().padStart(2, '0')}`;
   const getTimerBarColor = () => {
@@ -120,7 +131,6 @@ export const QuizScreen = ({ game, onFinish }) => {
 
   return (
     <div className="quiz-screen">
-      {/* Bố cục này không có header */}
       <div className="timer-bar-container">
         <div className={`timer-bar ${getTimerBarColor()}`} style={{ width: `${progress}%` }}></div>
         <span>{formatTime(timeLeft)}</span>
@@ -148,6 +158,7 @@ export const QuizScreen = ({ game, onFinish }) => {
         </div>
 
         <div className="question-nav">
+          <h5 className="question-nav-title">Question List</h5>
           <div className="nav-grid">
             {visibleQuestions.map((_, index) => {
               const questionIndex = startIdx + index;
@@ -163,18 +174,18 @@ export const QuizScreen = ({ game, onFinish }) => {
                   className={buttonClasses.join(' ')}
                   onClick={() => setCurrentQ(questionIndex)}
                 >
-                  Question {questionIndex + 1}
+                  {questionIndex + 1}
                 </button>
               );
             })}
           </div>
           <div className="nav-pagination">
             <button onClick={() => setNavPage(p => Math.max(0, p - 1))} disabled={navPage === 0}>
-              {'<<'}
+              {'«'}
             </button>
             <span>Page {navPage + 1} of {pageCount}</span>
             <button onClick={() => setNavPage(p => Math.min(pageCount - 1, p + 1))} disabled={navPage === pageCount - 1}>
-              {'>>'}
+              {'»'}
             </button>
           </div>
           <div className="nav-footer">
