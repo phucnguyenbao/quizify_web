@@ -4,12 +4,8 @@ import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/aut
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/Login.css';
 
-const LoginPage = () => {
+function LoginPage() {
   const [isForgot, setIsForgot] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  // States for form fields
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
@@ -115,6 +111,6 @@ const handleLogin = async () => {
       </div>
     </div>
   );
-};
+}
 
 export default LoginPage;
