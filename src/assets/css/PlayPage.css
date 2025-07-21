@@ -1,176 +1,179 @@
-/* General Body Styles */
+/* General Body & Button Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background-color: #f0f2f5;
     margin: 0;
     padding: 20px;
     color: #333;
 }
 
-.btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    color: white;
-}
-
-.btn-secondary {
-    background-color: #6c757d;
-    color: white;
-}
-
-
-/* Waiting Room Styles */
+/* --- Waiting Room --- */
 .waiting-room {
     max-width: 800px;
     margin: 40px auto;
-    padding: 20px;
+    padding: 30px;
     background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e8e8e8;
 }
 
-.page-title {
-    text-align: left;
-    color: #333;
-    margin-bottom: 20px;
-    padding-left: 20px;
+.waiting-room .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 25px;
 }
 
 .game-settings-box {
-    border: 2px solid orange;
-    padding: 20px;
-    border-radius: 8px;
+    border: 2px solid #007bff;
+    padding: 25px;
+    border-radius: 10px;
 }
 
 .settings-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
-    border: 2px solid blue;
-    border-radius: 8px;
     margin-bottom: 30px;
 }
 
 .setting-item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .setting-item label,
 .setting-item span {
+    font-weight: 500;
     font-size: 16px;
-    font-weight: bold;
-}
-
-.btn-list {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-.btn-toggle {
-    width: 60px;
-    height: 30px;
-    background-color: #ccc;
-    border-radius: 15px;
-    position: relative;
-    cursor: pointer;
-    border: none;
-    color: white;
-    font-weight: bold;
-}
-
-.btn-toggle.on {
-    background-color: red;
-}
-
-.btn-toggle.off {
-    background-color: #6c757d;
 }
 
 .avatar-preview {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: 2px solid #ddd;
-}
-
-.game-info {
-    padding: 0 20px;
 }
 
 .info-row {
     display: flex;
     justify-content: space-between;
-    font-size: 16px;
     margin-bottom: 15px;
+    font-size: 16px;
+    padding: 0 10px;
 }
 
 .info-row span:first-child {
-    font-weight: bold;
+    color: #555;
+}
+
+.info-row span:last-child {
+    font-weight: 500;
 }
 
 .start-game-actions {
     text-align: center;
     margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    /* === UPDATE: Tăng khoảng cách giữa các nút === */
+    gap: 25px;
 }
 
 .start-game-actions .btn {
-    margin: 0 10px;
+    border-radius: 15px;
+    padding: 10px 30px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ffc3a0, #ffafbd);
+    color: white;
 }
 
-/* Quiz Screen Styles */
+.btn-list {
+    padding: 8px 15px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #ffc3a0, #ffafbd);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-toggle {
+    width: 80px;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s ease;
+}
+
+.btn-toggle span {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* === UPDATE: Đổi màu nút âm thanh === */
+.btn-toggle.on {
+    background-color: lightcoral;
+    /* Màu đỏ nhạt khi ON */
+}
+
+.btn-toggle.off {
+    background-color: #cccccc;
+    /* Màu xám khi OFF */
+}
+
+/* --- Quiz Screen (giữ nguyên từ phiên bản trước) --- */
 .quiz-screen {
     width: 100%;
-    max-width: 1200px;
-    margin: auto;
-    padding: 10px;
+    background: linear-gradient(to bottom, #fdf4f5, #eef2f7);
 }
 
-.header-nav {
+.game-sub-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 15px 30px;
     font-size: 14px;
+    color: #555;
+}
+
+.game-sub-header>span {
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .user-actions span {
     margin-left: 20px;
     cursor: pointer;
+    font-weight: normal;
 }
 
 .timer-bar-container {
-    width: 100%;
+    width: 95%;
+    margin: 15px auto;
     background-color: #e0e0e0;
     border-radius: 5px;
-    margin: 15px 0;
     position: relative;
     height: 30px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 .timer-bar {
-    background-color: limegreen;
     height: 100%;
-    border-radius: 5px;
     position: absolute;
     left: 0;
     top: 0;
+    transition: width 1s linear, background-color 0.5s ease;
 }
 
 .timer-bar-container span {
@@ -180,64 +183,92 @@ body {
     font-weight: bold;
 }
 
+.timer-bar-green {
+    background-color: #2ecc71;
+}
+
+.timer-bar-yellow {
+    background-color: #f1c40f;
+}
+
+.timer-bar-red {
+    background-color: #e74c3c;
+}
+
 .quiz-body {
     display: flex;
     gap: 20px;
+    padding: 0 30px 30px 30px;
 }
 
 .question-area {
     flex: 3;
-    padding: 20px;
-    border: 2px solid orange;
-    border-radius: 8px;
-}
-
-.question-area h4 {
-    margin-top: 0;
-    margin-bottom: 20px;
 }
 
 .options-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
     gap: 15px;
 }
 
 .option-box {
     padding: 20px;
-    border: 2px solid;
     border-radius: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 10px;
-    min-height: 80px;
+    min-height: 70px;
+    border: 2px solid transparent;
+    transition: all 0.2s ease-in-out;
 }
 
 .option-box:nth-child(1) {
+    background-color: #ffeadb;
     border-color: orange;
 }
 
 .option-box:nth-child(2) {
+    background-color: #ffebe9;
     border-color: darkred;
 }
 
 .option-box:nth-child(3) {
+    background-color: #e4f7e8;
     border-color: limegreen;
 }
 
 .option-box:nth-child(4) {
-    border-color: orange;
+    background-color: #fff4d4;
+    border-color: #ffc107;
 }
 
 .option-box.selected {
-    background-color: #d1e7fd;
-    border-color: #0d6efd;
+    border-color: #007bff;
+    background-color: #cce5ff;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
 }
 
-.option-box p {
-    margin: 0;
+.question-footer {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.next-question-btn {
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.next-question-btn:hover {
+    background-color: #218838;
 }
 
 .question-nav {
@@ -257,29 +288,55 @@ body {
     flex-grow: 1;
 }
 
-.nav-button {
+.question-nav .nav-button {
     padding: 10px;
     border: 1px solid #ccc;
     background-color: #fff;
+    color: #333;
+    font-weight: normal;
     cursor: pointer;
     border-radius: 4px;
-    text-align: center;
+    transition: all 0.2s ease-in-out;
 }
 
-.nav-button.current {
+.question-nav .nav-button.answered {
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    border-color: #218838;
+}
+
+.question-nav .nav-button.current {
     background-color: #007bff;
     color: white;
     border-color: #007bff;
+    transform: scale(1.05);
 }
 
-.nav-button.answered {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
+.nav-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.nav-pagination button {
+    background: none;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.nav-pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 
 .nav-footer {
-    margin-top: 20px;
-    text-align: center;
+    margin-top: 15px;
 }
 
 .btn-submit {
