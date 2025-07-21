@@ -3,34 +3,17 @@ import '../assets/css/GamePage.css';
 import AddGameModal from './components/AddGame';
 
 const dummyGames = [
-  {
-    name: 'Game 1',
-    code: '234',
-    date: '23/07/2025',
-    avgScore: 8,
-    maxScore: 9,
-    numMembers: 15,
-    deadline: '10:00 26/08/2025',
-    quiz: 'Quiz 1',
-    status: 'Mở',
-    players: [
-      { id: '2301001', first: 'Minh', last: 'Nguyễn', dept: 'ODD', team: 'Team 1', attempts: '4/5', maxScore: 9 },
-      { id: '2301002', first: 'Khánh', last: 'Trần', dept: 'ODD', team: 'Team 2', attempts: '7/8', maxScore: 9 }
-    ]
-  },
-  {
-    name: 'Game 2',
-    code: '343',
-    date: '23/07/2025',
-    avgScore: 7,
-    maxScore: 8,
-    numMembers: 12,
-    deadline: '10:00 29/08/2025',
-    quiz: 'Quiz 2',
-    status: 'Đóng',
-    players: []
-  }
+  { id: 1, name: 'Game 1', code: '234', date: '23/07/2025', avgScore: 8, maxScore: 9, numMembers: 15, deadline: '10:00 26/08/2025', quiz: 'Quiz 1', status: 'Mở', timeLimit: 30, attempts: '7/8', players: [{ id: '2301001', first: 'Minh', last: 'Nguyễn', dept: 'ODD', team: 'Team 1', attempts: '4/5', maxScore: 9, quiz: 'Quiz 1' }, { id: '2301002', first: 'Khánh', last: 'Trần', dept: 'ODD', team: 'Team 2', attempts: '7/8', maxScore: 9, quiz: 'Quiz 1' }] },
+  { id: 2, name: 'Game 2', code: '343', date: '23/07/2025', avgScore: 7, maxScore: 8, numMembers: 12, deadline: '10:00 29/08/2025', quiz: 'Quiz 2', status: 'Đóng', timeLimit: 25, attempts: '5/5', players: [] }
 ];
+const dummyQuiz = {
+  title: 'Kiểm tra kiến thức chung',
+  questions: [
+    { id: 1, text: 'Cách làm bài tập về nhà hiệu quả', options: { a: 'Đáp án A', b: 'Đáp án B', c: 'Đáp án C', d: 'Đáp án D' }, },
+    { id: 2, text: 'Thủ đô của Pháp là gì?', options: { a: 'London', b: 'Berlin', c: 'Paris', d: 'Madrid' }, },
+    ...Array.from({ length: 18 }, (_, i) => ({ id: i + 3, text: `Đây là câu hỏi số ${i + 3}?`, options: { a: `Lựa chọn A${i + 3}`, b: `Lựa chọn B${i + 3}`, c: `Lựa chọn C${i + 3}`, d: `Lựa chọn D${i + 3}` }, }))
+  ]
+};
 
 const initialFilters = {
   name: '', code: '', date: '', avgScore: '', maxScore: '',
@@ -44,9 +27,10 @@ const GamePage = () => {
   const [selected, setSelected] = useState([]);
   const [detailGame, setDetailGame] = useState(null);
   const [showAddGame, setShowAddGame] = useState(false);
-   const [newGame, setNewGame] = useState({
+  const [newGame, setNewGame] = useState({
     name: '', code: '', date: '', deadline: '', avgScore: '', maxScore: '', numMembers: '', quiz: '', status: 'Mở'
   });
+  
   const handleChange = (key, value) => {
     setTempFilter(prev => ({ ...prev, [key]: value }));
   };
@@ -73,7 +57,13 @@ const GamePage = () => {
     );
   };
 
-  const selectAll = () => setSelected(games.map((_, i) => i));
+  const selectAll = () => {
+    if (selected.length === filteredGames.length) {
+      setSelected([]);
+    } else {
+      setSelected(filteredGames.map(g => g.id));
+    }
+  };
   const deleteSelected = () => {
     setGames(games.filter((_, i) => !selected.includes(i)));
     setSelected([]);
@@ -93,12 +83,13 @@ const GamePage = () => {
       name: '', code: '', date: '', deadline: '', avgScore: '', maxScore: '', numMembers: '', quiz: '', status: 'Mở'
     });
   };
+  
+
+
   return (
     
     <div className="game-page">
       <h2 className="bubble-text">Game management</h2>
-
-
       {/* Bộ lọc */}
       <div className="filter-row">
         {inputFilter("Tên game", "name")}
