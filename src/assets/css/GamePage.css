@@ -113,7 +113,12 @@
   color: #6d28d9;
   transform: scale(1.05);
 }
-
+.action-buttons {
+  display: flex;
+  justify-content: flex-end; 
+  gap: 16px;
+  margin-bottom: 16px; 
+}
 /* Action Link */
 .action-link {
   margin-right: 14px;
@@ -135,7 +140,7 @@
 }
 
 .status-button.open {
-  color: red;
+  color: blue;
 }
 
 .status-button.closed {
@@ -144,4 +149,58 @@
 
 .status-button:hover {
   opacity: 0.8;
+}
+.action-link, .cancel-link {
+  color: #8b5cf6;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  float: right; /* Đẩy về bên phải */
+}
+
+.action-link:hover, .cancel-link:hover {
+  color: #7c3aed;
+  text-decoration: underline;
+}
+/* Save Button (giữ nguyên) */
+.save-button-container {
+  text-align: right;
+  margin-top: 30px;
+}
+
+.save-button {
+  position: relative;
+  padding: 10px 26px;   /* Giảm padding để nút nhỏ lại */
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  color: white;
+  border: none;
+  border-radius: 12px;   /* Giảm bo tròn cho gọn hơn */
+  font-weight: 700;
+  font-size: 15px;       /* Giảm font size */
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* Giảm bóng */
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.save-button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.4), rgba(255,255,255,0));
+  transform: skewX(-20deg);
+  transition: all 0.5s ease;
+}
+
+.save-button:hover::before {
+  left: 130%;
+}
+
+.save-button:hover {
+  background: linear-gradient(135deg, #fda4af, #c4b5fd);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
 }

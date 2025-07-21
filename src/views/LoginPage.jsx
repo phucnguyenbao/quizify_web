@@ -53,7 +53,11 @@ function LoginPage() {
   return (
     <div className="login-container">
       <div className="login-card">
-        <div className="logo">Your Logo</div>
+<div className="logo-container">
+  <img src="/assets/images/logo2.png" alt="Logo" className="game-logo" />
+  <img src="/assets/images/quizify.png" alt="Quizify" className="game-quizify" />
+</div>
+
         <h2>{isForgot ? 'FORGOT PASSWORD' : 'LOGIN'}</h2>
 
         <div className="form-container">

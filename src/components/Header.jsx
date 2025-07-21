@@ -115,16 +115,16 @@ function Header() {
           <div className="nav-left-group">
           <div className="nav-left">
     <li>
-      <NavLink to="/game" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
+      <NavLink to="/game">
         <img src="/assets/images/logo2.png" alt="Logo" className="game-logo" />
-        <span className="logo-text">Quizify</span>
+        <img src="/assets/images/quizify.png" alt="Quizify" className="game-quizify" />
       </NavLink>
     </li>
           </div>
           <div className="nav-left">
     <li>
       <NavLink to="/game" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
-        <ListTodo size={16}/> Game
+        <Gamepad2 size={16}/> Game
       </NavLink>
     </li>
     <li>

@@ -16,10 +16,22 @@ const rolesMap = {
   "4": "User",
 };
 
-// Display order: User -> Admin
+// Display order
 const rolesList = ["User", "Leader", "Manager", "Admin"];
-
 const options = ["None", "View", "Edit"];
+
+// Permission mapping
+const permissionMap = {
+  "Trống": "None",
+  "Xem": "View",
+  "Sửa": "Edit",
+};
+
+const reversePermissionMap = {
+  "None": "Trống",
+  "View": "Xem",
+  "Edit": "Sửa",
+};
 
 const RolePage = () => {
   const [data, setData] = useState([]);
@@ -44,8 +56,8 @@ const RolePage = () => {
 
         if (!copoData[screenCode]) {
           copoData[screenCode] = {
-            screenCode: screenCode,
-            screenTitle: screenTitle,
+            screenCode,
+            screenTitle,
             components: [],
           };
         }
@@ -75,7 +87,8 @@ const RolePage = () => {
             (c) => c.name.trim() === component_description.trim()
           );
           if (comp) {
-            comp.permissions[roleName] = permission;
+            comp.permissions[roleName] =
+              permissionMap[permission] || "None";
           }
         });
       });
@@ -120,7 +133,7 @@ const RolePage = () => {
               component_description: comp.name,
               page_id: screen.screenCode,
               role_id: roleId,
-              permission: comp.permissions[role],
+              permission: reversePermissionMap[comp.permissions[role]],
             });
 
             docId++;

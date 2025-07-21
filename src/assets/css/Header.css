@@ -88,8 +88,8 @@ html, body {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 18px;
   box-shadow: 0 12px 32px rgba(0,0,0,0.15);
-  padding: 24px 28px;
-  width: 400px;
+  padding: 16px 20px; /* Giảm padding cho nhỏ gọn */
+  width: 320px;        /* Giảm width */
   font-size: 14px;
   z-index: 1000;
   animation: fadeIn 0.4s ease;
@@ -103,9 +103,8 @@ html, body {
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 20px;
+  gap: 12px;  /* Giảm khoảng cách */
 }
-
 /* Thông tin bên trái */
 .info-left {
   flex: 2;
@@ -217,8 +216,8 @@ html, body {
 /* Logout */
 .logout-section {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  bottom: 16px; /* Giảm khoảng cách */
+  right: 16px;
 }
 
 .logout-btn {
@@ -255,23 +254,23 @@ html, body {
 }
 
 .game-logo {
-  width: 30px;       
+  width: 40px !important;
+  height: auto !important;
   object-fit: contain;
 }
 
-/* Hover effect */
 .game-link:hover {
   opacity: 0.85;
   transition: opacity 0.3s ease;
-}
-.logo-text {
-  color: #111; /* Màu đen */
-  font-weight: 700;
-  font-size: 18px; /* Tùy chỉnh kích thước nếu muốn */
 }
 .active-link {
   background: rgba(255, 255, 255, 0.2);
   font-weight: 700;  /* Tô đậm hơn */
   color: #fff;
   box-shadow: 0 0 10px rgba(255,255,255,0.25);
+}
+.game-quizify {
+  width: 100px !important;
+  height: auto !important;
+  object-fit: contain;
 }

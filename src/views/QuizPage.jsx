@@ -133,7 +133,7 @@ const QuizManagement = () => {
 
       {/* Add Quiz */}
       <br />
-      <button className="add-button" onClick={() => setShowAddOptionModal(true)}>Add Quiz</button>
+      <button className="save-button"  onClick={() => setShowAddOptionModal(true)}>Add Quiz</button>
 
       {/* === Popups with overlay === */}
       {showAddOptionModal && (

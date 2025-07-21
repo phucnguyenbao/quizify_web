@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import '../assets/css/GamePage.css';
 import AddGameModal from './components/AddGame';
 import { WaitingRoom, QuizScreen } from './PlayPage';
+import GameDetails from './components/GameDetails';
 
 // Dummy Data
 const dummyGames = [
@@ -141,7 +142,10 @@ const GamePage = () => {
             <button onClick={handleSearch}>Search</button>
             <button onClick={handleReset}>Reset</button>
           </div>
-
+          <div className="action-buttons">
+            <span className="action-link" onClick={selectAll}>Select All</span>
+            <span className="action-link" onClick={deleteSelected}>Delete</span>
+          </div>
           {/* Game Table */}
           <table className="game-table">
             <thead>
@@ -155,18 +159,16 @@ const GamePage = () => {
                   <td style={{ color: 'blue', cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handlePlayGame(game)}>{game.name}</td>
                   <td>{game.code}</td><td>{game.date}</td><td>{game.avgScore}</td><td>{game.maxScore}</td><td>{game.numMembers}</td><td>{game.deadline}</td><td>{game.quiz}</td>
                   <td>
-<button 
-  className={`status-button ${game.status.toLowerCase()}`} 
-  onClick={() => {
-    const updated = [...games];
-    updated[i].status = game.status === 'Open' ? 'Closed' : 'Open';
-    setGames(updated);
-  }}
->
-  {game.status}
-</button>
-
-
+                    <button 
+                      className={`status-button ${game.status.toLowerCase()}`} 
+                      onClick={() => {
+                        const updated = [...games];
+                        updated[i].status = game.status === 'Open' ? 'Closed' : 'Open';
+                        setGames(updated);
+                      }}
+                    >
+                      {game.status}
+                    </button>
                   </td>
                   <td><button onClick={() => setDetailGame(game)}>Details</button></td>
                   <td><button>Edit</button></td>
@@ -175,11 +177,15 @@ const GamePage = () => {
               ))}
             </tbody>
           </table>
-          <div className="action-buttons">
-            <button onClick={selectAll}>Select All</button>
-            <button onClick={deleteSelected}>Delete</button>
-            <button onClick={() => setShowAddGame(true)}>Add Game</button>
-          </div>
+     <br />
+<button 
+  onClick={() => setShowAddGame(true)} 
+  className="save-button"
+>
+  Add Game
+</button>
+
+
         </>
       )}
 
@@ -198,27 +204,13 @@ const GamePage = () => {
         />
       )}
 
-      {detailGame && (
-        <div className="modal-overlay" onClick={() => setDetailGame(null)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h3 style={{ color: 'hotpink' }}>{detailGame.name}</h3>
-            <table className="detail-table">
-              <thead>
-                <tr><th>ID</th><th>First</th><th>Last</th><th>Department</th><th>Team</th><th>Attempts</th><th>Max Score</th><th>Quiz</th></tr>
-              </thead>
-              <tbody>
-                {detailGame.players.map((p, idx) => (
-                  <tr key={idx}>
-                    <td>{p.id}</td><td>{p.first}</td><td>{p.last}</td><td>{p.dept}</td><td>{p.team}</td><td>{p.attempts}</td><td>{p.maxScore}</td><td>{p.quiz}</td>
-                  </tr>
-                ))}
-                {detailGame.players.length === 0 && <tr><td colSpan="8">No players yet</td></tr>}
-              </tbody>
-            </table>
-            <button onClick={() => setDetailGame(null)}>Close</button>
-          </div>
-        </div>
-      )}
+{detailGame && (
+  <GameDetails
+    game={detailGame}
+    onClose={() => setDetailGame(null)}
+  />
+)}
+
 
       {showAddGame && (
         <AddGameModal

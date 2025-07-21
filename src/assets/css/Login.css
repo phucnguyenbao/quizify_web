@@ -144,3 +144,18 @@ h2 {
 .login-card, .primary-btn, .secondary-btn, .form-group input {
   transition: all 0.3s ease-in-out;
 }
+.logo-container {
+  display: flex;
+  justify-content: center;   /* Đưa cả 2 hình ra giữa */
+  align-items: center;       /* Căn giữa theo chiều dọc */
+}
+
+.game-logo {
+  width: 60px; /* Có thể điều chỉnh */
+  height: auto;
+}
+
+.game-quizify {
+  height: 120px; /* Chiều cao chữ Quizify, tự động căn tỷ lệ */
+  object-fit: contain;
+}

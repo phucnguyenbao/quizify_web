@@ -4,7 +4,8 @@ import '../assets/css/SettingPage.css';
 const SettingPage = () => {
   const [filterCreateDate, setFilterCreateDate] = useState('');
   const [reportContent, setReportContent] = useState('');
-  const [musicModalOpen, setMusicModalOpen] = useState(false);
+  const [music, setMusic] = useState('');
+
   const [sound, setSound] = useState('Off');
   const [theme, setTheme] = useState('Light');
   const [searchReport, setSearchReport] = useState('');
@@ -74,10 +75,23 @@ const SettingPage = () => {
             </select>
           </div>
 
-          <div className="form-group">
-            <label>Music</label>
-            <button className="button-music" onClick={() => setMusicModalOpen(true)}>Choose Music</button>
-          </div>
+<div className="form-group">
+  <label>Music</label>
+  <div className="music-select-group">
+    <select
+      value={music}
+      onChange={(e) => setMusic(e.target.value)}
+      className="music-select"
+    >
+      <option value="">Choose music</option>
+      <option value="Thien Ly Oi">Thien Ly Oi</option>
+      <option value="Dom Dom">Dom Dom</option>
+      <option value="Hong Nhan">Hong Nhan</option>
+    </select>
+    <button className="upload-music-btn" onClick={handleUploadMusic}>Upload</button>
+  </div>
+</div>
+
 
           <div className="form-group">
             <label>Language</label>
@@ -116,20 +130,7 @@ const SettingPage = () => {
         </div>
       </div>
 
-      {/* Music Modal */}
-      {musicModalOpen && (
-        <div className="modal">
-          <div className="popup-label">Choose Music</div>
-          <div className="popup-content music-list">
-            <div>Thien Ly Oi</div>
-            <div>Dom Dom</div>
-            <div>Hong Nhan</div>
-            <button className="upload-music" onClick={handleUploadMusic}>Upload Music</button>
-            <button className="exit-button" onClick={() => setMusicModalOpen(false)}>Exit</button>
-          </div>
-        </div>
-      )}
-
+     
       {/* Section 2: Report Management */}
       <div className="section">
         <h3>Report Management</h3>
