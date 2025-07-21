@@ -6,7 +6,7 @@ const ViewQuestionsModal = ({ quiz, onClose }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={e => e.stopPropagation()}>
-         <h2 className="modal-title">View Questions</h2>
+        <h2 className="modal-title">View Questions</h2>
 
         <table className="detail-table">
           <thead>
@@ -64,11 +64,18 @@ const ViewQuestionsModal = ({ quiz, onClose }) => {
               </tr>
             ))}
           </tbody>
-        </table>
-        <div className="quiz-action-links left-align">
-          <span className="action-link">Edit</span>
-          <span className="action-link">Add Question</span>
+                    <tfoot>
+    <tr>
+      <td colSpan="9">
+          <div className="quiz-action-links left-align">
+            <span className="action-link">Edit</span>
+            <span className="action-link">Add Question</span>
         </div>
+      </td>
+    </tr>
+  </tfoot>
+        </table>
+
 
 
         <div className="modal-footer">
