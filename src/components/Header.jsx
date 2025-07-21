@@ -38,7 +38,7 @@ function Header() {
             </li>
             <li>
               <NavLink to="/login" className={({ isActive }) => (isActive ? 'active-link' : '')}>
-                <LogOut size={16}/> Đăng xuất11111
+                <LogOut size={16}/> Đăng xuất
               </NavLink>
             </li>
             <li>

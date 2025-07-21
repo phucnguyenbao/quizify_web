@@ -1,214 +1,204 @@
-import React, { useState } from 'react';
-import { auth } from '../firebase/services'; // Đảm bảo đường dẫn này chính xác
-import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+import React, { useState } from "react";
+import "../assets/css/LoginPage.css"; // Import file CSS mới
+import { auth } from "../firebase/services";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 
-function LoginPage() {
+const LoginPage = () => {
   const [isForgot, setIsForgot] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // States for form fields
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  // Chuyển đổi giữa các form
+  const toggleForm = (showForgot) => {
+    setIsForgot(showForgot);
+    setError(""); // Xóa lỗi khi chuyển form
+    // Reset các trường input
+    setEmail('');
+    setPhone('');
+    setPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+  };
+
   const handleLogin = async () => {
+    if (!email || !password) {
+      setError("Vui lòng nhập đầy đủ email và mật khẩu.");
+      return;
+    }
+    setIsLoading(true);
+    setError("");
     try {
       const userCred = await signInWithEmailAndPassword(auth, email, password);
       console.log("Đăng nhập thành công:", userCred.user);
-      // Chuyển hướng người dùng đến trang chính sau khi đăng nhập thành công
+      // Chuyển hướng người dùng sau khi đăng nhập thành công
     } catch (err) {
+      setError("Email hoặc mật khẩu không chính xác. Vui lòng thử lại.");
       console.error("Lỗi đăng nhập:", err.message);
-      alert("Lỗi đăng nhập: " + err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleForgotPassword = async () => {
-    if (email) {
-      try {
-        await sendPasswordResetEmail(auth, email);
-        alert("Một email khôi phục mật khẩu đã được gửi đến địa chỉ email của bạn!");
-        setIsForgot(false); // Quay lại màn hình đăng nhập sau khi gửi email
-      } catch (err) {
-        console.error("Lỗi khi gửi email khôi phục:", err.message);
-        alert("Lỗi: " + err.message);
+  const handlePasswordReset = async () => {
+    if (!email) {
+      setError("Vui lòng nhập email đã đăng ký.");
+      return;
+    }
+    setIsLoading(true);
+    setError("");
+    try {
+      // Logic cho việc reset mật khẩu với SĐT và Mật khẩu mới (cần backend)
+      if (newPassword !== confirmPassword) {
+        setError("Mật khẩu mới và mật khẩu xác nhận không khớp!");
+        setIsLoading(false);
+        return;
       }
-    } else {
-      alert("Vui lòng nhập địa chỉ email của bạn.");
+      console.log("Đang xử lý yêu cầu đổi mật khẩu cho:", { email, phone });
+      alert("Chức năng đổi mật khẩu đang được phát triển!");
+      // Nơi bạn sẽ gọi API backend
+      // Sau khi thành công:
+      // toggleForm(false);
+
+    } catch (err) {
+      setError("Đã xảy ra lỗi khi cố gắng đổi mật khẩu.");
+      console.error("Lỗi đổi mật khẩu:", err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // Hàm xử lý việc đổi mật khẩu (backend chưa tích hợp)
-  const handleChangePassword = () => {
-    if (newPassword !== confirmPassword) {
-      alert("Mật khẩu mới và mật khẩu xác nhận không khớp!");
+  // Hàm này chỉ để gửi email reset, tách biệt với form đổi mật khẩu
+  const sendResetEmail = async () => {
+    if (!email) {
+      alert("Vui lòng nhập email vào ô Email để nhận link khôi phục.");
       return;
     }
-    if (!email || !phone || !newPassword) {
-      alert("Vui lòng điền đầy đủ thông tin.");
-      return;
+    try {
+      await sendPasswordResetEmail(auth, email);
+      alert(`Một email khôi phục mật khẩu đã được gửi đến ${email}!`);
+    } catch (err) {
+      alert("Lỗi khi gửi email: " + err.message);
     }
-    // Nơi bạn sẽ gọi API backend để đổi mật khẩu
-    alert('Xác nhận đổi mật khẩu (chức năng backend chưa được kết nối)');
-  }
-
-  // ---- STYLES ----
-  const containerStyle = {
-    position: 'relative',
-    border: '1px solid blue',
-    width: '90%',
-    maxWidth: '900px',
-    height: '400px',
-    margin: '50px auto',
-    fontFamily: 'Arial, sans-serif'
-  };
-
-  const logoStyle = {
-    position: 'absolute',
-    top: '20px',
-    left: '20px',
-    fontWeight: 'bold'
-  };
-
-  const titleStyle = {
-    position: 'absolute',
-    top: '20px',
-    right: '20px',
-    color: 'blue',
-    margin: 0
-  };
-
-  const formContainerStyle = {
-    position: 'absolute',
-    top: '80px',
-    left: '20px',
-  };
-
-  const inputGroupStyle = {
-    marginBottom: '15px',
-    display: 'flex',
-    alignItems: 'center',
-    width: '400px'
-  };
-
-  const labelStyle = {
-    width: '180px', // Đặt chiều rộng cố định cho label
-    minWidth: '180px',
-  };
-
-  const footerStyle = {
-    position: 'absolute',
-    bottom: '20px',
-    right: '20px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '20px'
-  };
-
-  const buttonStyle = {
-    padding: '8px 16px',
-    border: '1px solid #ccc',
-    backgroundColor: '#f0f0f0',
-    cursor: 'pointer'
-  };
-
-  const primaryButtonStyle = {
-    ...buttonStyle,
-    backgroundColor: '#e6f0ff',
-    borderColor: 'orange'
-  };
-
-  const linkStyle = {
-    color: 'blue',
-    cursor: 'pointer',
-    textDecoration: 'underline'
   }
 
 
   return (
-    <div style={containerStyle}>
-      <div style={logoStyle}>Logo</div>
-      <h2 style={titleStyle}>{isForgot ? 'QUÊN MẬT KHẨU' : 'ĐĂNG NHẬP'}</h2>
+    <div className="page-container">
+      <div className="form-box">
+        <div className="form-header">
+          <span className="logo">Logo</span>
+          <h2 className="title">{isForgot ? 'QUÊN MẬT KHẨU' : 'ĐĂNG NHẬP'}</h2>
+        </div>
 
-      <div style={formContainerStyle}>
-        {!isForgot ? (
-          // --- Form Đăng nhập ---
-          <>
-            <div style={inputGroupStyle}>
-              <label style={labelStyle}>Số điện thoại hoặc Email</label>
-              <input
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="Nhập email hoặc số điện thoại"
-              />
-            </div>
-            <div style={inputGroupStyle}>
-              <label style={labelStyle}>Mật khẩu</label>
-              <input
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                type="password"
-                placeholder="Nhập mật khẩu"
-              />
-            </div>
-          </>
-        ) : (
-          // --- Form Quên mật khẩu ---
-          <>
-            <div style={inputGroupStyle}>
-              <label style={labelStyle}>Email</label>
-              <input
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="Nhập email đã đăng ký"
-              />
-            </div>
-            <div style={inputGroupStyle}>
-              <label style={labelStyle}>Số điện thoại</label>
-              <input
-                value={phone}
-                onChange={e => setPhone(e.target.value)}
-                placeholder="Nhập số điện thoại"
-              />
-            </div>
-            <div style={inputGroupStyle}>
-              <label style={labelStyle}>Mật khẩu mới</label>
-              <input
-                value={newPassword}
-                onChange={e => setNewPassword(e.target.value)}
-                type="password"
-                placeholder="Nhập mật khẩu mới"
-              />
-            </div>
-            <div style={inputGroupStyle}>
-              <label style={labelStyle}>Xác nhận mật khẩu mới</label>
-              <input
-                value={confirmPassword}
-                onChange={e => setConfirmPassword(e.target.value)}
-                type="password"
-                placeholder="Nhập lại mật khẩu mới"
-              />
-            </div>
-            <a href="#" onClick={handleForgotPassword} style={{ ...linkStyle, marginLeft: '180px' }}>Gửi lại</a>
-          </>
-        )}
-      </div>
+        {/* --- Form content --- */}
+        <div className="form-content">
+          {!isForgot ? (
+            // --- Form Đăng nhập ---
+            <>
+              <div className="form-group">
+                <label>Số điện thoại hoặc Email</label>
+                <input
+                  type="text"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="Nhập email hoặc số điện thoại"
+                  disabled={isLoading}
+                />
+              </div>
+              <div className="form-group">
+                <label>Mật khẩu</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder="Nhập mật khẩu"
+                  disabled={isLoading}
+                />
+              </div>
+            </>
+          ) : (
+            // --- Form Quên mật khẩu ---
+            <>
+              <div className="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="Nhập email đã đăng ký"
+                  disabled={isLoading}
+                />
+              </div>
+              <div className="form-group">
+                <label>Số điện thoại</label>
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={e => setPhone(e.target.value)}
+                  placeholder="Nhập số điện thoại"
+                  disabled={isLoading}
+                />
+              </div>
+              <div className="form-group">
+                <label>Mật khẩu mới</label>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={e => setNewPassword(e.target.value)}
+                  placeholder="Nhập mật khẩu mới"
+                  disabled={isLoading}
+                />
+              </div>
+              <div className="form-group">
+                <label>Xác nhận mật khẩu mới</label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={e => setConfirmPassword(e.target.value)}
+                  placeholder="Nhập lại mật khẩu mới"
+                  disabled={isLoading}
+                />
+              </div>
+              <div className="resend-link-container">
+                <button onClick={sendResetEmail} className="link-button">Gửi lại link qua Email</button>
+              </div>
+            </>
+          )}
+          {error && <p className="error-message">{error}</p>}
+        </div>
 
-      <div style={footerStyle}>
-        {!isForgot ? (
-          // --- Footer Đăng nhập ---
-          <>
-            <button onClick={handleLogin} style={primaryButtonStyle}>Xác nhận</button>
-            <a href="#" onClick={() => setIsForgot(true)} style={linkStyle}>Quên mật khẩu</a>
-          </>
-        ) : (
-          // --- Footer Quên mật khẩu ---
-          <>
-            <button onClick={handleChangePassword} style={primaryButtonStyle}>Xác nhận</button>
-            <button onClick={() => setIsForgot(false)} style={buttonStyle}>Cancel</button>
-          </>
-        )}
+        {/* --- Footer buttons --- */}
+        <div className="form-footer">
+          {!isForgot ? (
+            <>
+              <button onClick={() => toggleForm(true)} className="link-button">
+                Quên mật khẩu
+              </button>
+              <button onClick={handleLogin} className="btn btn-primary" disabled={isLoading}>
+                {isLoading ? "Đang xử lý..." : "Xác nhận"}
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => toggleForm(false)} className="btn btn-secondary" disabled={isLoading}>
+                Cancel
+              </button>
+              <button onClick={handlePasswordReset} className="btn btn-primary" disabled={isLoading}>
+                {isLoading ? "Đang xử lý..." : "Xác nhận"}
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default LoginPage;
