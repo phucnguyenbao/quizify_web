@@ -63,23 +63,6 @@
   margin-top: 16px;
 }
 
-.gradient-button {
-  background: linear-gradient(135deg, #ffb6c1, #a5b4fc);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 14px;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 4px 4px 12px rgba(0,0,0,0.1),
-              -4px -4px 12px rgba(255,255,255,0.4);
-  transition: 0.3s;
-}
-
-.gradient-button:hover {
-  transform: translateY(-2px);
-  opacity: 0.95;
-}
 
 .secondary-button {
   background: #f5f5f5;
@@ -95,4 +78,44 @@
 
 .secondary-button:hover {
   background: #e0e0e0;
+}
+.detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.detail-table th {
+  background: rgba(255,255,255,0.15);
+  padding: 14px;
+  color: #ffd8b1 !important;          /* Màu chữ sáng hơn */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);  /* Bóng nhẹ cho nổi bật */
+  font-weight: 600;
+}
+
+.detail-table td {
+  padding: 12px;
+  text-align: center;
+  color: #f0f0f5!important;;               /* Sáng hơn */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);  /* Bóng cho rõ nét */
+  font-weight: 500;
+}
+
+.detail-table tr:hover {
+  background: rgba(255,255,255,0.08);
+  transition: background 0.3s ease;
+}
+.quiz-action-links {
+  margin-top: 20px;
+}
+
+.left-align {
+  display: flex;
+  justify-content: flex-start; /* Đẩy về bên trái */
+  gap: 12px; /* Khoảng cách giữa các nút */
 }

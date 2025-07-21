@@ -164,22 +164,17 @@
   text-decoration: underline;
 }
 /* Save Button (giữ nguyên) */
-.save-button-container {
-  text-align: right;
-  margin-top: 30px;
-}
-
 .save-button {
   position: relative;
-  padding: 10px 26px;   /* Giảm padding để nút nhỏ lại */
-  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  padding: 10px 26px;
+  background: linear-gradient(135deg, #6ee7b7, #3b82f6);  /* Đổi màu */
   color: white;
   border: none;
-  border-radius: 12px;   /* Giảm bo tròn cho gọn hơn */
+  border-radius: 12px;
   font-weight: 700;
-  font-size: 15px;       /* Giảm font size */
+  font-size: 15px;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* Giảm bóng */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   overflow: hidden;
   transition: all 0.4s ease;
 }
@@ -200,7 +195,7 @@
 }
 
 .save-button:hover {
-  background: linear-gradient(135deg, #fda4af, #c4b5fd);
+  background: linear-gradient(135deg, #34d399, #2563eb); /* Màu hover đậm hơn */
   transform: translateY(-2px);
   box-shadow: 0 12px 40px rgba(0,0,0,0.15);
 }

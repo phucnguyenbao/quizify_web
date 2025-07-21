@@ -178,7 +178,7 @@
 
 
 .select-None {
-  background: rgba(255,255,255,0.2);
+  background: white;
   color: #222;
   padding: 8px 16px;
   border-radius: 12px;
@@ -228,7 +228,7 @@
 .save-button {
   position: relative;
   padding: 14px 38px;
-  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+background: linear-gradient(135deg, #6ee7b7, #3b82f6);
   color: white;
   border: none;
   border-radius: 18px;
@@ -256,7 +256,7 @@
 }
 
 .save-button:hover {
-  background: linear-gradient(135deg, #fda4af, #c4b5fd);
+  background: linear-gradient(135deg, #34d399, #2563eb);
   transform: translateY(-2px);
   box-shadow: 0 12px 40px rgba(0,0,0,0.15);
 }

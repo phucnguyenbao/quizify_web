@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../assets/css/GamePage.css'; // Dùng chung CSS hoặc tách riêng nếu muốn
+import '../../assets/css/AddGame.css'; // Dùng chung file CSS với AddGame
 
 const GameDetails = ({ game, onClose }) => {
   if (!game) return null;
@@ -7,7 +7,8 @@ const GameDetails = ({ game, onClose }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <h3 style={{ color: 'hotpink' }}>{game.name}</h3>
+        <h2 className="modal-title">{game.name}</h2>
+
         <table className="detail-table">
           <thead>
             <tr>
@@ -26,7 +27,10 @@ const GameDetails = ({ game, onClose }) => {
             )}
           </tbody>
         </table>
-        <button onClick={onClose}>Close</button>
+
+        <div className="modal-footer">
+          <button className="secondary-button" onClick={onClose}>Close</button>
+        </div>
       </div>
     </div>
   );
