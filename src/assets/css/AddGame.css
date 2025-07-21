@@ -10,20 +10,13 @@
 }
 
 .modal-content {
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.08); /* Trong suốt hơn */
+  backdrop-filter: blur(25px); /* Giữ độ blur để mềm mại */
   padding: 36px;
   border-radius: 20px;
   box-shadow: 0 12px 32px rgba(0,0,0,0.2);
   width: 90%;
   max-width: 750px;
-}
-
-.modal-title {
-  text-align: center;
-  font-size: 28px;
-  color: #5e5e8b;
-  margin-bottom: 24px;
 }
 
 .form-grid {
@@ -38,8 +31,8 @@
 }
 
 .form-item label {
-  font-weight: 600;
-  color: #5e5e8b;
+  font-weight: 700; /* Đậm hơn */
+  color: white;   /* Tím than, đậm hơn #5e5e8b */
   margin-bottom: 6px;
 }
 
@@ -55,10 +48,10 @@
 
 .form-item input:focus {
   outline: none;
-  background: rgba(255,255,255,0.6);
-  box-shadow: 0 0 8px rgba(139,92,246,0.3);
+  background: rgba(255, 255, 255, 0.85); /* Đậm hơn rõ ràng */
+  box-shadow: 0 0 10px rgba(94, 94, 139, 0.5); /* Đổi màu bóng đậm hơn, tông tím than */
+  color: #333; /* Chữ đậm hơn khi focus */
 }
-
 .button-row {
   display: flex;
   gap: 12px;
