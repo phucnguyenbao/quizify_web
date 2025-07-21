@@ -6,7 +6,14 @@
 
 
 .game-page {
+/* ================================== */
+/* General Page and Layout */
+/* ================================== */
+.page-wrapper {
+  background-color: #f0f4f8;
+  /* Light blue-grey background */
   padding: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   min-height: 100vh;
   background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), 
   url('/public/assets/images/anhnen.png') no-repeat center center fixed;
@@ -102,66 +109,3 @@
 }
 
 
-
-.action-buttons {
-  margin-bottom: 12px;
-}
-
-
-
-/* Buttons */
-button, .add-button {
-  background: linear-gradient(135deg, #ffb6c1, #a5b4fc);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 14px;
-  border: none;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 4px 4px 12px rgba(0,0,0,0.1),
-              -4px -4px 12px rgba(255,255,255,0.3);
-  transition: all 0.3s ease;
-}
-
-button:hover, .add-button:hover {
-  background: linear-gradient(135deg, #fda4af, #c4b5fd);
-  transform: translateY(-2px);
-  box-shadow: 6px 6px 20px rgba(0,0,0,0.1),
-              -6px -6px 20px rgba(255,255,255,0.4);
-}
-
-button:disabled {
-  background: #d1d5db;
-  color: #999;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-/* Clickable Game Name */
-.game-name {
-  color: #7c3aed;
-  font-weight: 600;
-  cursor: pointer;
-  transition: color 0.3s ease, transform 0.2s ease;
-}
-
-.game-name:hover {
-  color: #6d28d9;
-  transform: scale(1.05);
-}
-
-/* Action Link */
-.action-link {
-  margin-right: 14px;
-  color: #8b5cf6;
-  cursor: pointer;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.action-link:hover {
-  color: #7c3aed;
-  text-decoration: underline;
-}
