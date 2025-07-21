@@ -6,19 +6,18 @@ const SettingPage = () => {
   const [reportContent, setReportContent] = useState('');
   const [musicModalOpen, setMusicModalOpen] = useState(false);
   const [sound, setSound] = useState('Off');
-  const [theme, setTheme] = useState('Sáng');
+  const [theme, setTheme] = useState('Light');
   const [searchReport, setSearchReport] = useState('');
   const [searchUser, setSearchUser] = useState('');
   const [searchBan, setSearchBan] = useState('');
   const [searchTeam, setSearchTeam] = useState('');
   const [filterReplyDate, setFilterReplyDate] = useState('');
 
-  // Thêm ban vào dữ liệu
   const reports = [
-    { id: 1, title: 'Báo cáo 1', status: 'Đã xử lý', date: '23/06/2025', user: 'Minh', ban: 'Kỹ thuật', team: 'ODD', replyDate: '2025-06-23' },
-    { id: 2, title: 'Báo cáo 2', status: 'Chưa xem', date: '23/06/2025', user: 'Khánh', ban: 'Vận hành', team: 'ABD', replyDate: '2025-06-24' },
-    { id: 3, title: 'Báo cáo 3', status: 'Đang xử lý', date: '23/06/2025', user: 'Phúc', ban: 'Kỹ thuật', team: 'ODD', replyDate: '2025-06-25' },
-    { id: 4, title: 'Báo cáo 4', status: 'Chưa xem', date: '23/06/2025', user: 'Khải', ban: 'Vận hành', team: 'ABD', replyDate: '2025-06-26' },
+    { id: 1, title: 'Report 1', status: 'Processed', date: '23/06/2025', user: 'Minh', ban: 'Technical', team: 'ODD', replyDate: '2025-06-23' },
+    { id: 2, title: 'Report 2', status: 'Unread', date: '23/06/2025', user: 'Khánh', ban: 'Operation', team: 'ABD', replyDate: '2025-06-24' },
+    { id: 3, title: 'Report 3', status: 'Processing', date: '23/06/2025', user: 'Phúc', ban: 'Technical', team: 'ODD', replyDate: '2025-06-25' },
+    { id: 4, title: 'Report 4', status: 'Unread', date: '23/06/2025', user: 'Khải', ban: 'Operation', team: 'ABD', replyDate: '2025-06-26' },
   ];
 
   const convertToISO = (dateStr) => {
@@ -46,25 +45,25 @@ const SettingPage = () => {
 
   const handleSubmitReport = () => {
     if (reportContent.trim() === '') {
-      alert('Vui lòng nhập nội dung báo cáo');
+      alert('Please enter report content.');
       return;
     }
-    console.log('Đã gửi báo cáo:', reportContent);
+    console.log('Report submitted:', reportContent);
     setReportContent('');
   };
 
   const handleUploadMusic = () => {
-    alert('Tính năng upload nhạc đang được phát triển!');
+    alert('Music upload feature is under development!');
   };
 
   return (
     <div className="setting-container">
       {/* Section 1: Settings */}
       <div className="section">
-        <h3>Quản lý cài đặt</h3>
+        <h3>Settings Management</h3>
         <div className="setting-form">
           <div className="form-group">
-            <label>Âm thanh nền</label>
+            <label>Background Sound</label>
             <select
               value={sound}
               onChange={(e) => setSound(e.target.value)}
@@ -76,92 +75,92 @@ const SettingPage = () => {
           </div>
 
           <div className="form-group">
-            <label>Nhạc</label>
-            <button className="button-music" onClick={() => setMusicModalOpen(true)}>Chọn nhạc</button>
+            <label>Music</label>
+            <button className="button-music" onClick={() => setMusicModalOpen(true)}>Choose Music</button>
           </div>
 
           <div className="form-group">
-            <label>Ngôn ngữ</label>
+            <label>Language</label>
             <select>
-              <option>Tiếng Nhật</option>
-              <option>Tiếng Việt</option>
+              <option>Japanese</option>
+              <option>Vietnamese</option>
             </select>
           </div>
 
           <div className="form-group">
-            <label>Giao diện</label>
+            <label>Theme</label>
             <select
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
-              className={`select-theme ${theme === 'Sáng' ? 'theme-white' : 'theme-black'}`}
+              className={`select-theme ${theme === 'Light' ? 'theme-white' : 'theme-black'}`}
             >
-              <option value="Tối">Tối</option>
-              <option value="Sáng">Sáng</option>
+              <option value="Dark">Dark</option>
+              <option value="Light">Light</option>
             </select>
           </div>
 
           <div className="form-group">
-            <label>Báo cáo</label>
+            <label>Report</label>
             <input
               type="text"
               value={reportContent}
               onChange={(e) => setReportContent(e.target.value)}
-              placeholder="Nội dung báo cáo"
+              placeholder="Enter report content"
             />
           </div>
 
           <div className="form-buttons">
-            <button className="button-submit" onClick={handleSubmitReport}>Gửi</button>
+            <button className="button-submit" onClick={handleSubmitReport}>Submit</button>
             <button className="button-cancel" onClick={() => setReportContent('')}>Cancel</button>
           </div>
         </div>
       </div>
 
-      {/* Modal chọn nhạc */}
+      {/* Music Modal */}
       {musicModalOpen && (
         <div className="modal">
-              <div className="popup-label">Chọn nhạc</div>
-              <div className="popup-content music-list">
-                <div>Thiên lý ơi</div>
-                <div>Đom đóm</div>
-                <div>Hồng nhan</div>
-                <button className="upload-music" onClick={handleUploadMusic}>Tải nhạc lên</button>
-                 <button className="exit-button" onClick={() => setMusicModalOpen(false)}>Thoát</button>
-              </div>
+          <div className="popup-label">Choose Music</div>
+          <div className="popup-content music-list">
+            <div>Thien Ly Oi</div>
+            <div>Dom Dom</div>
+            <div>Hong Nhan</div>
+            <button className="upload-music" onClick={handleUploadMusic}>Upload Music</button>
+            <button className="exit-button" onClick={() => setMusicModalOpen(false)}>Exit</button>
+          </div>
         </div>
       )}
 
-      {/* Section 2: Quản lý báo cáo */}
+      {/* Section 2: Report Management */}
       <div className="section">
-        <h3>Quản lý báo cáo</h3>
+        <h3>Report Management</h3>
         <div className="filter-group">
-          <input placeholder="Tìm tên báo cáo" value={searchReport} onChange={(e) => setSearchReport(e.target.value)} />
-                    <select>
-            <option>Lọc theo trạng thái</option>
-            <option>Đã xử lý</option>
-            <option>Chưa xem</option>
-            <option>Đang xử lý</option>
+          <input placeholder="Search report name" value={searchReport} onChange={(e) => setSearchReport(e.target.value)} />
+          <select>
+            <option>Filter by Status</option>
+            <option>Processed</option>
+            <option>Unread</option>
+            <option>Processing</option>
           </select>
           <input type="date" value={filterCreateDate} onChange={(e) => setFilterCreateDate(e.target.value)} />
-          <input placeholder="Người tạo" value={searchUser} onChange={(e) => setSearchUser(e.target.value)} />
-          <input placeholder="Ban" value={searchBan} onChange={(e) => setSearchBan(e.target.value)} />
+          <input placeholder="Creator" value={searchUser} onChange={(e) => setSearchUser(e.target.value)} />
+          <input placeholder="Department" value={searchBan} onChange={(e) => setSearchBan(e.target.value)} />
           <input placeholder="Team" value={searchTeam} onChange={(e) => setSearchTeam(e.target.value)} />
           <input type="date" value={filterReplyDate} onChange={(e) => setFilterReplyDate(e.target.value)} />
-          <button onClick={() => {}}>Tìm</button>
+          <button onClick={() => {}}>Search</button>
           <button onClick={resetFilters}>Reset</button>
         </div>
 
         <table className="report-table">
           <thead>
             <tr>
-              <th>Báo cáo</th>
-              <th>Trạng thái</th>
-              <th>Ngày tạo</th>
-              <th>Người tạo</th>
-              <th>Ban</th>
+              <th>Report</th>
+              <th>Status</th>
+              <th>Create Date</th>
+              <th>Creator</th>
+              <th>Department</th>
               <th>Team</th>
-              <th>Ngày phản hồi</th>
-              <th>Nội dung phản hồi</th>
+              <th>Reply Date</th>
+              <th>Reply Content</th>
             </tr>
           </thead>
           <tbody>
@@ -170,9 +169,9 @@ const SettingPage = () => {
                 <td>{r.title}</td>
                 <td>
                   <select defaultValue={r.status}>
-                    <option>Đã xử lý</option>
-                    <option>Chưa xem</option>
-                    <option>Đang xử lý</option>
+                    <option>Processed</option>
+                    <option>Unread</option>
+                    <option>Processing</option>
                   </select>
                 </td>
                 <td>{r.date}</td>
@@ -182,8 +181,8 @@ const SettingPage = () => {
                 <td>{r.replyDate}</td>
                 <td>
                   <div className="reply-input-group">
-                    <input type="text" placeholder="Nhập phản hồi..." />
-                    <button>Gửi</button>
+                    <input type="text" placeholder="Enter reply..." />
+                    <button>Send</button>
                   </div>
                 </td>
               </tr>

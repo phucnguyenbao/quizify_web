@@ -10,18 +10,17 @@ const UploadQuizModal = ({ onClose }) => {
 
   return (
     <div className="popup-container">
-      <span className="popup-title">Nhập file tạo quiz</span>
+      <span className="popup-title">Upload File to Create Quiz</span>
 
       <div className="popup-content">
         <input
           type="file"
           onChange={handleFileChange}
         />
-        <button className="popup-btn">Tạo</button>
+        <button className="popup-btn">Generate</button>
         <span className="popup-cancel" onClick={onClose}>Cancel</span>
       </div>
     </div>
-
   );
 };
 

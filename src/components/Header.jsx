@@ -6,6 +6,8 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { LogOut, Settings, Users, Gamepad2, ListTodo, Shield } from 'lucide-react';
 import '../assets/css/Header.css';
 
+
+
 function Header() {
   const [userData, setUserData] = useState(null);
   const [editData, setEditData] = useState({});
@@ -29,7 +31,7 @@ function Header() {
               lastName: data.member_name,
               phone: data.phone_number,
               email: data.email,
-              date: new Date(data.registration_date.seconds * 1000).toLocaleDateString('vi-VN'),
+              date: new Date(data.registration_date.seconds * 1000).toLocaleDateString('en-US'),
               role: data.manager ? 'Manager' : (data.leader ? 'Leader' : 'Member'),
               avatarId: data.avatar_id || 12
             };
@@ -39,7 +41,7 @@ function Header() {
             console.error('User data not found in Firestore.');
           }
         } catch (err) {
-          console.error('Lỗi khi lấy dữ liệu user:', err);
+          console.error('Error fetching user data:', err);
         }
       } else {
         setUserData(null);
@@ -73,7 +75,7 @@ function Header() {
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const newAvatarId = Math.floor(Math.random() * 70) + 1; // Random avatar (pravatar hỗ trợ 1-70)
+      const newAvatarId = Math.floor(Math.random() * 70) + 1;
       setEditData(prev => ({ ...prev, avatarId: newAvatarId }));
     }
   };
@@ -90,10 +92,10 @@ function Header() {
       });
       setUserData(editData);
       setIsEditing(false);
-      alert('Cập nhật thông tin thành công!');
+      alert('Profile updated successfully!');
     } catch (err) {
-      console.error('Lỗi khi cập nhật:', err);
-      alert('Lỗi khi cập nhật thông tin.');
+      console.error('Update error:', err);
+      alert('Failed to update profile.');
     }
   };
 
@@ -110,61 +112,90 @@ function Header() {
     <header className="header">
       <nav>
         <div className="navbar">
+          <div className="nav-left-group">
           <div className="nav-left">
-            <li><NavLink to="/game"><Gamepad2 size={16}/> Game</NavLink></li>
-            <li><NavLink to="/quiz"><ListTodo size={16}/> Quiz</NavLink></li>
-            <li><NavLink to="/"><Users size={16}/> Thành viên</NavLink></li>
-            <li><NavLink to="/role"><Shield size={16}/> Phân quyền</NavLink></li>
+    <li>
+      <NavLink to="/game" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
+        <img src="/assets/images/logo2.png" alt="Logo" className="game-logo" />
+        <span className="logo-text">Quizify</span>
+      </NavLink>
+    </li>
           </div>
-
+          <div className="nav-left">
+    <li>
+      <NavLink to="/game" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
+        <ListTodo size={16}/> Game
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to="/quiz" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
+        <ListTodo size={16}/> Quiz
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
+        <Users size={16}/> Members
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to="/role" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
+        <Shield size={16}/> Roles
+      </NavLink>
+    </li>
+          </div>
+</div>
           <div className="nav-right">
-            <li><NavLink to="/setting"><Settings size={16}/> Báo cáo</NavLink></li>
+  <li>
+    <NavLink to="/setting" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
+      <Settings size={16}/> Reports
+    </NavLink>
+  </li>
             <li>
               <img src={avatar} alt="Avatar" className="avatar" onClick={() => setShowPopup(prev => !prev)} />
               {showPopup && (
                 <div className="profile-popup" ref={popupRef}>
                   <div className="popup-content">
                     <div className="info-left">
-                      <h4>Thông tin cá nhân</h4>
-                      <p><strong>Mã nhân viên:</strong> {userData.id}</p>
+                      <h4>Profile Information</h4>
+                      <p><strong>Employee ID:</strong> {userData.id}</p>
 
                       {isEditing ? (
                         <>
-                          <p><strong>Tên:</strong> <input name="lastName" value={editData.lastName} onChange={handleEditChange} /></p>
-                          <p><strong>Họ và tên đệm:</strong> <input name="firstName" value={editData.firstName} onChange={handleEditChange} /></p>
-                          <p><strong>SĐT:</strong> <input name="phone" value={editData.phone} onChange={handleEditChange} /></p>
+                          <p><strong>Last Name:</strong> <input name="lastName" value={editData.lastName} onChange={handleEditChange} /></p>
+                          <p><strong>First & Middle Name:</strong> <input name="firstName" value={editData.firstName} onChange={handleEditChange} /></p>
+                          <p><strong>Phone:</strong> <input name="phone" value={editData.phone} onChange={handleEditChange} /></p>
                           <p><strong>Email:</strong> <input name="email" value={editData.email} onChange={handleEditChange} /></p>
                         </>
                       ) : (
                         <>
-                          <p><strong>Tên:</strong> {userData.lastName}</p>
-                          <p><strong>Họ và tên đệm:</strong> {userData.firstName}</p>
-                          <p><strong>SĐT:</strong> {userData.phone}</p>
+                          <p><strong>Last Name:</strong> {userData.lastName}</p>
+                          <p><strong>First & Middle Name:</strong> {userData.firstName}</p>
+                          <p><strong>Phone:</strong> {userData.phone}</p>
                           <p><strong>Email:</strong> {userData.email}</p>
                         </>
                       )}
 
-                      <p><strong>Ngày đăng ký:</strong> {userData.date}</p>
+                      <p><strong>Registration Date:</strong> {userData.date}</p>
                       <p><strong>Role:</strong> {userData.role}</p>
 
                       <div className="popup-actions">
                         {!isEditing ? (
-                          <button className="save-btn" onClick={() => setIsEditing(true)}>Sửa</button>
+                          <button className="save-btn" onClick={() => setIsEditing(true)}>Edit</button>
                         ) : (
                           <>
-                            <button className="save-btn" onClick={handleSave}>Lưu</button>
-                            <button className="cancel-btn" onClick={handleCancel}>Hủy</button>
+                            <button className="save-btn" onClick={handleSave}>Save</button>
+                            <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
                           </>
                         )}
                       </div>
                     </div>
 
                     <div className="info-right">
-                      <p>Chào mừng <strong>{userData.lastName}</strong></p>
+                      <p>Welcome <strong>{userData.lastName}</strong></p>
                       <img src={avatar} alt="avatar" className="avatar-large" />
                       {isEditing && (
                         <label className="upload-label">
-                          Chọn ảnh
+                          Change Avatar
                           <input type="file" onChange={handleAvatarChange} hidden />
                         </label>
                       )}
@@ -174,7 +205,7 @@ function Header() {
                   <div className="logout-section">
                     <button className="logout-btn" onClick={handleLogout}>
                       <LogOut size={16} style={{ marginRight: '6px' }} />
-                      Đăng xuất
+                      Logout
                     </button>
                   </div>
                 </div>

@@ -99,37 +99,37 @@ const GamePage = () => {
           {/* Filters */}
           <div className="filter-row">
 <input 
-  placeholder="name" 
+  placeholder="Name" 
   value={tempFilter.name} 
   onChange={e => handleChange('name', e.target.value)} 
 />
 <input 
-  placeholder="code" 
+  placeholder="Code" 
   value={tempFilter.code} 
   onChange={e => handleChange('code', e.target.value)} 
 />
 <input 
-  type="date" 
+  type="Date" 
   value={tempFilter.date} 
   onChange={e => handleChange('date', e.target.value)} 
 />
 <input 
-  placeholder="avgScore" 
+  placeholder="AvgScore" 
   value={tempFilter.avgScore} 
   onChange={e => handleChange('avgScore', e.target.value)} 
 />
 <input 
-  placeholder="maxScore" 
+  placeholder="MaxScore" 
   value={tempFilter.maxScore} 
   onChange={e => handleChange('maxScore', e.target.value)} 
 />
 <input 
-  placeholder="numMembers" 
+  placeholder="NumMembers" 
   value={tempFilter.numMembers} 
   onChange={e => handleChange('numMembers', e.target.value)} 
 />
 <input 
-  placeholder="quiz" 
+  placeholder="Quiz" 
   value={tempFilter.quiz} 
   onChange={e => handleChange('quiz', e.target.value)} 
 />
@@ -155,13 +155,18 @@ const GamePage = () => {
                   <td style={{ color: 'blue', cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handlePlayGame(game)}>{game.name}</td>
                   <td>{game.code}</td><td>{game.date}</td><td>{game.avgScore}</td><td>{game.maxScore}</td><td>{game.numMembers}</td><td>{game.deadline}</td><td>{game.quiz}</td>
                   <td>
-                    <select value={game.status} onChange={e => {
-                      const updated = [...games];
-                      updated[i].status = e.target.value;
-                      setGames(updated);
-                    }}>
-                      <option value="Open">Open</option><option value="Closed">Closed</option>
-                    </select>
+<button 
+  className={`status-button ${game.status.toLowerCase()}`} 
+  onClick={() => {
+    const updated = [...games];
+    updated[i].status = game.status === 'Open' ? 'Closed' : 'Open';
+    setGames(updated);
+  }}
+>
+  {game.status}
+</button>
+
+
                   </td>
                   <td><button onClick={() => setDetailGame(game)}>Details</button></td>
                   <td><button>Edit</button></td>

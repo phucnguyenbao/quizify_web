@@ -11,86 +11,87 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
- const navigate = useNavigate();
-const handleLogin = async () => {
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    alert('Đăng nhập thành công!');
-    navigate('/game'); // Chuyển đến trang /game
-  } catch (err) {
-    alert('Lỗi đăng nhập: ' + err.message);
-  }
-}
+
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert('Login successful!');
+      navigate('/game');
+    } catch (err) {
+      alert('Login failed: ' + err.message);
+    }
+  };
 
   const handleForgotPassword = async () => {
     if (email) {
       try {
         await sendPasswordResetEmail(auth, email);
-        alert('Đã gửi email khôi phục!');
+        alert('Password reset email sent!');
         setIsForgot(false);
       } catch (err) {
-        alert('Lỗi: ' + err.message);
+        alert('Error: ' + err.message);
       }
     } else {
-      alert('Vui lòng nhập email.');
+      alert('Please enter your email.');
     }
   };
 
   const handleChangePassword = () => {
     if (newPassword !== confirmPassword) {
-      alert('Mật khẩu mới và xác nhận không khớp!');
+      alert('New password and confirmation do not match!');
       return;
     }
     if (!email || !phone || !newPassword) {
-      alert('Vui lòng điền đầy đủ thông tin.');
+      alert('Please fill in all fields.');
       return;
     }
-    alert('Đổi mật khẩu thành công (mô phỏng)');
+    alert('Password changed successfully (mock)');
   };
 
   return (
     <div className="login-container">
       <div className="login-card">
         <div className="logo">Your Logo</div>
-        <h2>{isForgot ? 'QUÊN MẬT KHẨU' : 'ĐĂNG NHẬP'}</h2>
+        <h2>{isForgot ? 'FORGOT PASSWORD' : 'LOGIN'}</h2>
 
         <div className="form-container">
-
           {!isForgot ? (
             <>
               <div className="form-group">
-                <label>Email / SĐT</label>
-                <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Nhập email hoặc số điện thoại" />
+                <label>Email / Phone</label>
+                <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter email or phone number" />
               </div>
 
               <div className="form-group">
-                <label>Mật khẩu</label>
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Nhập mật khẩu" />
+                <label>Password</label>
+                <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter password" />
               </div>
             </>
           ) : (
             <>
               <div className="form-group">
                 <label>Email</label>
-                <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Nhập email đã đăng ký" />
+                <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your registered email" />
               </div>
 
               <div className="form-group">
-                <label>SĐT</label>
-                <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="Nhập số điện thoại" />
+                <label>Phone</label>
+                <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="Enter your phone number" />
               </div>
 
               <div className="form-group">
-                <label>Mật khẩu mới</label>
-                <input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder="Nhập mật khẩu mới" />
+                <label>New Password</label>
+                <input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder="Enter new password" />
               </div>
 
               <div className="form-group">
-                <label>Xác nhận</label>
-                <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Nhập lại mật khẩu mới" />
+                <label>Confirm Password</label>
+                <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirm new password" />
               </div>
 
-              <button className="link-button" onClick={handleForgotPassword}>Gửi lại email</button>
+              <button className="link-button" onClick={handleForgotPassword}>Resend email</button>
             </>
           )}
         </div>
@@ -98,13 +99,13 @@ const handleLogin = async () => {
         <div className="action-group">
           {!isForgot ? (
             <>
-              <button className="primary-btn" onClick={handleLogin}>Xác nhận</button>
-              <button className="link-button" onClick={() => setIsForgot(true)}>Quên mật khẩu?</button>
+              <button className="primary-btn" onClick={handleLogin}>Confirm</button>
+              <button className="link-button" onClick={() => setIsForgot(true)}>Forgot password?</button>
             </>
           ) : (
             <>
-              <button className="primary-btn" onClick={handleChangePassword}>Xác nhận</button>
-              <button className="secondary-btn" onClick={() => setIsForgot(false)}>Huỷ</button>
+              <button className="primary-btn" onClick={handleChangePassword}>Confirm</button>
+              <button className="secondary-btn" onClick={() => setIsForgot(false)}>Cancel</button>
             </>
           )}
         </div>

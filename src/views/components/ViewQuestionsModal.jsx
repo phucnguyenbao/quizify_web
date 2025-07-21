@@ -4,16 +4,16 @@ import "../../assets/css/QuizPage.css";
 const ViewQuestionsModal = ({ quiz, onClose }) => {
   return (
     <div className="view-quiz-modal">
-      <h4 className="quiz-section-title">Xem câu hỏi</h4>
+      <h4 className="quiz-section-title">View Questions</h4>
       <table className="quiz-table">
         <thead>
           <tr>
-            <th>Tên quiz</th>
-            <th>Mã quiz</th>
-            <th>Chủ đề quiz</th>
-            <th>Ngày tạo</th>
-            <th>Điểm trung bình</th>
-            <th>Số lượng câu hỏi</th>
+            <th>Quiz Name</th>
+            <th>Quiz Code</th>
+            <th>Topic</th>
+            <th>Created Date</th>
+            <th>Average Score</th>
+            <th>Number of Questions</th>
           </tr>
         </thead>
         <tbody>
@@ -31,21 +31,21 @@ const ViewQuestionsModal = ({ quiz, onClose }) => {
       <table className="quiz-table">
         <thead>
           <tr>
-            <th>STT</th>
-            <th>Câu hỏi</th>
+            <th>No.</th>
+            <th>Question</th>
             <th>A</th>
             <th>B</th>
             <th>C</th>
             <th>D</th>
             <th>E</th>
-            <th>Đáp án</th>
+            <th>Answer</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {quiz.questions.map((q, index) => (
             <tr key={index}>
-              <td>Câu {index + 1}</td>
+              <td>Q{index + 1}</td>
               <td>{q.question}</td>
               <td>{q.a}</td>
               <td>{q.b}</td>
@@ -53,20 +53,20 @@ const ViewQuestionsModal = ({ quiz, onClose }) => {
               <td>{q.d}</td>
               <td>{q.e}</td>
               <td>{q.answer}</td>
-              <td className="delete-link">Xóa</td>
+              <td className="delete-link">Delete</td>
             </tr>
           ))}
         </tbody>
       </table>
 
       <div className="quiz-action-links">
-        <span className="action-link">Sửa</span>
-        <span className="action-link">Thêm câu hỏi</span>
+        <span className="action-link">Edit</span>
+        <span className="action-link">Add Question</span>
         <span className="cancel-link" onClick={onClose}>Cancel</span>
       </div>
 
       <div className="confirm-wrapper">
-        <button className="confirm-button">Xác nhận</button>
+        <button className="confirm-button">Confirm</button>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ import {
   doc,
 } from "firebase/firestore";
 
-// Mapping role_id sang tên role
+// Mapping role_id to role name
 const rolesMap = {
   "1": "Admin",
   "2": "Manager",
@@ -16,10 +16,10 @@ const rolesMap = {
   "4": "User",
 };
 
-// Thứ tự hiển thị từ User -> Admin
+// Display order: User -> Admin
 const rolesList = ["User", "Leader", "Manager", "Admin"];
 
-const options = ["Trống", "Xem", "Sửa"];
+const options = ["None", "View", "Edit"];
 
 const RolePage = () => {
   const [data, setData] = useState([]);
@@ -56,16 +56,16 @@ const RolePage = () => {
         });
       });
 
-      // Mặc định tất cả quyền là "Trống"
+      // Default all permissions to "None"
       Object.values(copoData).forEach((screen) => {
         screen.components.forEach((comp) => {
           rolesList.forEach((role) => {
-            comp.permissions[role] = "Trống";
+            comp.permissions[role] = "None";
           });
         });
       });
 
-      // Gán quyền từ rope
+      // Assign permissions from rope
       ropeSnap.forEach((docSnap) => {
         const { component_description, role_id, permission } = docSnap.data();
         const roleName = rolesMap[role_id];
@@ -82,8 +82,8 @@ const RolePage = () => {
 
       setData(Object.values(copoData));
     } catch (err) {
-      console.error("Lỗi lấy dữ liệu:", err);
-      alert("Kết nối Database thất bại! " + err.message);
+      console.error("Error fetching data:", err);
+      alert("Database connection failed! " + err.message);
     }
   };
 
@@ -100,12 +100,12 @@ const RolePage = () => {
       const ropeSnap = await getDocs(collection(db, "rope"));
       const batch = writeBatch(db);
 
-      // Xóa toàn bộ dữ liệu cũ trong rope
+      // Delete old data in rope
       ropeSnap.forEach((docSnap) => {
         batch.delete(doc(db, "rope", docSnap.id));
       });
 
-      // Lưu mới
+      // Save new data
       let docId = 1;
 
       data.forEach((screen) => {
@@ -129,23 +129,23 @@ const RolePage = () => {
       });
 
       await batch.commit();
-      alert("Lưu phân quyền thành công!");
+      alert("Permissions saved successfully!");
       fetchData();
     } catch (err) {
-      console.error("Lỗi khi lưu:", err);
-      alert("Lỗi khi lưu phân quyền!");
+      console.error("Error saving:", err);
+      alert("Failed to save permissions!");
     }
   };
 
   return (
     <div className="permission-container">
-      <h2 className="bubble-text">Quản lý phân quyền hệ thống</h2>
+      <h2 className="bubble-text">System Role Management</h2>
       <table className="permission-table">
         <thead>
           <tr>
-            <th>Mã màn hình</th>
-            <th>Tên màn hình</th>
-            <th>Thành phần</th>
+            <th>Page ID</th>
+            <th>Page Name</th>
+            <th>Component</th>
             {rolesList.map((role) => (
               <th key={role}>{role}</th>
             ))}
@@ -193,11 +193,11 @@ const RolePage = () => {
       <div className="save-button-container">
         {!isEditing ? (
           <button onClick={() => setIsEditing(true)} className="save-button">
-            Sửa
+            Edit
           </button>
         ) : (
           <button onClick={handleSave} className="save-button">
-            Lưu
+            Save
           </button>
         )}
       </div>
