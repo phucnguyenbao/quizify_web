@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import '../assets/css/PlayPage.css';
 
 const dummyQuiz = {
   title: 'Kiểm tra kiến thức chung',
