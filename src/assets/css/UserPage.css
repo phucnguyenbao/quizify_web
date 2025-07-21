@@ -100,6 +100,23 @@
     margin-bottom: 25px;
 }
 
+.actions-toolbar {
+    display: flex;
+    justify-content: flex-start;
+    /* Căn lề trái thay vì phải */
+    align-items: center;
+    gap: 25px;
+    padding-bottom: 20px;
+    /* Thêm padding bên dưới */
+    margin-bottom: 20px;
+    /* Thêm margin để tách khỏi bảng */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    /* Thêm đường kẻ mờ */
+}
+
+/* ========================================================= */
+
+
 .action-link {
     font-weight: 500;
     color: #4a5a9c;
