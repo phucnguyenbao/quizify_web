@@ -115,9 +115,9 @@
 }
 .action-buttons {
   display: flex;
-  justify-content: flex-end; 
-  gap: 16px;
-  margin-bottom: 16px; 
+  justify-content: flex-end; /* Căn phải */
+  gap: 12px;                  /* Khoảng cách giữa các nút */
+  margin: 16px 0;             /* Khoảng cách trên dưới */
 }
 /* Action Link */
 .action-link {

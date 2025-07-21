@@ -278,9 +278,9 @@ button:disabled {
 /* Nhóm nút hành động */
 .action-buttons {
   display: flex;
-  gap: 18px;
-  justify-content: center;
-  margin-top: 24px;
+  justify-content: flex-end; /* Căn phải */
+  gap: 12px;                  /* Khoảng cách giữa các nút */
+  margin: 16px 0;             /* Khoảng cách trên dưới */
 }
 
 /* Simple Modal riêng */

@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase/services';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { LogOut, Settings, Users, ListTodo, Shield } from 'lucide-react';
+import { LogOut, Settings, Gamepad2, Users, ListTodo, Shield, Camera } from 'lucide-react';
 import '../assets/css/Header.css';
 
 
@@ -154,7 +154,7 @@ function Header() {
               <img src={avatar} alt="Avatar" className="avatar" onClick={() => setShowPopup(prev => !prev)} />
               {showPopup && (
                 <div className="profile-popup" ref={popupRef}>
-                  <div className="popup-content">
+
                     <div className="info-left">
                       <h4>Profile Information</h4>
                       <p><strong>Employee ID:</strong> {userData.id}</p>
@@ -194,13 +194,20 @@ function Header() {
                       <p>Welcome <strong>{userData.lastName}</strong></p>
                       <img src={avatar} alt="avatar" className="avatar-large" />
                       {isEditing && (
-                        <label className="upload-label">
-                          Change Avatar
-                          <input type="file" onChange={handleAvatarChange} hidden />
-                        </label>
+<div className="avatar-upload">
+  <input 
+    type="file" 
+    id="avatarUpload" 
+    onChange={handleAvatarChange} 
+    hidden 
+  />
+  <label htmlFor="avatarUpload" className="camera-icon">
+    <Camera size={24} />
+  </label>
+</div>
                       )}
                     </div>
-                  </div>
+
 
                   <div className="logout-section">
                     <button className="logout-btn" onClick={handleLogout}>
