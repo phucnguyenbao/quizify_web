@@ -12,8 +12,8 @@ const QuizManagement = () => {
   };
 
   const [quizzes, setQuizzes] = useState([
-    { name: 'Quiz 1', code: '234', topic: 'Động vật', date: '2025-07-23', score: 8, count: 15, numUsers: 30, numChoices: 120, questions: ['Con mèo là?', 'Đây là gì?'] },
-    { name: 'Quiz 2', code: '343', topic: 'Security', date: '2025-07-23', score: 8, count: 12, numUsers: 20, numChoices: 95, questions: ['HTTPS là gì?', 'XSS là gì?'] }
+    { name: 'Quiz 1', code: '234', topic: 'Animals', date: '2025-07-23', score: 8, count: 15, numUsers: 30, numChoices: 120, questions: ['What is a cat?', 'What is this?'] },
+    { name: 'Quiz 2', code: '343', topic: 'Security', date: '2025-07-23', score: 8, count: 12, numUsers: 20, numChoices: 95, questions: ['What is HTTPS?', 'What is XSS?'] }
   ]);
 
   const [filters, setFilters] = useState(initialFilters);
@@ -22,7 +22,6 @@ const QuizManagement = () => {
   const [selectedIndexes, setSelectedIndexes] = useState([]);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
 
-  // Popup State
   const [showAddOptionModal, setShowAddOptionModal] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showAIModal, setShowAIModal] = useState(false);
@@ -55,7 +54,7 @@ const QuizManagement = () => {
 
   const exportSelected = () => {
     const selected = quizzes.filter((_, i) => selectedIndexes.includes(i));
-    alert(`Export ${selected.length} quiz(es).`);
+    alert(`Exporting ${selected.length} quiz(es).`);
   };
 
   // ====== Filtered Data ======
@@ -72,27 +71,27 @@ const QuizManagement = () => {
 
   return (
     <div className="quiz-management">
-      <h2>Quản lý Quiz</h2>
+      <h2>Quiz Management</h2>
 
       {/* Filter */}
       <div className="filter-row">
-        <input value={tempFilter.name} onChange={(e) => handleFilterChange("name", e.target.value)} placeholder="Tên" />
-        <input value={tempFilter.code} onChange={(e) => handleFilterChange("code", e.target.value)} placeholder="Mã" />
-        <input value={tempFilter.topic} onChange={(e) => handleFilterChange("topic", e.target.value)} placeholder="Chủ đề" />
+        <input value={tempFilter.name} onChange={(e) => handleFilterChange("name", e.target.value)} placeholder="Name" />
+        <input value={tempFilter.code} onChange={(e) => handleFilterChange("code", e.target.value)} placeholder="Code" />
+        <input value={tempFilter.topic} onChange={(e) => handleFilterChange("topic", e.target.value)} placeholder="Topic" />
         <input type="date" value={tempFilter.date} onChange={(e) => handleFilterChange("date", e.target.value)} />
-        <input value={tempFilter.score} onChange={(e) => handleFilterChange("score", e.target.value)} placeholder="Điểm" />
-        <input value={tempFilter.count} onChange={(e) => handleFilterChange("count", e.target.value)} placeholder="Câu hỏi" />
-        <input value={tempFilter.numUsers} onChange={(e) => handleFilterChange("numUsers", e.target.value)} placeholder="Người làm" />
-        <input value={tempFilter.numChoices} onChange={(e) => handleFilterChange("numChoices", e.target.value)} placeholder="Lượt chọn" />
-        <button onClick={handleSearch}>Tìm</button>
-        <button onClick={handleCancel}>Hủy</button>
+        <input value={tempFilter.score} onChange={(e) => handleFilterChange("score", e.target.value)} placeholder="Score" />
+        <input value={tempFilter.count} onChange={(e) => handleFilterChange("count", e.target.value)} placeholder="Questions" />
+        <input value={tempFilter.numUsers} onChange={(e) => handleFilterChange("numUsers", e.target.value)} placeholder="Participants" />
+        <input value={tempFilter.numChoices} onChange={(e) => handleFilterChange("numChoices", e.target.value)} placeholder="Total Choices" />
+        <button onClick={handleSearch}>Search</button>
+        <button onClick={handleCancel}>Reset</button>
       </div>
 
       {/* Action Buttons */}
       <div className="action-buttons">
-        <span className="action-link" onClick={selectAll}>Chọn hết</span>
-        <span className="action-link" onClick={deleteSelected}>Xóa</span>
-        <span className="action-link" onClick={() => alert("Lấy quiz!")}>Lấy</span>
+        <span className="action-link" onClick={selectAll}>Select All</span>
+        <span className="action-link" onClick={deleteSelected}>Delete</span>
+        <span className="action-link" onClick={() => alert("Fetching quiz!")}>Fetch</span>
         <span className="action-link" onClick={exportSelected}>Export</span>
       </div>
 
@@ -100,9 +99,9 @@ const QuizManagement = () => {
       <table>
         <thead>
           <tr>
-            <th>Tên</th><th>Mã</th><th>Chủ đề</th><th>Ngày</th>
-            <th>Điểm</th><th>Câu hỏi</th><th>Người làm</th><th>Lượt chọn</th>
-            <th>Hành động</th><th>✓</th>
+            <th>Name</th><th>Code</th><th>Topic</th><th>Date</th>
+            <th>Score</th><th>Questions</th><th>Participants</th><th>Total Choices</th>
+            <th>Actions</th><th>✓</th>
           </tr>
         </thead>
         <tbody>
@@ -121,7 +120,7 @@ const QuizManagement = () => {
                   setSelectedQuiz(quiz);
                   setShowViewQuestionsModal(true);
                 }}>
-                  Xem câu hỏi
+                  View Questions
                 </button>
               </td>
               <td>
@@ -133,8 +132,8 @@ const QuizManagement = () => {
       </table>
 
       {/* Add Quiz */}
-      <br></br>
-      <button className="add-button" onClick={() => setShowAddOptionModal(true)}>Thêm Quiz</button>
+      <br />
+      <button className="add-button" onClick={() => setShowAddOptionModal(true)}>Add Quiz</button>
 
       {/* === Popups with overlay === */}
       {showAddOptionModal && (

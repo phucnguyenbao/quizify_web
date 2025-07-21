@@ -23,10 +23,14 @@ html, body {
   margin: 0;
   padding: 0;
 }
-
+.nav-left-group {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Khoảng cách giữa logo và menu */
+}
 .nav-left, .nav-right {
   display: flex;
-  gap: 18px; /* Gọn hơn */
+  gap: 10px; /* Gọn hơn */
 }
 
 .navbar li {
@@ -64,8 +68,8 @@ html, body {
 }
 
 .avatar {
-  width: 26px;   /* Nhỏ hơn */
-  height: 26px;
+  width: 30px;   /* Nhỏ hơn */
+  height: 30px;
   border-radius: 50%;
   object-fit: cover;
   border: 1.5px solid #eee;
@@ -240,4 +244,34 @@ html, body {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+.game-link {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Giữ khoảng cách nhỏ, không cần chỉnh thêm */
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+}
+
+.game-logo {
+  width: 30px;       
+  object-fit: contain;
+}
+
+/* Hover effect */
+.game-link:hover {
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+.logo-text {
+  color: #111; /* Màu đen */
+  font-weight: 700;
+  font-size: 18px; /* Tùy chỉnh kích thước nếu muốn */
+}
+.active-link {
+  background: rgba(255, 255, 255, 0.2);
+  font-weight: 700;  /* Tô đậm hơn */
+  color: #fff;
+  box-shadow: 0 0 10px rgba(255,255,255,0.25);
 }

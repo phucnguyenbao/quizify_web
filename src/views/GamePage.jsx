@@ -3,17 +3,17 @@ import '../assets/css/GamePage.css';
 import AddGameModal from './components/AddGame';
 import { WaitingRoom, QuizScreen } from './PlayPage';
 
-// Dữ liệu giả
+// Dummy Data
 const dummyGames = [
   {
-    id: 1, name: 'Game 1', code: '234', date: '23/07/2025', avgScore: 8, maxScore: 9, numMembers: 15, deadline: '10:00 26/08/2025', quiz: 'Quiz 1', status: 'Mở', timeLimit: 30, attempts: '7/8',
+    id: 1, name: 'Game 1', code: '234', date: '23/07/2025', avgScore: 8, maxScore: 9, numMembers: 15, deadline: '10:00 26/08/2025', quiz: 'Quiz 1', status: 'Open', timeLimit: 30, attempts: '7/8',
     players: [
-      { id: '2301001', first: 'Minh', last: 'Nguyễn', dept: 'ODD', team: 'Team 1', attempts: '4/5', maxScore: 9, quiz: 'Quiz 1' },
-      { id: '2301002', first: 'Khánh', last: 'Trần', dept: 'ODD', team: 'Team 2', attempts: '7/8', maxScore: 9, quiz: 'Quiz 1' }
+      { id: '2301001', first: 'Minh', last: 'Nguyen', dept: 'ODD', team: 'Team 1', attempts: '4/5', maxScore: 9, quiz: 'Quiz 1' },
+      { id: '2301002', first: 'Khanh', last: 'Tran', dept: 'ODD', team: 'Team 2', attempts: '7/8', maxScore: 9, quiz: 'Quiz 1' }
     ]
   },
   {
-    id: 2, name: 'Game 2', code: '343', date: '23/07/2025', avgScore: 7, maxScore: 8, numMembers: 12, deadline: '10:00 29/08/2025', quiz: 'Quiz 2', status: 'Đóng', timeLimit: 25, attempts: '5/5', players: []
+    id: 2, name: 'Game 2', code: '343', date: '23/07/2025', avgScore: 7, maxScore: 8, numMembers: 12, deadline: '10:00 29/08/2025', quiz: 'Quiz 2', status: 'Closed', timeLimit: 25, attempts: '5/5', players: []
   }
 ];
 
@@ -30,13 +30,12 @@ const GamePage = () => {
   const [detailGame, setDetailGame] = useState(null);
   const [showAddGame, setShowAddGame] = useState(false);
   const [newGame, setNewGame] = useState({
-    name: '', code: '', date: '', deadline: '', avgScore: '', maxScore: '', numMembers: '', quiz: '', status: 'Mở'
+    name: '', code: '', date: '', deadline: '', avgScore: '', maxScore: '', numMembers: '', quiz: '', status: 'Open'
   });
 
   const [currentView, setCurrentView] = useState('list');
   const [selectedGame, setSelectedGame] = useState(null);
 
-  // Filter games
   const filteredGames = useMemo(() => {
     return games.filter(game =>
       Object.entries(filters).every(([key, value]) =>
@@ -45,7 +44,6 @@ const GamePage = () => {
     );
   }, [games, filters]);
 
-  // Handlers
   const handleChange = (key, value) => setTempFilter(prev => ({ ...prev, [key]: value }));
   const handleNewGameChange = (key, value) => setNewGame(prev => ({ ...prev, [key]: value }));
   const handleSearch = () => setFilters({ ...tempFilter });
@@ -75,7 +73,7 @@ const GamePage = () => {
     setGames([...games, { ...newGame, id: games.length + 1 }]);
     setShowAddGame(false);
     setNewGame({
-      name: '', code: '', date: '', deadline: '', avgScore: '', maxScore: '', numMembers: '', quiz: '', status: 'Mở'
+      name: '', code: '', date: '', deadline: '', avgScore: '', maxScore: '', numMembers: '', quiz: '', status: 'Open'
     });
   };
 
@@ -98,25 +96,57 @@ const GamePage = () => {
         <>
           <h2 className="bubble-text">Game Management</h2>
 
-          {/* Bộ lọc */}
+          {/* Filters */}
           <div className="filter-row">
-            {['name', 'code', 'avgScore', 'maxScore', 'numMembers', 'quiz'].map(field => (
-              <input key={field} placeholder={field} value={tempFilter[field]} onChange={e => handleChange(field, e.target.value)} />
-            ))}
-            <input type="date" value={tempFilter.date} onChange={e => handleChange('date', e.target.value)} />
+<input 
+  placeholder="Name" 
+  value={tempFilter.name} 
+  onChange={e => handleChange('name', e.target.value)} 
+/>
+<input 
+  placeholder="Code" 
+  value={tempFilter.code} 
+  onChange={e => handleChange('code', e.target.value)} 
+/>
+<input 
+  type="Date" 
+  value={tempFilter.date} 
+  onChange={e => handleChange('date', e.target.value)} 
+/>
+<input 
+  placeholder="AvgScore" 
+  value={tempFilter.avgScore} 
+  onChange={e => handleChange('avgScore', e.target.value)} 
+/>
+<input 
+  placeholder="MaxScore" 
+  value={tempFilter.maxScore} 
+  onChange={e => handleChange('maxScore', e.target.value)} 
+/>
+<input 
+  placeholder="NumMembers" 
+  value={tempFilter.numMembers} 
+  onChange={e => handleChange('numMembers', e.target.value)} 
+/>
+<input 
+  placeholder="Quiz" 
+  value={tempFilter.quiz} 
+  onChange={e => handleChange('quiz', e.target.value)} 
+/>
+
             <input type="date" value={tempFilter.deadline} onChange={e => handleChange('deadline', e.target.value)} />
             <select value={tempFilter.status} onChange={e => handleChange('status', e.target.value)}>
-              <option value="">Tất cả</option><option value="Mở">Mở</option><option value="Đóng">Đóng</option>
+              <option value="">All</option><option value="Open">Open</option><option value="Closed">Closed</option>
             </select>
-            <button onClick={handleSearch}>Tìm</button>
+            <button onClick={handleSearch}>Search</button>
             <button onClick={handleReset}>Reset</button>
           </div>
 
-          {/* Bảng game */}
+          {/* Game Table */}
           <table className="game-table">
             <thead>
               <tr>
-                <th>Tên game</th><th>Mã phòng</th><th>Ngày tạo</th><th>Điểm TB</th><th>Điểm cao</th><th>SL TV</th><th>Deadline</th><th>Quiz</th><th>Trạng thái</th><th>Chi tiết</th><th>Sửa</th><th>✓</th>
+                <th>Game Name</th><th>Room Code</th><th>Created Date</th><th>Avg Score</th><th>Max Score</th><th>Members</th><th>Deadline</th><th>Quiz</th><th>Status</th><th>Details</th><th>Edit</th><th>✓</th>
               </tr>
             </thead>
             <tbody>
@@ -125,25 +155,30 @@ const GamePage = () => {
                   <td style={{ color: 'blue', cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handlePlayGame(game)}>{game.name}</td>
                   <td>{game.code}</td><td>{game.date}</td><td>{game.avgScore}</td><td>{game.maxScore}</td><td>{game.numMembers}</td><td>{game.deadline}</td><td>{game.quiz}</td>
                   <td>
-                    <select value={game.status} onChange={e => {
-                      const updated = [...games];
-                      updated[i].status = e.target.value;
-                      setGames(updated);
-                    }}>
-                      <option value="Mở">Mở</option><option value="Đóng">Đóng</option>
-                    </select>
+<button 
+  className={`status-button ${game.status.toLowerCase()}`} 
+  onClick={() => {
+    const updated = [...games];
+    updated[i].status = game.status === 'Open' ? 'Closed' : 'Open';
+    setGames(updated);
+  }}
+>
+  {game.status}
+</button>
+
+
                   </td>
-                  <td><button onClick={() => setDetailGame(game)}>Chi tiết</button></td>
-                  <td><button> Sửa </button></td>
+                  <td><button onClick={() => setDetailGame(game)}>Details</button></td>
+                  <td><button>Edit</button></td>
                   <td><input type="checkbox" checked={selected.includes(i)} onChange={() => toggleSelect(i)} /></td>
                 </tr>
               ))}
             </tbody>
           </table>
           <div className="action-buttons">
-            <button onClick={selectAll}>Chọn hết</button>
-            <button onClick={deleteSelected}>Xóa</button>
-            <button onClick={() => setShowAddGame(true)}>Thêm game</button>
+            <button onClick={selectAll}>Select All</button>
+            <button onClick={deleteSelected}>Delete</button>
+            <button onClick={() => setShowAddGame(true)}>Add Game</button>
           </div>
         </>
       )}
@@ -169,7 +204,7 @@ const GamePage = () => {
             <h3 style={{ color: 'hotpink' }}>{detailGame.name}</h3>
             <table className="detail-table">
               <thead>
-                <tr><th>Mã NV</th><th>Tên</th><th>Họ</th><th>Phòng ban</th><th>Team</th><th>Làm</th><th>Điểm</th><th>Quiz</th></tr>
+                <tr><th>ID</th><th>First</th><th>Last</th><th>Department</th><th>Team</th><th>Attempts</th><th>Max Score</th><th>Quiz</th></tr>
               </thead>
               <tbody>
                 {detailGame.players.map((p, idx) => (
@@ -177,10 +212,10 @@ const GamePage = () => {
                     <td>{p.id}</td><td>{p.first}</td><td>{p.last}</td><td>{p.dept}</td><td>{p.team}</td><td>{p.attempts}</td><td>{p.maxScore}</td><td>{p.quiz}</td>
                   </tr>
                 ))}
-                {detailGame.players.length === 0 && <tr><td colSpan="8">Chưa có người chơi</td></tr>}
+                {detailGame.players.length === 0 && <tr><td colSpan="8">No players yet</td></tr>}
               </tbody>
             </table>
-            <button onClick={() => setDetailGame(null)}>Đóng</button>
+            <button onClick={() => setDetailGame(null)}>Close</button>
           </div>
         </div>
       )}

@@ -5,21 +5,20 @@ const AIQuizModal = ({ onClose }) => {
   const [prompt, setPrompt] = useState('');
 
   return (
-<div className="popup-container">
-  <span className="popup-title">AI tạo quiz</span>
+    <div className="popup-container">
+      <span className="popup-title">AI Quiz Generator</span>
 
-  <div className="popup-content">
-    <input
-      type="text"
-      placeholder="Nhập prompt"
-      value={prompt}
-      onChange={(e) => setPrompt(e.target.value)}
-    />
-    <button className="popup-btn">Tạo</button>
-    <span className="popup-cancel" onClick={onClose}>Cancel</span>
-  </div>
-</div>
-
+      <div className="popup-content">
+        <input
+          type="text"
+          placeholder="Enter prompt"
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+        />
+        <button className="popup-btn">Generate</button>
+        <span className="popup-cancel" onClick={onClose}>Cancel</span>
+      </div>
+    </div>
   );
 };
 
