@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import '../assets/css/popupmem/UserPage.css';
 import AddDepartmentPopup from './components/popupmem/AddDepartmentPopup';
 import AddMemberPopup from './components/popupmem/AddMemberPopup';
 import MemberDetailPopup from './components/popupmem/MemberDetailPopup';
-// TeamPopup không được sử dụng, có thể xóa dòng này nếu bạn muốn
-// import TeamPopup from './components/popupmem/TeamPopup'; 
 import WorkResultPopup from './components/popupmem/WorkResultPopup';
-// === UPDATE: Import các component mới ===
 import AdvancedStats from './components/popupmem/AdvancedStats';
 
 
-// --- MOCK DATA (TRANSLATED TO ENGLISH) ---
+// --- MOCK DATA ---
 const mockMembersData = [{ id: '2301001', name: 'Minh Tuan', department: 'ODD', team: 'Team 1', role: 'Leader' }, { id: '2301002', name: 'Khanh An', department: 'ODD', team: 'Team 2', role: 'Manager' }, { id: '2301003', name: 'Phuc Lam', department: 'ODD', team: 'Team 1', role: 'User' }, { id: '2301004', name: 'Thu Trang', department: 'ODD', team: 'Team 3', role: 'Leader' }, { id: '2302001', name: 'Anh Thu', department: 'ABD', team: 'Team 4', role: 'Leader' }, { id: '2302002', name: 'Bao Han', department: 'ABD', team: 'Team 4', role: 'User' }, { id: '2302003', name: 'Gia Huy', department: 'ABD', team: 'Team 5', role: 'Leader' }, { id: '2303001', name: 'Hoai An', department: 'HR', team: 'Team 6', role: 'Leader' }, { id: '2303002', name: 'Manh Dung', department: 'HR', team: 'Team 6', role: 'User' }, { id: '2303003', name: 'Duc Minh', department: 'HR', team: 'Team 7', role: 'User' },];
-const mockWorkResults = { '2301001': { name: 'Minh Tuan', completedGames: [{ id: 1, name: 'Game 1', topic: 'Process', gameCode: '234', attempts: '3/4', avgScore: 7, highScore: 8, lastScore: 8 }, { id: 2, name: 'Game 2', topic: 'Security', gameCode: '343', attempts: '5/6', avgScore: 8, highScore: 9, lastScore: 9 },], attemptDetails: [{ attempt: 1, score: 8, time: '10:00 23/06/2025 - 17:00 23/06/2027' }, { attempt: 2, score: 8, time: '10:00 23/06/2025 - 17:00 23/06/2028' },] }, '2302001': { name: 'Anh Thu', completedGames: [{ id: 2, name: 'Game 2', topic: 'Security', gameCode: '343', attempts: '1/2', avgScore: 9, highScore: 9, lastScore: 9 }], attemptDetails: [{ attempt: 1, score: 9, time: '09:00 25/06/2025' }] }, };
+const mockWorkResults = { '2301001': { name: 'Minh Tuan', completedGames: [/*...*/], attemptDetails: [/*...*/] }, '2302001': { name: 'Anh Thu', completedGames: [/*...*/], attemptDetails: [/*...*/] }, };
+
 
 function UserPage() {
     const [members, setMembers] = useState(mockMembersData);
@@ -25,14 +23,24 @@ function UserPage() {
     const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
     const [showAddDepartmentPopup, setShowAddDepartmentPopup] = useState(false);
 
+    // === FIX: SỬA LẠI LOGIC ĐỂ DÙNG BIẾN 'members' ===
+    // Tự động tạo danh sách cho các ô lựa chọn từ dữ liệu thành viên *hiện tại*
+    const { departments, teams, roles } = useMemo(() => {
+        const departments = [...new Set(members.map(m => m.department))];
+        const teams = [...new Set(members.map(m => m.team))];
+        const roles = [...new Set(members.map(m => m.role))];
+        return { departments, teams, roles };
+    }, [members]); // Bây giờ dependency 'members' đã hoàn toàn chính xác
+
+
+    // Cập nhật logic lọc để hoạt động chính xác với các ô lựa chọn
     useEffect(() => {
         let tempMembers = members.filter(m =>
-            (m.name.toLowerCase().includes(filters.name.toLowerCase()) || filters.name === "") &&
-            (m.id.includes(filters.code) || filters.code === "") &&
-            (m.department.toLowerCase().includes(filters.department.toLowerCase()) || filters.department === "") &&
-            (m.team.toLowerCase().includes(filters.team.toLowerCase()) || filters.team === "")&&
-            (m.role.toLowerCase().includes(filters.role.toLowerCase()) || filters.role === "")
-
+            (m.name.toLowerCase().includes(filters.name.toLowerCase())) &&
+            (m.id.includes(filters.code)) &&
+            (filters.department === "" || m.department === filters.department) &&
+            (filters.team === "" || m.team === filters.team) &&
+            (filters.role === "" || m.role === filters.role)
         );
         setFilteredMembers(tempMembers);
     }, [filters, members]);
@@ -53,6 +61,10 @@ function UserPage() {
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
         setFilters(prev => ({ ...prev, [name]: value }));
+    };
+
+    const resetFilters = () => {
+        setFilters({ name: '', code: '', department: '', team: '', role: '' });
     };
 
     const handleSelectMember = (memberId) => {
@@ -82,7 +94,7 @@ function UserPage() {
     const handleFetch = () => {
         alert('Fetching latest data...');
         setMembers(mockMembersData);
-        setFilters({ name: '', code: '', topic: '', team: '' });
+        resetFilters();
     };
 
     const handleExport = () => {
@@ -103,42 +115,40 @@ function UserPage() {
     return (
         <div className="management-container">
             <h1 className="management-title">USER MANAGEMENT</h1>
-            {/* === UPDATE: Thêm các component mới vào đây === */}
             <AdvancedStats />
 
-            <div className="glass-card">
-                {/* === UPDATE: Bố cục thanh tìm kiếm 2 hàng mới === */}
+            <div className="glass-card" style={{ marginTop: '20px' }}>
+
                 <div className="filter-section">
                     <input type="text" name="name" value={filters.name} onChange={handleFilterChange} placeholder="Name" className="filter-input" />
                     <input type="text" name="code" value={filters.code} onChange={handleFilterChange} placeholder="Code" className="filter-input" />
-                    <input type="text" name="department" value={filters.department} onChange={handleFilterChange} placeholder="Department" className="filter-input" />
-                    <input type="text" name="team" value={filters.team} onChange={handleFilterChange} placeholder="Team" className="filter-input" />
 
-                    {/* Hàng thứ 2 */}
-                    <input type="text" name="role" value={filters.role} onChange={handleFilterChange} placeholder="Role" className="filter-input" />
+                    <select name="department" value={filters.department} onChange={handleFilterChange} className="filter-select">
+                        <option value="">Department</option>
+                        {departments.map(dept => <option key={dept} value={dept}>{dept}</option>)}
+                    </select>
 
-                    {/* 2 ô trống để đẩy nhóm nút sang phải */}
-                    <div></div>
-                    <div></div>
+                    <select name="team" value={filters.team} onChange={handleFilterChange} className="filter-select">
+                        <option value="">Team</option>
+                        {teams.map(team => <option key={team} value={team}>{team}</option>)}
+                    </select>
+
+                    <select name="role" value={filters.role} onChange={handleFilterChange} className="filter-select">
+                        <option value="">Role</option>
+                        {roles.map(role => <option key={role} value={role}>{role}</option>)}
+                    </select>
 
                     <div className="button-group">
                         <button className="btn btn-primary">Search</button>
-                        <button className="btn btn-secondary" onClick={() => setFilters({ name: '', code: '', department: '', team: '', role: '' })}>Reset</button>
+                        <button className="btn btn-secondary" onClick={resetFilters}>Reset</button>
                     </div>
                 </div>
-            </div>
-            {/* ========================================= */}
-            
-1
-            {/* Thanh công cụ đã được di chuyển từ đây... */}
 
-            <div className="glass-card" style={{ marginTop: '20px' }}>
-                {/* ...vào đây, ngay bên trong thẻ glass-card của bảng */}
                 <div className="actions-toolbar">
                     <span className="action-link" onClick={(e) => { e.preventDefault(); const cb = document.getElementById('select-all-cb'); cb.checked = !cb.checked; handleSelectAll({ target: cb }); }}>Select All</span>
-                    <span className="action-link" onClick={(e) => { e.preventDefault(); handleDeleteSelected(); }}>Delete</span>
-                    <span className="action-link" onClick={(e) => { e.preventDefault(); handleFetch(); }}>Fetch</span>
-                    <span className="action-link" onClick={(e) => { e.preventDefault(); handleExport(); }}>Export</span>
+                    <span className="action-link" onClick={handleDeleteSelected}>Delete</span>
+                    <span className="action-link" onClick={handleFetch}>Fetch</span>
+                    <span className="action-link" onClick={handleExport}>Export</span>
                 </div>
 
                 <table className="management-table">
@@ -152,7 +162,10 @@ function UserPage() {
                         {filteredMembers.map(member => (
                             <tr key={member.id}>
                                 <td><span className="action-link" onClick={() => setViewingMember(member)}>{member.name}</span></td>
-                                <td>{member.id}</td><td>{member.department}</td><td>{member.team}</td><td>{member.role}</td>
+                                <td>{member.id}</td>
+                                <td>{member.department}</td>
+                                <td>{member.team}</td>
+                                <td>{member.role}</td>
                                 <td><button className="btn btn-view" onClick={() => handleShowResultPopup(member.id)}>View Results</button></td>
                                 <td><input type="checkbox" checked={selectedMemberIds.includes(member.id)} onChange={() => handleSelectMember(member.id)} /></td>
                             </tr>

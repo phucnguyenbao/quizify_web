@@ -1,3 +1,5 @@
+/* src/assets/css/popupmem/AdvancedStats.css */
+
 .stats-container {
     display: flex;
     flex-direction: column;
@@ -20,85 +22,15 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
     padding: 20px;
-}
-
-.tables-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
 }
 
+.tables-container,
 .charts-column-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
-}
-
-/* === Giảm chiều cao card biểu đồ === */
-.charts-column-container .stats-card:first-child {
-    height: 180px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-/* ================================ */
-
-.pie-charts-container {
-    display: flex;
-    gap: 30px;
-    width: 100%;
-    flex-grow: 1;
-    min-height: 0;
-    justify-content: space-around;
-}
-
-.pie-chart-wrapper {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-/* Tiêu đề biểu đồ nhỏ hơn */
-.pie-chart-wrapper .stats-title {
-    font-size: 1rem;
-    margin-bottom: 5px;
-    text-align: center;
-}
-
-/* Thu nhỏ biểu đồ nếu cần */
-.pie-chart-wrapper canvas {
-    max-width: 120px;
-    max-height: 120px;
-}
-
-/* Dropdown chọn game */
-.game-selector-container {
-    margin-bottom: 10px;
-}
-
-.stats-selector {
-    width: 100%;
-    padding: 10px 15px;
-    border-radius: 10px;
-    border: 1px solid #e0e0e0;
-    font-size: 0.9rem;
-    background-color: #ffffff;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-repeat: no-repeat;
-    background-position: right 15px top 50%;
-    background-size: .6em auto;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.stats-selector:hover {
-    border-color: #a6c1ee;
 }
 
 .stats-title {
@@ -109,54 +41,93 @@
     margin-bottom: 15px;
 }
 
-.card-footer {
-    text-align: right;
-    margin-top: 10px;
+.game-selector-container {
+    margin-bottom: 20px;
 }
 
-.action-link {
-    font-weight: 500;
-    color: #007bff;
-    cursor: pointer;
-    text-decoration: underline;
-    margin-left: 15px;
+.stats-selector {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
     font-size: 0.9rem;
+    background-color: #ffffff;
+    cursor: pointer;
 }
 
-/* Drilldown layout */
-.drilldown-container {
+/* === BỐ CỤC BIỂU ĐỒ TRÒN (PHẦN QUAN TRỌNG) === */
+
+.pie-charts-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-grow: 1;
+    /* Cho phép container co giãn */
+}
+
+.pie-chart-wrapper {
+    flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 15px;
 }
 
-.drilldown-selectors-wrapper {
+.pie-chart-wrapper .stats-title {
+    font-size: 1rem;
+    margin-bottom: 0;
+    text-align: center;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Wrapper để chứa biểu đồ và chú giải */
+.chart-and-legend-container {
+    display: flex;
+    flex-direction: row;
+    /* Quan trọng: Sắp xếp theo hàng ngang */
+    align-items: center;
+    /* Căn giữa các item theo chiều dọc */
+    gap: 20px;
+    /* Khoảng cách giữa biểu đồ và chú giải */
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.chart-and-legend-container canvas {
+    max-width: 130px;
+    /* Tăng kích thước một chút */
+    max-height: 130px;
+}
+
+/* Vùng chú giải */
+.pie-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.legend-item {
     display: flex;
     align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 14px;
 }
 
-.drilldown-selectors-wrapper .stats-title {
-    margin-bottom: 0;
-    flex-shrink: 0;
+.legend-color-box {
+    width: 30px;
+    height: 16px;
+    border-radius: 4px;
 }
 
-.drilldown-selectors {
-    flex: 1;
-    display: flex;
-    gap: 15px;
-}
+/* ============================================== */
 
-.drilldown-selectors .stats-selector {
-    flex: 1;
-    min-width: 150px;
-}
-
-/* Table thống kê */
+/* Bảng thống kê */
 .stats-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1.5fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 8px 15px;
     align-items: center;
 }
@@ -178,3 +149,67 @@
     color: #444;
     padding: 6px 0;
 }
+
+.card-footer {
+    margin-top: auto;
+    text-align: right;
+    padding-top: 10px;
+}
+
+.action-link {
+    font-weight: 500;
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 15px;
+    font-size: 0.9rem;
+}
+.drilldown-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* Khoảng cách giữa các phần tử bên trong */
+}
+
+/* Wrapper cho tiêu đề và các bộ lọc */
+.drilldown-selectors-wrapper {
+    display: flex;
+    flex-direction: column;
+    /* Giữ tiêu đề ở trên, các bộ lọc ở dưới */
+    gap: 10px;
+}
+
+/* Quan trọng: Bố cục cho các bộ lọc <select> */
+.drilldown-selectors {
+    display: flex;
+    flex-direction: row;
+    /* Sắp xếp các ô chọn theo hàng ngang */
+    gap: 15px;
+    /* Khoảng cách giữa các ô chọn */
+}
+
+.drilldown-selectors .stats-selector {
+    flex: 1;
+    /* Giúp các ô chọn có chiều rộng bằng nhau và lấp đầy không gian */
+}
+
+/* Quan trọng: Container chứa biểu đồ cột */
+.bar-chart-container {
+    position: relative;
+    /* Giảm chiều cao xuống còn một nửa (hoặc theo ý muốn) */
+    height: 150px;
+    margin-top: 10px;
+    /* Thêm một chút khoảng cách trên */
+}
+
+/* Thêm style cho thông báo khi chưa chọn đủ */
+.chart-placeholder-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #888;
+    font-style: italic;
+}
+
+/* ============================================== */
