@@ -1,3 +1,5 @@
+// src/views/UserPage.jsx
+
 import React, { useState, useEffect, useMemo } from 'react';
 import '../assets/css/popupmem/UserPage.css';
 import AddDepartmentPopup from './components/popupmem/AddDepartmentPopup';
@@ -5,12 +7,11 @@ import AddMemberPopup from './components/popupmem/AddMemberPopup';
 import MemberDetailPopup from './components/popupmem/MemberDetailPopup';
 import WorkResultPopup from './components/popupmem/WorkResultPopup';
 import AdvancedStats from './components/popupmem/AdvancedStats';
-
+import GameHistory from './components/popupmem/GameHistory';
 
 // --- MOCK DATA ---
 const mockMembersData = [{ id: '2301001', name: 'Minh Tuan', department: 'ODD', team: 'Team 1', role: 'Leader' }, { id: '2301002', name: 'Khanh An', department: 'ODD', team: 'Team 2', role: 'Manager' }, { id: '2301003', name: 'Phuc Lam', department: 'ODD', team: 'Team 1', role: 'User' }, { id: '2301004', name: 'Thu Trang', department: 'ODD', team: 'Team 3', role: 'Leader' }, { id: '2302001', name: 'Anh Thu', department: 'ABD', team: 'Team 4', role: 'Leader' }, { id: '2302002', name: 'Bao Han', department: 'ABD', team: 'Team 4', role: 'User' }, { id: '2302003', name: 'Gia Huy', department: 'ABD', team: 'Team 5', role: 'Leader' }, { id: '2303001', name: 'Hoai An', department: 'HR', team: 'Team 6', role: 'Leader' }, { id: '2303002', name: 'Manh Dung', department: 'HR', team: 'Team 6', role: 'User' }, { id: '2303003', name: 'Duc Minh', department: 'HR', team: 'Team 7', role: 'User' },];
 const mockWorkResults = { '2301001': { name: 'Minh Tuan', completedGames: [/*...*/], attemptDetails: [/*...*/] }, '2302001': { name: 'Anh Thu', completedGames: [/*...*/], attemptDetails: [/*...*/] }, };
-
 
 function UserPage() {
     const [members, setMembers] = useState(mockMembersData);
@@ -23,17 +24,18 @@ function UserPage() {
     const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
     const [showAddDepartmentPopup, setShowAddDepartmentPopup] = useState(false);
 
-    // === FIX: SỬA LẠI LOGIC ĐỂ DÙNG BIẾN 'members' ===
-    // Tự động tạo danh sách cho các ô lựa chọn từ dữ liệu thành viên *hiện tại*
+    const [showGameHistory, setShowGameHistory] = useState(false);
+    // === UPDATE: Lưu cả object member để lấy tên ===
+    const [viewingUserForHistory, setViewingUserForHistory] = useState(null);
+
     const { departments, teams, roles } = useMemo(() => {
         const departments = [...new Set(members.map(m => m.department))];
         const teams = [...new Set(members.map(m => m.team))];
         const roles = [...new Set(members.map(m => m.role))];
         return { departments, teams, roles };
-    }, [members]); // Bây giờ dependency 'members' đã hoàn toàn chính xác
+    }, [members]);
 
 
-    // Cập nhật logic lọc để hoạt động chính xác với các ô lựa chọn
     useEffect(() => {
         let tempMembers = members.filter(m =>
             (m.name.toLowerCase().includes(filters.name.toLowerCase())) &&
@@ -52,6 +54,7 @@ function UserPage() {
                 setViewingMember(null);
                 setShowAddMemberPopup(false);
                 setShowAddDepartmentPopup(false);
+                setShowGameHistory(false);
             }
         };
         window.addEventListener('keydown', handleKeyDown);
@@ -81,14 +84,10 @@ function UserPage() {
         setSelectedMemberIds([]);
     };
 
-    const handleShowResultPopup = (memberId) => {
-        const results = mockWorkResults[memberId];
-        if (results) {
-            setPopupMemberInfo(results);
-            setShowWorkResultPopup(true);
-        } else {
-            alert("This member has no work results data.");
-        }
+    // === UPDATE: Handler nhận cả object member ===
+    const handleShowHistory = (member) => {
+        setViewingUserForHistory(member);
+        setShowGameHistory(true);
     };
 
     const handleFetch = () => {
@@ -118,7 +117,7 @@ function UserPage() {
             <AdvancedStats />
 
             <div className="glass-card" style={{ marginTop: '20px' }}>
-
+                {/* ... (Phần filter và toolbar không đổi) ... */}
                 <div className="filter-section">
                     <input type="text" name="name" value={filters.name} onChange={handleFilterChange} placeholder="Name" className="filter-input" />
                     <input type="text" name="code" value={filters.code} onChange={handleFilterChange} placeholder="Code" className="filter-input" />
@@ -166,7 +165,8 @@ function UserPage() {
                                 <td>{member.department}</td>
                                 <td>{member.team}</td>
                                 <td>{member.role}</td>
-                                <td><button className="btn btn-view" onClick={() => handleShowResultPopup(member.id)}>View Results</button></td>
+                                {/* === UPDATE: Truyền cả object member === */}
+                                <td><button className="btn btn-view" onClick={() => handleShowHistory(member)}>View Results</button></td>
                                 <td><input type="checkbox" checked={selectedMemberIds.includes(member.id)} onChange={() => handleSelectMember(member.id)} /></td>
                             </tr>
                         ))}
@@ -179,10 +179,13 @@ function UserPage() {
                 </div>
             </div>
 
+              {/* === UPDATE: Conditional rendering for ALL popups === */}
             {showWorkResultPopup && <WorkResultPopup memberInfo={popupMemberInfo} onClose={() => setShowWorkResultPopup(false)} />}
             {viewingMember && <MemberDetailPopup member={viewingMember} onClose={() => setViewingMember(null)} onSave={handleSaveMember} />}
             {showAddMemberPopup && <AddMemberPopup onClose={() => setShowAddMemberPopup(false)} onAddMember={() => { alert('Add member functionality in development'); setShowAddMemberPopup(false); }} />}
             {showAddDepartmentPopup && <AddDepartmentPopup onClose={() => setShowAddDepartmentPopup(false)} onAddDepartment={() => { alert('Add department functionality in development'); setShowAddDepartmentPopup(false); }} />}
+            {/* === UPDATE: Truyền object 'user' và quản lý đóng popup === */}
+            {showGameHistory && <GameHistory user={viewingUserForHistory} onClose={() => setShowGameHistory(false)} />}
         </div>
     );
 }
