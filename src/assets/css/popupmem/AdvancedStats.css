@@ -1,55 +1,180 @@
-.stats-container { display: flex; flex-direction: column; gap: 20px; margin-bottom: 20px; }
-.overview-stats-grid { display: grid; grid-template-columns: 1.5fr 2fr; gap: 20px; align-items: flex-start; }
-.stats-card { background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); padding: 20px; }
-.tables-container { display: flex; flex-direction: column; gap: 20px; }
-.charts-column-container { display: flex; flex-direction: column; gap: 20px; }
-
-/* === UPDATE: Đặt chiều cao cố định và bố cục flex cho thẻ biểu đồ tròn === */
-.charts-column-container .stats-card:first-child {
-    height: 200px; /* Chiều cao cố định (bạn có thể điều chỉnh giá trị này) */
-    display: flex; 
+.stats-container {
+    display: flex;
     flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
 }
-/* ==================================================================== */
+
+.overview-stats-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.stats-card {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+    padding: 20px;
+}
+
+.tables-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.charts-column-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* === Giảm chiều cao card biểu đồ === */
+.charts-column-container .stats-card:first-child {
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* ================================ */
 
 .pie-charts-container {
     display: flex;
-    gap: 15px;
+    gap: 30px;
     width: 100%;
-    flex-grow: 1; /* Cho phép khu vực này lấp đầy không gian còn lại */
-    min-height: 0; /* Ghi đè min-height cũ */
+    flex-grow: 1;
+    min-height: 0;
+    justify-content: space-around;
 }
+
 .pie-chart-wrapper {
     flex: 1;
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
-/* === UPDATE: Thu nhỏ tiêu đề của từng biểu đồ tròn === */
+
+/* Tiêu đề biểu đồ nhỏ hơn */
 .pie-chart-wrapper .stats-title {
     font-size: 1rem;
     margin-bottom: 5px;
     text-align: center;
 }
-/* ==================================================== */
 
-.game-selector-container { margin-bottom: 10px; }
-.stats-selector { width: 100%; padding: 10px 15px; border-radius: 10px; border: 1px solid #e0e0e0; font-size: 0.9rem; background-color: #ffffff; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%2...%3E'); background-repeat: no-repeat; background-position: right 15px top 50%; background-size: .6em auto; cursor: pointer; transition: all 0.2s ease; }
-.stats-selector:hover { border-color: #a6c1ee; }
-.stats-title { font-size: 1.1rem; font-weight: 600; color: #3e52a8; margin-top: 0; margin-bottom: 15px; }
-.card-footer { text-align: right; margin-top: 10px; }
-.action-link { font-weight: 500; color: #007bff; cursor: pointer; text-decoration: underline; margin-left: 15px; font-size: 0.9rem; }
+/* Thu nhỏ biểu đồ nếu cần */
+.pie-chart-wrapper canvas {
+    max-width: 120px;
+    max-height: 120px;
+}
 
-/* Bố cục cho phần Drilldown */
-.drilldown-container { display: flex; flex-direction: column; gap: 15px; }
-.drilldown-selectors-wrapper { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-.drilldown-selectors-wrapper .stats-title { margin-bottom: 0; flex-shrink: 0; }
-.drilldown-selectors { flex: 1; display: flex; gap: 15px; }
-.drilldown-selectors .stats-selector { flex: 1; min-width: 150px; }
+/* Dropdown chọn game */
+.game-selector-container {
+    margin-bottom: 10px;
+}
 
-/* Style cho bảng thống kê */
-.stats-grid { display: grid; grid-template-columns: 1.5fr 1.5fr 1fr 1fr; gap: 8px 15px; align-items: center; }
-.stats-header { font-weight: 600; color: #333; font-size: 13px; padding-bottom: 6px; border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
-.stats-row { display: contents; }
-.stats-cell { font-size: 14px; color: #444; padding: 6px 0; }
+.stats-selector {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    font-size: 0.9rem;
+    background-color: #ffffff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 15px top 50%;
+    background-size: .6em auto;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.stats-selector:hover {
+    border-color: #a6c1ee;
+}
+
+.stats-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #3e52a8;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.card-footer {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.action-link {
+    font-weight: 500;
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 15px;
+    font-size: 0.9rem;
+}
+
+/* Drilldown layout */
+.drilldown-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.drilldown-selectors-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.drilldown-selectors-wrapper .stats-title {
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+
+.drilldown-selectors {
+    flex: 1;
+    display: flex;
+    gap: 15px;
+}
+
+.drilldown-selectors .stats-selector {
+    flex: 1;
+    min-width: 150px;
+}
+
+/* Table thống kê */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1fr 1fr;
+    gap: 8px 15px;
+    align-items: center;
+}
+
+.stats-header {
+    font-weight: 600;
+    color: #333;
+    font-size: 13px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.stats-row {
+    display: contents;
+}
+
+.stats-cell {
+    font-size: 14px;
+    color: #444;
+    padding: 6px 0;
+}
