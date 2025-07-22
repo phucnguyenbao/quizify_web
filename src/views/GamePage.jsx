@@ -94,7 +94,8 @@ const GamePage = () => {
 
       {currentView === 'list' && (
         <>
-          <h2 className="bubble-text">Game Management</h2>
+          <h2 class="game-title"><span class="text-inner">GAME MANAGEMENT</span></h2>
+
 
           {/* Filters */}
           <div className="filter-row">

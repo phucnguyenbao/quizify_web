@@ -1,10 +1,10 @@
 .game-footer {
-  padding: 16px 24px; /* Giảm padding để footer thấp */
+  padding: 1px 16px;
   background: linear-gradient(135deg, #e87acb, #5d7ddf);
   color: #fff;
   box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.1);
   font-family: 'Segoe UI', sans-serif;
-  font-size: 15px; /* Tăng nhẹ size */
+ font-size: 14px;
 }
 
 .footer-content {

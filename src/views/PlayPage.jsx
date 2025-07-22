@@ -31,7 +31,17 @@ const dummyQuiz = {
 // --- WAITING ROOM COMPONENT (Không thay đổi) ---
 export const WaitingRoom = ({ game, onStartQuiz, onExit }) => {
   const [soundOn, setSoundOn] = useState(true);
+
+  const handleStart = () => {
+    document.body.classList.add('start-transition');
+    document.querySelector('.waiting-room').classList.add('hide-content');
+    setTimeout(() => {
+      onStartQuiz();
+    }, 870); 
+  };
+
   if (!game) return null;
+
   return (
     <div className="waiting-room">
       <h3 className="page-title">Game Lobby</h3>
@@ -47,7 +57,7 @@ export const WaitingRoom = ({ game, onStartQuiz, onExit }) => {
           <div className="info-row"><span>Highest Score</span><span>9</span></div>
         </div>
         <div className="start-game-actions">
-          <button className="btn btn-primary" onClick={onStartQuiz}>Start</button>
+          <button className="btn btn-primary" onClick={handleStart}>Start</button>
           <button className="btn-secondary" onClick={onExit}>Back</button>
         </div>
       </div>
@@ -56,8 +66,12 @@ export const WaitingRoom = ({ game, onStartQuiz, onExit }) => {
 };
 
 
+
 // --- QUIZ SCREEN COMPONENT (Logic không đổi) ---
 export const QuizScreen = ({ game, onFinish }) => {
+    useEffect(() => {
+    document.body.classList.remove('start-transition');
+  }, []);
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState({});
   const [navPage, setNavPage] = useState(0);
@@ -146,7 +160,7 @@ export const QuizScreen = ({ game, onFinish }) => {
                 className={`option-box ${answers[currentQ] === key ? 'selected' : ''}`}
                 onClick={() => handleSelectAnswer(currentQ, key)}
               >
-                <span>{key})</span><p>{value}</p>
+                <span>{key}</span><p>{value}</p>
               </div>
             ))}
           </div>

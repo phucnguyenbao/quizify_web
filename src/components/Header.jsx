@@ -142,6 +142,10 @@ function Header() {
                 </NavLink>
               </li>
             </div>
+              <div class="navbar-center">
+    <span class="welcome-text">Every click brings you closer to victory !</span>
+              </div>
+
 
           </div>
 
