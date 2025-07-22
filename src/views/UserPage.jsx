@@ -7,8 +7,8 @@ import MemberDetailPopup from './components/popupmem/MemberDetailPopup';
 // import TeamPopup from './components/popupmem/TeamPopup'; 
 import WorkResultPopup from './components/popupmem/WorkResultPopup';
 // === UPDATE: Import các component mới ===
-import DepartmentStats from './components/popupmem/DepartmentStats';
-import GameList from './components/popupmem/GameList';
+import AdvancedStats from './components/popupmem/AdvancedStats';
+
 
 // --- MOCK DATA (TRANSLATED TO ENGLISH) ---
 const mockMembersData = [{ id: '2301001', name: 'Minh Tuan', department: 'ODD', team: 'Team 1', role: 'Leader' }, { id: '2301002', name: 'Khanh An', department: 'ODD', team: 'Team 2', role: 'Manager' }, { id: '2301003', name: 'Phuc Lam', department: 'ODD', team: 'Team 1', role: 'User' }, { id: '2301004', name: 'Thu Trang', department: 'ODD', team: 'Team 3', role: 'Leader' }, { id: '2302001', name: 'Anh Thu', department: 'ABD', team: 'Team 4', role: 'Leader' }, { id: '2302002', name: 'Bao Han', department: 'ABD', team: 'Team 4', role: 'User' }, { id: '2302003', name: 'Gia Huy', department: 'ABD', team: 'Team 5', role: 'Leader' }, { id: '2303001', name: 'Hoai An', department: 'HR', team: 'Team 6', role: 'Leader' }, { id: '2303002', name: 'Manh Dung', department: 'HR', team: 'Team 6', role: 'User' }, { id: '2303003', name: 'Duc Minh', department: 'HR', team: 'Team 7', role: 'User' },];
@@ -104,8 +104,8 @@ function UserPage() {
         <div className="management-container">
             <h1 className="management-title">USER MANAGEMENT</h1>
             {/* === UPDATE: Thêm các component mới vào đây === */}
-            <DepartmentStats />
-            <GameList />
+            <AdvancedStats />
+
             <div className="glass-card">
                 {/* === UPDATE: Bố cục thanh tìm kiếm 2 hàng mới === */}
                 <div className="filter-section">
