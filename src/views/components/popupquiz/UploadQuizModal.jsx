@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../assets/css/AddGame.css'; 
+import '../../../assets/css/popupgamequiz/AddGame.css';
 
 const UploadQuizModal = ({ onClose, onUpload }) => {
     const [file, setFile] = useState(null);

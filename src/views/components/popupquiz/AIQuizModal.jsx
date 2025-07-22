@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../assets/css/AddGame.css'; 
+import '../../../assets/css/popupgamequiz/AddGame.css';
 
 const AIQuizModal = ({ onClose }) => {
   const [prompt, setPrompt] = useState('');

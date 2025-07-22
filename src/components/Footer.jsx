@@ -10,7 +10,7 @@ const upcomingGames = [
 ];
 
 const Footer = () => {
-  const [playingIndex, setPlayingIndex] = useState(null);
+  
   const [modalIndex, setModalIndex] = useState(null);
 
   return (
@@ -19,7 +19,9 @@ const Footer = () => {
 
         <div className="footer-about">
           <h4>About Quizify</h4>
-          <p>Quizify is your go-to platform for team quizzes, fun games, and interactive learning. We aim to bring education and entertainment together!</p>
+          <p>
+            Quizify is your go-to platform for team quizzes, fun games, and interactive learning. We aim to bring education and entertainment together! With a wide range of engaging games designed to challenge your mind and foster collaboration, Quizify is the perfect tool for teams, classrooms, or just a fun night with friends. Whether you're testing your memory, identifying sounds, or racing through trivia, our games are built to spark curiosity, encourage learning, and strengthen teamwork. Join us on a journey where knowledge meets excitement!
+          </p>
           <p>Contact us: support@quizify.com</p>
         </div>
 
@@ -28,16 +30,29 @@ const Footer = () => {
           <div className="game-preview">
             {upcomingGames.map((game, idx) => (
 <div key={idx} className="game-item" onClick={() => setModalIndex(idx)}>
-  <video
-    src={game.video}
-    muted
-    className="video-thumbnail"
-    onMouseOver={e => e.target.play()}
-    onMouseOut={e => {
+<video
+  src={game.video}
+  muted
+  className="video-thumbnail"
+  onMouseOver={e => {
+    if (e.target.paused) {
+      const playPromise = e.target.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          // Ngăn lỗi hiện ra console
+          console.warn("Play interrupted:", error);
+        });
+      }
+    }
+  }}
+  onMouseOut={e => {
+    if (!e.target.paused) {
       e.target.pause();
       e.target.currentTime = 0;
-    }}
-  />
+    }
+  }}
+/>
+
   <span>{game.name}</span>
 </div>
 
@@ -52,8 +67,6 @@ const Footer = () => {
       {modalIndex !== null && (
         <div className="game-modal" onClick={() => setModalIndex(null)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setModalIndex(null)}>×</button>
-            <h2>{upcomingGames[modalIndex].name}</h2>
             <video
               src={upcomingGames[modalIndex].video}
               autoPlay

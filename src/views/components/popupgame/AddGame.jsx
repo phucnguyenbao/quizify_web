@@ -1,5 +1,5 @@
 import React from 'react'; 
-import '../../assets/css/AddGame.css';
+import '../../../assets/css/popupgamequiz/AddGame.css';
 const AddGameModal = ({ onClose, onCreate, newGame, onChange }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>

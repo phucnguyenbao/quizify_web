@@ -1,9 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import '../assets/css/GamePage.css';
-import AddGameModal from './components/AddGame';
 import { WaitingRoom, QuizScreen } from './PlayPage';
-import GameDetails from './components/GameDetails';
-
+import GameDetails from './components/popupgame/GameDetails';
+import AddGameModal from './components/popupgame/AddGame';
 // Dummy Data
 const dummyGames = [
   {

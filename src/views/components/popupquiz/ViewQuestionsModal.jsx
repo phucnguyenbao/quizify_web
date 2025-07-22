@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../assets/css/AddGame.css'; 
+import '../../../assets/css/popupgamequiz/AddGame.css';
 import { Trash } from 'lucide-react';
 
 const ViewQuestionsModal = ({ quiz, onClose }) => {

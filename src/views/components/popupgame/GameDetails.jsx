@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../assets/css/AddGame.css'; // Dùng chung file CSS với AddGame
+import '../../../assets/css/popupgamequiz/AddGame.css';
 
 const GameDetails = ({ game, onClose }) => {
   if (!game) return null;
