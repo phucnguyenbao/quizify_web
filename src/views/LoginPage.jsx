@@ -31,7 +31,7 @@ function LoginPage() {
     if (email) {
       try {
         await sendPasswordResetEmail(auth, email);
-        alert('Password reset email sent!');
+        alert('Password reset email sent! Please check your inbox.');
         setIsForgot(false);
       } catch (err) {
         alert('Error: ' + err.message);

@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SettingForm from './components/popupsetting/SettingForm';
 import ReportTable from './components/popupsetting/ReportTable';
 import '../assets/css/SettingPage.css';
-
+import { auth, db } from '../firebase/services';
+import { onAuthStateChanged } from 'firebase/auth';
+import { query, collection, where, getDocs } from 'firebase/firestore';
 
 const SettingPage = () => {
   const [filterCreateDate, setFilterCreateDate] = useState('');
   const [reportContent, setReportContent] = useState('');
   const [music, setMusic] = useState('');
-
+  const [language, setLanguage] = useState('');
   const [sound, setSound] = useState('Off');
   const [theme, setTheme] = useState('Light');
   const [searchReport, setSearchReport] = useState('');
@@ -16,6 +18,40 @@ const SettingPage = () => {
   const [searchBan, setSearchBan] = useState('');
   const [searchTeam, setSearchTeam] = useState('');
   const [filterReplyDate, setFilterReplyDate] = useState('');
+  const [memberId, setMemberId] = useState('');
+
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      try {
+        const q = query(
+          collection(db, 'user'),
+          where('email', '==', user.email) // Query theo email để tìm member_id
+        );
+
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const userDoc = querySnapshot.docs[0];
+          const data = userDoc.data();
+          setMemberId(data.member_id); // member_id trong document
+          setMusic(data.music);
+          setSound(data.background_sound)
+          setTheme(data.theme)
+          setLanguage(data.language)
+          console.log('Found member_id:', data.member_id);
+        } else {
+          console.error('❌ Không tìm thấy user có email này trong Firestore');
+        }
+
+      } catch (err) {
+        console.error('❌ Lỗi lấy dữ liệu Firestore:', err);
+      }
+    }
+  });
+
+  return () => unsubscribe();
+}, []);
 
   const reports = [
     { id: 1, title: 'Report 1', status: 'Processed', date: '23/06/2025', user: 'Minh', ban: 'Technical', team: 'ODD', replyDate: '2025-06-23' },
@@ -59,14 +95,17 @@ const SettingPage = () => {
   const handleUploadMusic = () => {
     alert('Music upload feature is under development!');
   };
+
   return (
     <div className="setting-container">
       <div className="section">
         <h3>Settings Management</h3>
         <SettingForm
+          uid={memberId}
           sound={sound} setSound={setSound}
           theme={theme} setTheme={setTheme}
           music={music} setMusic={setMusic}
+          language={language} setLanguage={setLanguage}
           reportContent={reportContent} setReportContent={setReportContent}
           handleSubmitReport={handleSubmitReport}
           handleUploadMusic={handleUploadMusic}

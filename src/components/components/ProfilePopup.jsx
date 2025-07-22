@@ -1,6 +1,6 @@
-// src/components/ProfilePopup.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Camera, LogOut } from 'lucide-react';
+import AvatarLibraryPopup from './AvatarLibraryPopup';
 
 const ProfilePopup = ({
   userData, editData, setEditData,
@@ -8,8 +8,12 @@ const ProfilePopup = ({
   handleEditChange, handleSave, handleCancel,
   handleAvatarChange, handleLogout
 }) => {
+  
+  const [showAvatarLibrary, setShowAvatarLibrary] = useState(false);
 
-  const avatar = `https://i.pravatar.cc/150?img=${editData.avatarId}`;
+  const avatar = editData.avatarId 
+    ? `/assets/images/avatar/${editData.avatarId}` 
+    : 'https://i.pravatar.cc/150?u=default';
 
   return (
     <div className="profile-popup">
@@ -68,12 +72,7 @@ const ProfilePopup = ({
 
             <button
               className="library-button"
-              onClick={() => {
-                const newId = prompt("Enter avatar ID (1 - 70):", editData.avatarId);
-                if (newId && +newId >= 1 && +newId <= 70) {
-                  setEditData(prev => ({ ...prev, avatarId: +newId }));
-                }
-              }}
+              onClick={() => setShowAvatarLibrary(true)}
             >
               Choose
             </button>
@@ -88,6 +87,15 @@ const ProfilePopup = ({
         </button>
       </div>
 
+      {showAvatarLibrary && (
+        <AvatarLibraryPopup
+          onSelect={(filename) => {
+            setEditData(prev => ({ ...prev, avatarId: filename }));
+            setShowAvatarLibrary(false);
+          }}
+          onClose={() => setShowAvatarLibrary(false)}
+        />
+      )}
     </div>
   );
 };

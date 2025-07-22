@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import '../assets/css/Footer.css';
 
 const upcomingGames = [
-  { name: 'Battle Arena', video: '/assets/images/BattleArena.mp4', poster: '/assets/images/BattleArena.mp4' },
-  { name: 'Chess', video: '/assets/images/Chess.mp4', poster: '/assets/images/quiz-quest.png' },
-  { name: 'Memory Match', video: '/assets/images/MemoryMatch.mp4', poster: '/assets/images/memory-match.png' },
-  { name: 'Adventure Run', video: '/assets/images/AdventureRun.mp4', poster: '/assets/images/adventure-run.png' },
-  { name: 'Guess the sound', video: '/assets/images/GuessTheSound.mp4', poster: '/assets/images/adventure-run.png' }
+  { name: 'Battle Arena', video: '/assets/images/gamefooter/BattleArena.mp4', poster: '/assets/images/BattleArena.mp4' },
+  { name: 'Chess', video: '/assets/images/gamefooter/Chess.mp4', poster: '/assets/images/quiz-quest.png' },
+  { name: 'Memory Match', video: '/assets/images/gamefooter/MemoryMatch.mp4', poster: '/assets/images/memory-match.png' },
+  { name: 'Adventure Run', video: '/assets/images/gamefooter/AdventureRun.mp4', poster: '/assets/images/adventure-run.png' },
+  { name: 'Guess the sound', video: '/assets/images/gamefooter/GuessTheSound.mp4', poster: '/assets/images/adventure-run.png' }
 ];
 
 const Footer = () => {

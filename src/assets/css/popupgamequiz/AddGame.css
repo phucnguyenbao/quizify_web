@@ -13,7 +13,6 @@
   top: 1% !important;            
   left: 50% !important;
   transform: translateX(-50%) !important;
-
   background: rgba(255, 255, 255, 0.05) !important;
   backdrop-filter: blur(30px) !important;
   padding: 36px !important;

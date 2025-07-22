@@ -103,7 +103,11 @@ function Header() {
 
   if (!userData) return null;
 
-  const avatar = `https://i.pravatar.cc/150?img=${editData.avatarId}`;
+const avatar = isEditing 
+  ? `/assets/images/avatar/${editData.avatarId}` 
+  : `/assets/images/avatar/${userData.avatarId}`;
+
+
 
   return (
     <header className="header">

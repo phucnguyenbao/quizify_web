@@ -1,0 +1,62 @@
+/* AvatarLibraryPopup.css */
+.avatar-library-popup {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(8px) !important;
+  z-index: 9999 !important;
+    overflow-y: auto !important;  
+}
+
+
+
+.avatar-library-popup h3 {
+  color: #ffdbb5 !important;
+  margin-bottom: 20px !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  text-align: center !important; /* 👉 Thêm dòng này */
+}
+
+.avatar-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 14px !important;
+  justify-content: center !important;
+  margin-top: 20px !important;
+}
+
+.avatar-item {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  object-fit: cover !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+  border: 2px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.avatar-item:hover {
+  transform: scale(1.15) !important;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.6) !important;
+  border-color: #6ee7b7 !important;
+}
+
+.close-btn {
+  background: #f5f5f5 !important;
+  color: #555 !important;
+  padding: 12px 24px !important;
+  border-radius: 14px !important;
+  border: none !important;
+  font-weight: 600 !important;
+  margin-left: 12px !important;
+  cursor: pointer !important;
+  transition: 0.3s !important;
+}
+
+.close-btn:hover {
+  background: #e0e0e0 !important;
+}

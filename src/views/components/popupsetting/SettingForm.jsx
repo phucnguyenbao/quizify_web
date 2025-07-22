@@ -1,11 +1,34 @@
 // src/components/SettingForm.jsx
 
-import React from 'react';
+import React, { useState } from 'react';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../../firebase/services';
 
 const SettingForm = ({
-  sound, setSound, theme, setTheme, music, setMusic,
-  reportContent, setReportContent, handleSubmitReport, handleUploadMusic
+  uid, 
+  sound, setSound,
+  theme, setTheme,
+  music, setMusic,
+  reportContent, setReportContent,
+  handleSubmitReport, handleUploadMusic
 }) => {
+  const [language, setLanguage] = useState('Japanese');
+
+  // Hàm cập nhật Firestore
+  const updateSetting = async (field, value) => {
+    if (!uid) {
+      console.error('No member_id provided. Cannot update Firestore.');
+      return;
+    }
+    try {
+      const docRef = doc(db, 'user', uid); // Dùng đúng collection + member_id làm doc id
+      await updateDoc(docRef, { [field]: value });
+      console.log(`✅ Updated ${field} to ${value} in Firestore`);
+    } catch (err) {
+      console.error(`❌ Failed to update ${field}:`, err);
+    }
+  };
+
   return (
     <div className="setting-content">
       <div className="setting-video">
@@ -17,7 +40,11 @@ const SettingForm = ({
           <label>Background Sound</label>
           <select
             value={sound}
-            onChange={(e) => setSound(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              setSound(value);
+              updateSetting('background_sound', value);
+            }}
             className={`select-sound ${sound === 'On' ? 'sound-on' : 'sound-off'}`}
           >
             <option value="Off">Off</option>
@@ -30,10 +57,13 @@ const SettingForm = ({
           <div className="music-select-group">
             <select
               value={music}
-              onChange={(e) => setMusic(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                setMusic(value);
+                updateSetting('music', value);
+              }}
               className="music-select"
             >
-              <option value="">Choose music</option>
               <option value="Thien Ly Oi">Thien Ly Oi</option>
               <option value="Dom Dom">Dom Dom</option>
               <option value="Hong Nhan">Hong Nhan</option>
@@ -44,9 +74,17 @@ const SettingForm = ({
 
         <div className="form-group">
           <label>Language</label>
-          <select>
-            <option>Japanese</option>
-            <option>Vietnamese</option>
+          <select
+            value={language}
+            onChange={(e) => {
+              const value = e.target.value;
+              setLanguage(value);
+              updateSetting('language', value);
+            }}
+            className="language-select"
+          >
+            <option value="Japanese">Japanese</option>
+            <option value="Vietnamese">Vietnamese</option>
           </select>
         </div>
 
@@ -54,7 +92,11 @@ const SettingForm = ({
           <label>Theme</label>
           <select
             value={theme}
-            onChange={(e) => setTheme(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              setTheme(value);
+              updateSetting('theme', value);
+            }}
             className={`select-theme ${theme === 'Light' ? 'theme-white' : 'theme-black'}`}
           >
             <option value="Dark">Dark</option>
