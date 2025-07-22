@@ -4,22 +4,26 @@
   left: 0 !important;
   width: 100% !important;
   height: 100% !important;
-  background: rgba(0, 0, 0, 0.6) !important; /* tăng độ mờ lên */
-  backdrop-filter: blur(8px) !important;    /* làm mờ sâu hơn */
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  z-index: 999 !important;
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(8px) !important;
+  z-index: 9999 !important;
 }
-
 .modal-content {
-  background: rgba(255, 255, 255, 0.05) !important; /* mờ hơn nữa */
-  backdrop-filter: blur(30px) !important;           /* làm mờ sâu hơn */
+  position: fixed !important;
+  top: 1% !important;            
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(30px) !important;
   padding: 36px !important;
   border-radius: 20px !important;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2) !important;
   width: 90% !important;
   max-width: 750px !important;
+  max-height: 70vh !important;   
+  overflow-y: auto !important;  
+
 }
 
 .form-grid {
@@ -108,6 +112,14 @@
   background: #e0e0e0 !important;
 }
 
+
+/* ksnlksnlkcnslkncksnklcnlksnclknslkcnkldsnlkcdnlksnckldnsklcnlksnakcdnksjfk
+ksnklfdnslkc
+sdncksndkcns
+sbjkbkjsbkjdbfkjsbkfbs'df
+bskjcbskjcnkdsfasnklf
+jsbdkjfbsldkcnsdlk
+ */
 .detail-table {
   width: 100% !important;
   border-collapse: collapse !important;
@@ -115,20 +127,36 @@
   background: rgba(255, 255, 255, 0.1) !important;
   backdrop-filter: blur(10px) !important;
   border-radius: 14px !important;
-  overflow: hidden !important;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
-}
+  max-height: 40vh;
+  display: block !important; 
 
+}
+.detail-table thead, .detail-table tbody, .detail-table tr {
+  display: table !important; 
+  width: 100% !important; 
+  table-layout: fixed !important; 
+}
+.detail-table thead {
+  width: calc(100% - 8px); /* Trừ bớt chiều rộng scrollbar cho khớp */
+}
+.detail-table tbody {
+  display: block !important;
+  max-height: 250px !important;
+  overflow-y: auto !important;
+}
 .detail-table th {
   background: rgba(255, 255, 255, 0.15) !important;
-  padding: 14px !important;
+  padding: 12px !important;
   color: #ffd8b1 !important;
+  text-align: center !important;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
   font-weight: 600 !important;
+  white-space: nowrap !important;
 }
 
 .detail-table td {
-  padding: 12px !important;
+  padding: 5px !important;
   text-align: center !important;
   color: #f0f0f5 !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
@@ -139,6 +167,7 @@
   background: rgba(255, 255, 255, 0.08) !important;
   transition: background 0.3s ease !important;
 }
+
 
 .quiz-action-links {
   margin-top: 20px !important;

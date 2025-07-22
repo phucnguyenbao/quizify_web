@@ -4,7 +4,11 @@ html, body {
   box-sizing: border-box;
   font-family: 'Segoe UI', sans-serif;
 }
-
+/* Global */
+@font-face {
+  font-family: 'Bubblegum';
+  src: url('/public/fonts/bubblegum/Bubblegum.ttf') format('truetype');
+}
 .header {
   background: linear-gradient(90deg, #5138bf, #928DAB);
   padding: 0.5px 12px; /* Giảm chiều cao */
@@ -304,6 +308,7 @@ html, body {
 .welcome-text {
   font-family: 'Bubblegum Sans', cursive;
   font-size: 28px;
+  font-style: italic;
   background: linear-gradient(270deg, #fca311, #f7b733, #f28482, #fca311);
   background-size: 600% 600%;
   -webkit-background-clip: text;

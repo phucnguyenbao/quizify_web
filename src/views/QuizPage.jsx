@@ -68,7 +68,6 @@ const QuizManagement = () => {
     (filters.numUsers === '' || q.numUsers.toString().includes(filters.numUsers)) &&
     (filters.numChoices === '' || q.numChoices.toString().includes(filters.numChoices))
   ));
-
   return (
     <div className="quiz-management">
       <h2>Quiz Management</h2>

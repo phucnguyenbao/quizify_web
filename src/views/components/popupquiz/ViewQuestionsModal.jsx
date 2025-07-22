@@ -1,11 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../../assets/css/popupgamequiz/AddGame.css';
 import { Trash } from 'lucide-react';
 
 const ViewQuestionsModal = ({ quiz, onClose }) => {
-  return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={e => e.stopPropagation()}>
+    const [topPosition, setTopPosition] = useState(0);
+useEffect(() => {
+  // Khóa scroll nền
+  document.body.style.overflow = 'hidden';
+
+  // Scroll về đầu trang để viewport hiển thị hết modal
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+
+  return () => {
+    document.body.style.overflow = 'auto';
+  };
+}, []);
+
+
+    return (
+        <div className="modal-overlay" onClick={onClose}>
+            <div
+                className="modal-content"
+                style={{
+                    top: `${topPosition}px`,
+                    left: '50%',
+                     transform: 'translate(-50%, -50%)'
+                }}
+                onClick={(e) => e.stopPropagation()}
+            >
         <h2 className="modal-title">View Questions</h2>
 
         <table className="detail-table">
@@ -16,7 +41,7 @@ const ViewQuestionsModal = ({ quiz, onClose }) => {
               <th>Topic</th>
               <th>Created Date</th>
               <th>Average Score</th>
-              <th>Number of Questions</th>
+              <th>Number</th>
             </tr>
           </thead>
           <tbody>
@@ -30,7 +55,7 @@ const ViewQuestionsModal = ({ quiz, onClose }) => {
             </tr>
           </tbody>
         </table>
-
+ <div class="table-wrapper">
         <table className="detail-table">
           <thead>
             <tr>
@@ -76,7 +101,7 @@ const ViewQuestionsModal = ({ quiz, onClose }) => {
   </tfoot>
         </table>
 
-
+</div>
 
         <div className="modal-footer">
           <button className="gradient-button">Confirm</button>
