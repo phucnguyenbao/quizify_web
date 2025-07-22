@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import '../assets/css/Footer.css';
 
 const upcomingGames = [
-  { name: 'Battle Arena', video: '/assets/images/BattleArena.mp4', poster: '/assets/images/battle-arena.png' },
-  { name: 'Quiz Quest', video: '/assets/videos/quiz-quest.mp4', poster: '/assets/images/quiz-quest.png' },
-  { name: 'Memory Match', video: '/assets/videos/memory-match.mp4', poster: '/assets/images/memory-match.png' },
+  { name: 'Battle Arena', video: '/assets/images/BattleArena.mp4', poster: '/assets/images/BattleArena.mp4' },
+  { name: 'Chess', video: '/assets/images/Chess.mp4', poster: '/assets/images/quiz-quest.png' },
+  { name: 'Memory Match', video: '/assets/images/MemoryMatch.mp4', poster: '/assets/images/memory-match.png' },
   { name: 'Adventure Run', video: '/assets/images/AdventureRun.mp4', poster: '/assets/images/adventure-run.png' },
   { name: 'Guess the sound', video: '/assets/images/GuessTheSound.mp4', poster: '/assets/images/adventure-run.png' }
 ];
@@ -27,10 +27,20 @@ const Footer = () => {
           <h4>Upcoming Games</h4>
           <div className="game-preview">
             {upcomingGames.map((game, idx) => (
-              <div key={idx} className="game-item" onClick={() => setModalIndex(idx)}>
-                <img src={game.poster} alt={game.name} />
-                <span>{game.name}</span>
-              </div>
+<div key={idx} className="game-item" onClick={() => setModalIndex(idx)}>
+  <video
+    src={game.video}
+    muted
+    className="video-thumbnail"
+    onMouseOver={e => e.target.play()}
+    onMouseOut={e => {
+      e.target.pause();
+      e.target.currentTime = 0;
+    }}
+  />
+  <span>{game.name}</span>
+</div>
+
             ))}
           </div>
         </div>

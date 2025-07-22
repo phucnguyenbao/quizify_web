@@ -136,3 +136,10 @@
   border-radius: 8px;
   margin-top: 10px;
 }
+.video-thumbnail {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+}
