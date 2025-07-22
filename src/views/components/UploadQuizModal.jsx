@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-// Giả sử bạn có một file CSS chung cho các modal
-import '../../assets/css/QuizPage.css';
+import '../../assets/css/AddGame.css'; 
 
 const UploadQuizModal = ({ onClose, onUpload }) => {
-    // Dòng này gây ra lỗi vì biến 'file' không được sử dụng
     const [file, setFile] = useState(null);
 
     const handleFileChange = (event) => {
@@ -13,11 +11,9 @@ const UploadQuizModal = ({ onClose, onUpload }) => {
     };
 
     return (
-        <div className="modal-backdrop">
-            <div className="modal-content">
-                <div className="modal-header">
-                    <h2>Upload Quiz from File</h2>
-                </div>
+        <div className="modal-overlay small-overlay">
+            <div className="ai-modal">
+                  <h2 className="modal-title">Upload Quiz from File</h2>
                 <div className="modal-body">
                     <p>Please select a file to upload (.xls, .csv)</p>
                     
@@ -28,17 +24,17 @@ const UploadQuizModal = ({ onClose, onUpload }) => {
                     />
 
                     {/* FIX: Sử dụng biến 'file' để hiển thị tên file đã chọn */}
-                    {file && (
-                        <div style={{ marginTop: '15px', color: 'green' }}>
-                            <p>Selected file: <strong>{file.name}</strong></p>
-                        </div>
-                    )}
+{file && (
+  <div className="selected-file">
+    <p>Selected file: <strong>{file.name}</strong></p>
+  </div>
+)}
 
                 </div>
-                <div className="modal-footer">
-                    <button className="btn btn-secondary" onClick={onClose}>Cancel</button>
-                    <button className="btn btn-primary" onClick={() => onUpload(file)}>Upload</button>
-                </div>
+                    <div className="modal-footer">
+                    <button className="gradient-button">Upload</button>
+                    <button className="secondary-button" onClick={onClose}>Cancel</button>
+                    </div>
             </div>
         </div>
     );

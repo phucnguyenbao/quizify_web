@@ -62,6 +62,16 @@ const SettingPage = () => {
       {/* Section 1: Settings */}
       <div className="section">
         <h3>Settings Management</h3>
+        <div className="setting-content">
+          <div className="setting-video">
+  <video 
+    src="/assets/images/setting.mp4" 
+    autoPlay 
+    muted 
+    loop 
+    playsInline
+  />
+</div>
         <div className="setting-form">
           <div className="form-group">
             <label>Background Sound</label>
@@ -129,6 +139,9 @@ const SettingPage = () => {
           </div>
         </div>
       </div>
+
+</div>
+
 
      
       {/* Section 2: Report Management */}

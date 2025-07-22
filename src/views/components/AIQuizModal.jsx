@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
-import "../../assets/css/QuizPage.css";
+import '../../assets/css/AddGame.css'; 
 
 const AIQuizModal = ({ onClose }) => {
   const [prompt, setPrompt] = useState('');
 
   return (
-    <div className="popup-container">
-      <span className="popup-title">AI Quiz Generator</span>
-
-      <div className="popup-content">
+    <div className="modal-overlay small-overlay">
+      <div className="ai-modal">
+        <h2 className="modal-title">AI Quiz Generator</h2>
         <input
+          className="ai-input"
           type="text"
           placeholder="Enter prompt"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
         />
-        <button className="popup-btn">Generate</button>
-        <span className="popup-cancel" onClick={onClose}>Cancel</span>
+        <div className="modal-footer">
+          <button className="gradient-button">Gen</button>
+          <button className="secondary-button" onClick={onClose}>Cancel</button>
+        </div>
       </div>
     </div>
   );

@@ -142,18 +142,25 @@ const GamePage = () => {
             <button onClick={handleSearch}>Search</button>
             <button onClick={handleReset}>Reset</button>
           </div>
-          <div className="action-buttons">
-            <span className="action-link" onClick={selectAll}>Select All</span>
-            <span className="action-link" onClick={deleteSelected}>Delete</span>
-          </div>
+
           {/* Game Table */}
           <table className="game-table">
-            <thead>
-              <tr>
-                <th>Game Name</th><th>Room Code</th><th>Created Date</th><th>Avg Score</th><th>Max Score</th><th>Members</th><th>Deadline</th><th>Quiz</th><th>Status</th><th>Details</th><th>Edit</th><th>✓</th>
-              </tr>
-            </thead>
-            <tbody>
+  <thead>
+    <tr>
+      <th colSpan="12" style={{ textAlign: 'right', padding: '10px 20px' }}>
+        <div className="table-actions">
+          <span className="action-link" onClick={selectAll}>Select All</span>
+          <span className="action-link" onClick={deleteSelected}>Delete</span>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <th>Game Name</th><th>Room Code</th><th>Created Date</th><th>Avg Score</th>
+      <th>Max Score</th><th>Members</th><th>Deadline</th><th>Quiz</th>
+      <th>Status</th><th>Details</th><th>Edit</th><th>✓</th>
+    </tr>
+  </thead>
+  <tbody>
               {filteredGames.map((game, i) => (
                 <tr key={i}>
                   <td style={{ color: 'blue', cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handlePlayGame(game)}>{game.name}</td>

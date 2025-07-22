@@ -5,6 +5,7 @@ import QuizPage from './views/QuizPage';
 import RolePage from './views/RolePage';
 import SettingPage from './views/SettingPage';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import LoginPage from './views/LoginPage'; // 1. Import LoginPage
 import UserPage from './views/UserPage'; // Import UserPage nếu cần
 function App() {
@@ -14,7 +15,7 @@ function App() {
       <Header /> 
       <Routes>
         {/* 2. Thêm Route cho trang đăng nhập */}
-        <Route path="/login" element={<LoginPage />} />1
+        <Route path="/login" element={<LoginPage />} />
         {/* Các Route hiện có của bạn */}
         <Route path="/" element={<UserPage />} /> 
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/role" element={<RolePage />} /> 
         <Route path="/setting" element={<SettingPage />} /> 
       </Routes>
+      <Footer />
     </Router>
   );
 }

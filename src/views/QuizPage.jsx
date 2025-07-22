@@ -87,23 +87,26 @@ const QuizManagement = () => {
         <button onClick={handleCancel}>Reset</button>
       </div>
 
-      {/* Action Buttons */}
-      <div className="action-buttons">
-        <span className="action-link" onClick={selectAll}>Select All</span>
-        <span className="action-link" onClick={deleteSelected}>Delete</span>
-        <span className="action-link" onClick={() => alert("Fetching quiz!")}>Fetch</span>
-        <span className="action-link" onClick={exportSelected}>Export</span>
-      </div>
 
       {/* Table */}
       <table>
-        <thead>
-          <tr>
-            <th>Name</th><th>Code</th><th>Topic</th><th>Date</th>
-            <th>Score</th><th>Questions</th><th>Participants</th><th>Total Choices</th>
-            <th>Actions</th><th>✓</th>
-          </tr>
-        </thead>
+  <thead>
+    <tr>
+      <th colSpan="10" style={{ textAlign: 'right', padding: '10px 20px' }}>
+        <div className="table-action-buttons">
+          <span className="action-link" onClick={selectAll}>Select All</span>
+          <span className="action-link" onClick={deleteSelected}>Delete</span>
+          <span className="action-link" onClick={() => alert("Fetching quiz!")}>Fetch</span>
+          <span className="action-link" onClick={exportSelected}>Export</span>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <th>Name</th><th>Code</th><th>Topic</th><th>Date</th>
+      <th>Score</th><th>Questions</th><th>Participants</th><th>Total Choices</th>
+      <th>Actions</th><th>✓</th>
+    </tr>
+  </thead>
         <tbody>
           {filteredQuizzes.map((quiz, idx) => (
             <tr key={idx}>
@@ -132,7 +135,7 @@ const QuizManagement = () => {
       </table>
 
       {/* Add Quiz */}
-      <br />
+      <br/>
       <button className="save-button"  onClick={() => setShowAddOptionModal(true)}>Add Quiz</button>
 
       {/* === Popups with overlay === */}
