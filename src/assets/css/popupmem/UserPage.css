@@ -1,25 +1,28 @@
-/* Import a cute, rounded font from Google Fonts */
+/* ... (Phần @import và .management-container giữ nguyên) ... */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
-/* Main container with pastel gradient background */
 .management-container {
+    background: linear-gradient(135deg, #f5e1ff, #d4e7ff);
+    background-image: url('https://images.pexels.com/photos/1766838/pexels-photo-1766838.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     padding: 25px;
-    background: linear-gradient(135deg, #f5e1ff, #d4e7ff);
     min-height: 100vh;
 }
 
-/* Big, cute title at the top */
+/* ... (Phần .management-title và .glass-card giữ nguyên) ... */
 .management-title {
     font-family: 'Fredoka One', cursive;
     text-align: center;
-    font-size: 3.5rem;
+    font-size: 3rem;
     color: #fff;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
     margin-bottom: 30px;
 }
 
-/* Glassmorphism style for filter section and table */
 .glass-card {
     background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
@@ -30,33 +33,54 @@
     padding: 25px;
 }
 
+
+/* === UPDATE: Bố cục thanh tìm kiếm liền mạch === */
+/* ... (Các style khác không đổi) ... */
+
+/* === UPDATE: Bố cục thanh tìm kiếm 2 hàng === */
 .filter-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+    /* Chuyển sang Grid Layout */
+    grid-template-columns: repeat(4, 1fr);
+    /* Chia thành 4 cột bằng nhau */
+    gap: 15px;
+    /* Khoảng cách giữa các ô */
+
+    /* Các style cũ giữ nguyên */
     margin-bottom: 20px;
     align-items: center;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    /* Tăng padding để có không gian */
+    border-radius: 15px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .filter-input {
-    width: 100%;
-    padding: 12px 15px;
-    border: none;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.7);
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    font-size: 14px;
-}
-
-.filter-input::placeholder {
-    color: #888;
+    /* Các ô input sẽ tự động lấp đầy các ô trong grid */
+    padding: 12px 20px;
+    background: #fff;
+    /* Nền trắng cho các ô input */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    /* Thêm viền mờ */
+    border-radius: 10px;
+    box-shadow: none;
+    font-size: 15px;
+    color: #333;
+    outline: none;
 }
 
 .button-group {
+    grid-column: 4 / 5;
+    /* Đặt nhóm nút ở cột thứ 4 */
+    justify-self: end;
+    /* Căn lề phải trong ô grid */
     display: flex;
-    gap: 15px;
+    gap: 10px;
     align-items: center;
 }
+
+/* =================================================== */
 
 .btn {
     padding: 12px 25px;
