@@ -1,32 +1,45 @@
-// src/components/SettingForm.jsx
-
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase/services';
+import { useTranslation } from 'react-i18next';
 
 const SettingForm = ({
-  uid, 
-  sound, setSound,
-  theme, setTheme,
+  uid, sound, setSound,
   music, setMusic,
+  language, setLanguage,
   reportContent, setReportContent,
   handleSubmitReport, handleUploadMusic
 }) => {
-  const [language, setLanguage] = useState('Japanese');
+  const { t, i18n } = useTranslation();
 
-  // Hàm cập nhật Firestore
+  // 🔁 Khi prop `language` thay đổi từ Firestore, đổi giao diện
+  useEffect(() => {
+    if (language === 'Vietnamese') {
+      i18n.changeLanguage('vi');
+    } else if (language === 'Japanese') {
+      i18n.changeLanguage('ja');
+    } else if (language === 'English') {
+      i18n.changeLanguage('en');
+    }
+  }, [language, i18n]);
+
   const updateSetting = async (field, value) => {
-    if (!uid) {
-      console.error('No member_id provided. Cannot update Firestore.');
-      return;
-    }
+    if (!uid) return;
     try {
-      const docRef = doc(db, 'user', uid); // Dùng đúng collection + member_id làm doc id
+      const docRef = doc(db, 'user', uid);
       await updateDoc(docRef, { [field]: value });
-      console.log(`✅ Updated ${field} to ${value} in Firestore`);
     } catch (err) {
-      console.error(`❌ Failed to update ${field}:`, err);
+      console.error(`Update failed:`, err);
     }
+  };
+
+  const changeLanguage = (lang) => {
+    setLanguage(lang);
+    updateSetting('language', lang);
+
+    if (lang === 'Vietnamese') i18n.changeLanguage('vi');
+    else if (lang === 'Japanese') i18n.changeLanguage('ja');
+    else i18n.changeLanguage('en');
   };
 
   return (
@@ -37,86 +50,64 @@ const SettingForm = ({
 
       <div className="setting-form">
         <div className="form-group">
-          <label>Background Sound</label>
+          <label>{t('backgroundSound')}</label>
           <select
-            value={sound}
+            value={sound || 'Off'}
             onChange={(e) => {
               const value = e.target.value;
               setSound(value);
               updateSetting('background_sound', value);
             }}
-            className={`select-sound ${sound === 'On' ? 'sound-on' : 'sound-off'}`}
           >
-            <option value="Off">Off</option>
-            <option value="On">On</option>
+            <option value="Off">{t('off')}</option>
+            <option value="On">{t('on')}</option>
           </select>
         </div>
 
         <div className="form-group">
-          <label>Music</label>
+          <label>{t('music')}</label>
           <div className="music-select-group">
             <select
-              value={music}
+              value={music || ''}
               onChange={(e) => {
                 const value = e.target.value;
                 setMusic(value);
                 updateSetting('music', value);
               }}
-              className="music-select"
             >
-              <option value="Thien Ly Oi">Thien Ly Oi</option>
-              <option value="Dom Dom">Dom Dom</option>
-              <option value="Hong Nhan">Hong Nhan</option>
+              <option value="Thien Ly Oi">{t('thienLyOi')}</option>
+              <option value="Dom Dom">{t('domDom')}</option>
+              <option value="Hong Nhan">{t('hongNhan')}</option>
             </select>
-            <button className="upload-music-btn" onClick={handleUploadMusic}>Upload</button>
+            <button onClick={handleUploadMusic}>{t('upload')}</button>
           </div>
         </div>
 
         <div className="form-group">
-          <label>Language</label>
+          <label>{t('language')}</label>
           <select
-            value={language}
-            onChange={(e) => {
-              const value = e.target.value;
-              setLanguage(value);
-              updateSetting('language', value);
-            }}
-            className="language-select"
+            value={language || 'Japanese'} // fallback khi Firestore chưa có
+            onChange={(e) => changeLanguage(e.target.value)}
           >
             <option value="Japanese">Japanese</option>
             <option value="Vietnamese">Vietnamese</option>
+            <option value="English">English</option>
           </select>
         </div>
 
         <div className="form-group">
-          <label>Theme</label>
-          <select
-            value={theme}
-            onChange={(e) => {
-              const value = e.target.value;
-              setTheme(value);
-              updateSetting('theme', value);
-            }}
-            className={`select-theme ${theme === 'Light' ? 'theme-white' : 'theme-black'}`}
-          >
-            <option value="Dark">Dark</option>
-            <option value="Light">Light</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label>Report</label>
+          <label>{t('report')}</label>
           <input
             type="text"
             value={reportContent}
             onChange={(e) => setReportContent(e.target.value)}
-            placeholder="Enter report content"
+            placeholder={t('enterReport')}
           />
         </div>
 
         <div className="form-buttons">
-          <button className="button-submit" onClick={handleSubmitReport}>Submit</button>
-          <button className="button-cancel" onClick={() => setReportContent('')}>Cancel</button>
+          <button onClick={handleSubmitReport}>{t('submit')}</button>
+          <button onClick={() => setReportContent('')}>{t('cancel')}</button>
         </div>
       </div>
     </div>

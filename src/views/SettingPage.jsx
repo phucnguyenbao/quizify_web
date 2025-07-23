@@ -26,7 +26,7 @@ useEffect(() => {
       try {
         const q = query(
           collection(db, 'user'),
-          where('email', '==', user.email) // Query theo email để tìm member_id
+          where('email', '==', user.email) 
         );
 
         const querySnapshot = await getDocs(q);
@@ -34,10 +34,9 @@ useEffect(() => {
         if (!querySnapshot.empty) {
           const userDoc = querySnapshot.docs[0];
           const data = userDoc.data();
-          setMemberId(data.member_id); // member_id trong document
+          setMemberId(data.member_id); 
           setMusic(data.music);
           setSound(data.background_sound)
-          setTheme(data.theme)
           setLanguage(data.language)
           console.log('Found member_id:', data.member_id);
         } else {
@@ -103,7 +102,6 @@ useEffect(() => {
         <SettingForm
           uid={memberId}
           sound={sound} setSound={setSound}
-          theme={theme} setTheme={setTheme}
           music={music} setMusic={setMusic}
           language={language} setLanguage={setLanguage}
           reportContent={reportContent} setReportContent={setReportContent}
