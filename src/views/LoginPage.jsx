@@ -4,6 +4,9 @@ import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/aut
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/Login.css';
 
+import LoginForm from './components/popuplogin/LoginForm';
+import ForgotPasswordForm from './components/popuplogin/ForgotPasswordForm';
+
 function LoginPage() {
   const [isForgot, setIsForgot] = useState(false);
   const [email, setEmail] = useState('');
@@ -28,7 +31,7 @@ function LoginPage() {
     if (email) {
       try {
         await sendPasswordResetEmail(auth, email);
-        alert('Password reset email sent!');
+        alert('Password reset email sent! Please check your inbox.');
         setIsForgot(false);
       } catch (err) {
         alert('Error: ' + err.message);
@@ -53,64 +56,33 @@ function LoginPage() {
   return (
     <div className="login-container">
       <div className="login-card">
-<div className="logo-container">
-  <img src="/assets/images/logo2.png" alt="Logo" className="game-logo" />
-  <img src="/assets/images/quizify.png" alt="Quizify" className="game-quizify" />
-</div>
+        <div className="logo-container">
+          <img src="/assets/images/logo2.png" alt="Logo" className="game-logo" />
+          <img src="/assets/images/quizify.png" alt="Quizify" className="game-quizify" />
+        </div>
 
         <h2>{isForgot ? 'FORGOT PASSWORD' : 'LOGIN'}</h2>
 
         <div className="form-container">
-          {!isForgot ? (
-            <>
-              <div className="form-group">
-                <label>Email / Phone</label>
-                <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter email or phone number" />
-              </div>
-
-              <div className="form-group">
-                <label>Password</label>
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter password" />
-              </div>
-            </>
+          {isForgot ? (
+            <ForgotPasswordForm
+              email={email} setEmail={setEmail}
+              phone={phone} setPhone={setPhone}
+              newPassword={newPassword} setNewPassword={setNewPassword}
+              confirmPassword={confirmPassword} setConfirmPassword={setConfirmPassword}
+              onChangePassword={handleChangePassword}
+              onResendEmail={handleForgotPassword}
+              onCancel={() => setIsForgot(false)}
+            />
           ) : (
-            <>
-              <div className="form-group">
-                <label>Email</label>
-                <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your registered email" />
-              </div>
-
-              <div className="form-group">
-                <label>Phone</label>
-                <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="Enter your phone number" />
-              </div>
-
-              <div className="form-group">
-                <label>New Password</label>
-                <input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder="Enter new password" />
-              </div>
-
-              <div className="form-group">
-                <label>Confirm Password</label>
-                <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirm new password" />
-              </div>
-
-              <button className="link-button" onClick={handleForgotPassword}>Resend email</button>
-            </>
-          )}
-        </div>
-
-        <div className="action-group">
-          {!isForgot ? (
-            <>
-              <button className="primary-btn" onClick={handleLogin}>Confirm</button>
-              <button className="link-button" onClick={() => setIsForgot(true)}>Forgot password?</button>
-            </>
-          ) : (
-            <>
-              <button className="primary-btn" onClick={handleChangePassword}>Confirm</button>
-              <button className="secondary-btn" onClick={() => setIsForgot(false)}>Cancel</button>
-            </>
+            <LoginForm
+              email={email}
+              setEmail={setEmail}
+              password={password}
+              setPassword={setPassword}
+              onLogin={handleLogin}
+              onForgot={() => setIsForgot(true)}
+            />
           )}
         </div>
       </div>

@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import SettingForm from './components/popupsetting/SettingForm';
+import ReportTable from './components/popupsetting/ReportTable';
 import '../assets/css/SettingPage.css';
+import { auth, db } from '../firebase/services';
+import { onAuthStateChanged } from 'firebase/auth';
+import { query, collection, where, getDocs } from 'firebase/firestore';
 
 const SettingPage = () => {
   const [filterCreateDate, setFilterCreateDate] = useState('');
   const [reportContent, setReportContent] = useState('');
   const [music, setMusic] = useState('');
-
+  const [language, setLanguage] = useState('');
   const [sound, setSound] = useState('Off');
   const [theme, setTheme] = useState('Light');
   const [searchReport, setSearchReport] = useState('');
@@ -13,6 +18,40 @@ const SettingPage = () => {
   const [searchBan, setSearchBan] = useState('');
   const [searchTeam, setSearchTeam] = useState('');
   const [filterReplyDate, setFilterReplyDate] = useState('');
+  const [memberId, setMemberId] = useState('');
+
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      try {
+        const q = query(
+          collection(db, 'user'),
+          where('email', '==', user.email) // Query theo email để tìm member_id
+        );
+
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const userDoc = querySnapshot.docs[0];
+          const data = userDoc.data();
+          setMemberId(data.member_id); // member_id trong document
+          setMusic(data.music);
+          setSound(data.background_sound)
+          setTheme(data.theme)
+          setLanguage(data.language)
+          console.log('Found member_id:', data.member_id);
+        } else {
+          console.error('❌ Không tìm thấy user có email này trong Firestore');
+        }
+
+      } catch (err) {
+        console.error('❌ Lỗi lấy dữ liệu Firestore:', err);
+      }
+    }
+  });
+
+  return () => unsubscribe();
+}, []);
 
   const reports = [
     { id: 1, title: 'Report 1', status: 'Processed', date: '23/06/2025', user: 'Minh', ban: 'Technical', team: 'ODD', replyDate: '2025-06-23' },
@@ -59,151 +98,30 @@ const SettingPage = () => {
 
   return (
     <div className="setting-container">
-      {/* Section 1: Settings */}
       <div className="section">
         <h3>Settings Management</h3>
-        <div className="setting-content">
-          <div className="setting-video">
-  <video 
-    src="/assets/images/setting.mp4" 
-    autoPlay 
-    muted 
-    loop 
-    playsInline
-  />
-</div>
-        <div className="setting-form">
-          <div className="form-group">
-            <label>Background Sound</label>
-            <select
-              value={sound}
-              onChange={(e) => setSound(e.target.value)}
-              className={`select-sound ${sound === 'On' ? 'sound-on' : 'sound-off'}`}
-            >
-              <option value="Off">Off</option>
-              <option value="On">On</option>
-            </select>
-          </div>
-
-<div className="form-group">
-  <label>Music</label>
-  <div className="music-select-group">
-    <select
-      value={music}
-      onChange={(e) => setMusic(e.target.value)}
-      className="music-select"
-    >
-      <option value="">Choose music</option>
-      <option value="Thien Ly Oi">Thien Ly Oi</option>
-      <option value="Dom Dom">Dom Dom</option>
-      <option value="Hong Nhan">Hong Nhan</option>
-    </select>
-    <button className="upload-music-btn" onClick={handleUploadMusic}>Upload</button>
-  </div>
-</div>
-
-
-          <div className="form-group">
-            <label>Language</label>
-            <select>
-              <option>Japanese</option>
-              <option>Vietnamese</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Theme</label>
-            <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value)}
-              className={`select-theme ${theme === 'Light' ? 'theme-white' : 'theme-black'}`}
-            >
-              <option value="Dark">Dark</option>
-              <option value="Light">Light</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Report</label>
-            <input
-              type="text"
-              value={reportContent}
-              onChange={(e) => setReportContent(e.target.value)}
-              placeholder="Enter report content"
-            />
-          </div>
-
-          <div className="form-buttons">
-            <button className="button-submit" onClick={handleSubmitReport}>Submit</button>
-            <button className="button-cancel" onClick={() => setReportContent('')}>Cancel</button>
-          </div>
-        </div>
+        <SettingForm
+          uid={memberId}
+          sound={sound} setSound={setSound}
+          theme={theme} setTheme={setTheme}
+          music={music} setMusic={setMusic}
+          language={language} setLanguage={setLanguage}
+          reportContent={reportContent} setReportContent={setReportContent}
+          handleSubmitReport={handleSubmitReport}
+          handleUploadMusic={handleUploadMusic}
+        />
       </div>
 
-</div>
-
-
-     
-      {/* Section 2: Report Management */}
-      <div className="section">
-        <h3>Report Management</h3>
-        <div className="filter-group">
-          <input placeholder="Search report name" value={searchReport} onChange={(e) => setSearchReport(e.target.value)} />
-          <select>
-            <option>Filter by Status</option>
-            <option>Processed</option>
-            <option>Unread</option>
-            <option>Processing</option>
-          </select>
-          <input type="date" value={filterCreateDate} onChange={(e) => setFilterCreateDate(e.target.value)} />
-          <input placeholder="Creator" value={searchUser} onChange={(e) => setSearchUser(e.target.value)} />
-          <input placeholder="Department" value={searchBan} onChange={(e) => setSearchBan(e.target.value)} />
-          <input placeholder="Team" value={searchTeam} onChange={(e) => setSearchTeam(e.target.value)} />
-          <input type="date" value={filterReplyDate} onChange={(e) => setFilterReplyDate(e.target.value)} />
-          <button onClick={() => {}}>Search</button>
-          <button onClick={resetFilters}>Reset</button>
-        </div>
-
-        <table className="report-table">
-          <thead>
-            <tr>
-              <th>Report</th>
-              <th>Status</th>
-              <th>Create Date</th>
-              <th>Creator</th>
-              <th>Department</th>
-              <th>Team</th>
-              <th>Reply Date</th>
-              <th>Reply Content</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredReports.map((r) => (
-              <tr key={r.id}>
-                <td>{r.title}</td>
-                <td>
-                  <select defaultValue={r.status}>
-                    <option>Processed</option>
-                    <option>Unread</option>
-                    <option>Processing</option>
-                  </select>
-                </td>
-                <td>{r.date}</td>
-                <td>{r.user}</td>
-                <td>{r.ban}</td>
-                <td>{r.team}</td>
-                <td>{r.replyDate}</td>
-                <td>
-                  <div className="reply-input-group">
-                    <input type="text" placeholder="Enter reply..." />
-                    <button>Send</button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <ReportTable
+        searchReport={searchReport} setSearchReport={setSearchReport}
+        filterCreateDate={filterCreateDate} setFilterCreateDate={setFilterCreateDate}
+        searchUser={searchUser} setSearchUser={setSearchUser}
+        searchBan={searchBan} setSearchBan={setSearchBan}
+        searchTeam={searchTeam} setSearchTeam={setSearchTeam}
+        filterReplyDate={filterReplyDate} setFilterReplyDate={setFilterReplyDate}
+        resetFilters={resetFilters}
+        filteredReports={filteredReports}
+      />
     </div>
   );
 };

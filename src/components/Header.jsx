@@ -3,10 +3,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase/services';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { LogOut, Settings, Gamepad2, Users, ListTodo, Shield, Camera } from 'lucide-react';
+import { Settings, Gamepad2, Users, ListTodo, Shield } from 'lucide-react';
 import '../assets/css/Header.css';
-
-
+import ProfilePopup from './components/ProfilePopup';
 
 function Header() {
   const [userData, setUserData] = useState(null);
@@ -37,8 +36,6 @@ function Header() {
             };
             setUserData(formatted);
             setEditData(formatted);
-          } else {
-            console.error('User data not found in Firestore.');
           }
         } catch (err) {
           console.error('Error fetching user data:', err);
@@ -106,115 +103,79 @@ function Header() {
 
   if (!userData) return null;
 
-  const avatar = `https://i.pravatar.cc/150?img=${editData.avatarId}`;
+const avatar = isEditing 
+  ? `/assets/images/avatar/${editData.avatarId}` 
+  : `/assets/images/avatar/${userData.avatarId}`;
+
+
 
   return (
     <header className="header">
       <nav>
         <div className="navbar">
           <div className="nav-left-group">
-          <div className="nav-left">
-    <li>
-      <NavLink to="/game">
-        <img src="/assets/images/logo2.png" alt="Logo" className="game-logo" />
-        <img src="/assets/images/quizify.png" alt="Quizify" className="game-quizify" />
-      </NavLink>
-    </li>
+
+            <div className="nav-left">
+              <li>
+                <NavLink to="/game">
+                  <img src="/assets/images/logo2.png" alt="Logo" className="game-logo" />
+                  <img src="/assets/images/quizify.png" alt="Quizify" className="game-quizify" />
+                </NavLink>
+              </li>
+            </div>
+
+            <div className="nav-left">
+              <li>
+                <NavLink to="/game" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
+                  <Gamepad2 size={16}/> Game
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/quiz" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
+                  <ListTodo size={16}/> Quiz
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
+                  <Users size={16}/> Members
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/role" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
+                  <Shield size={16}/> Roles
+                </NavLink>
+              </li>
+            </div>
+              <div class="navbar-center">
+    <span class="welcome-text">Every click brings you closer to victory !</span>
+              </div>
+
+
           </div>
-          <div className="nav-left">
-    <li>
-      <NavLink to="/game" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
-        <Gamepad2 size={16}/> Game
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/quiz" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
-        <ListTodo size={16}/> Quiz
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
-        <Users size={16}/> Members
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/role" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
-        <Shield size={16}/> Roles
-      </NavLink>
-    </li>
-          </div>
-</div>
+
           <div className="nav-right">
-  <li>
-    <NavLink to="/setting" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
-      <Settings size={16}/> Reports
-    </NavLink>
-  </li>
+            <li>
+              <NavLink to="/setting" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
+                <Settings size={16}/> Reports
+              </NavLink>
+            </li>
+
             <li>
               <img src={avatar} alt="Avatar" className="avatar" onClick={() => setShowPopup(prev => !prev)} />
               {showPopup && (
-                <div className="profile-popup" ref={popupRef}>
-
-                    <div className="info-left">
-                      <h4>Profile Information</h4>
-                      <p><strong>Employee ID:</strong> {userData.id}</p>
-
-                      {isEditing ? (
-                        <>
-                          <p><strong>Last Name:</strong> <input name="lastName" value={editData.lastName} onChange={handleEditChange} /></p>
-                          <p><strong>First & Middle Name:</strong> <input name="firstName" value={editData.firstName} onChange={handleEditChange} /></p>
-                          <p><strong>Phone:</strong> <input name="phone" value={editData.phone} onChange={handleEditChange} /></p>
-                          <p><strong>Email:</strong> <input name="email" value={editData.email} onChange={handleEditChange} /></p>
-                        </>
-                      ) : (
-                        <>
-                          <p><strong>Last Name:</strong> {userData.lastName}</p>
-                          <p><strong>First & Middle Name:</strong> {userData.firstName}</p>
-                          <p><strong>Phone:</strong> {userData.phone}</p>
-                          <p><strong>Email:</strong> {userData.email}</p>
-                        </>
-                      )}
-
-                      <p><strong>Registration Date:</strong> {userData.date}</p>
-                      <p><strong>Role:</strong> {userData.role}</p>
-
-                      <div className="popup-actions">
-                        {!isEditing ? (
-                          <button className="save-btn" onClick={() => setIsEditing(true)}>Edit</button>
-                        ) : (
-                          <>
-                            <button className="save-btn" onClick={handleSave}>Save</button>
-                            <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
-                          </>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="info-right">
-                      <p>Welcome <strong>{userData.lastName}</strong></p>
-                      <img src={avatar} alt="avatar" className="avatar-large" />
-                      {isEditing && (
-<div className="avatar-upload">
-  <input 
-    type="file" 
-    id="avatarUpload" 
-    onChange={handleAvatarChange} 
-    hidden 
-  />
-  <label htmlFor="avatarUpload" className="camera-icon">
-    <Camera size={24} />
-  </label>
-</div>
-                      )}
-                    </div>
-
-
-                  <div className="logout-section">
-                    <button className="logout-btn" onClick={handleLogout}>
-                      <LogOut size={16} style={{ marginRight: '6px' }} />
-                      Logout
-                    </button>
-                  </div>
+                <div ref={popupRef}>
+                  <ProfilePopup
+                    userData={userData}
+                    editData={editData}
+                    setEditData={setEditData}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    handleEditChange={handleEditChange}
+                    handleSave={handleSave}
+                    handleCancel={handleCancel}
+                    handleAvatarChange={handleAvatarChange}
+                    handleLogout={handleLogout}
+                  />
                 </div>
               )}
             </li>

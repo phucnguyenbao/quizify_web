@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import "../assets/css/QuizPage.css";
-import AddOptionModal from './components/AddOptionModal';
-import UploadQuizModal from './components/UploadQuizModal';
-import AIQuizModal from './components/AIQuizModal';
-import ViewQuestionsModal from './components/ViewQuestionsModal';
+import AddOptionModal from './components/popupquiz/AddOptionModal';
+import UploadQuizModal from './components/popupquiz/UploadQuizModal';
+import AIQuizModal from './components/popupquiz/AIQuizModal';
+import ViewQuestionsModal from './components/popupquiz/ViewQuestionsModal';
 
 const QuizManagement = () => {
   const initialFilters = {
@@ -68,7 +68,6 @@ const QuizManagement = () => {
     (filters.numUsers === '' || q.numUsers.toString().includes(filters.numUsers)) &&
     (filters.numChoices === '' || q.numChoices.toString().includes(filters.numChoices))
   ));
-
   return (
     <div className="quiz-management">
       <h2>Quiz Management</h2>
@@ -141,7 +140,7 @@ const QuizManagement = () => {
       {/* === Popups with overlay === */}
       {showAddOptionModal && (
         <>
-          <div className="modal-overlay"></div>
+          
           <AddOptionModal
             onClose={() => setShowAddOptionModal(false)}
             onSelect={(type) => {
@@ -155,21 +154,21 @@ const QuizManagement = () => {
 
       {showUploadModal && (
         <>
-          <div className="modal-overlay"></div>
+          
           <UploadQuizModal onClose={() => setShowUploadModal(false)} />
         </>
       )}
 
       {showAIModal && (
         <>
-          <div className="modal-overlay"></div>
+          
           <AIQuizModal onClose={() => setShowAIModal(false)} />
         </>
       )}
 
       {showViewQuestionsModal && selectedQuiz && (
         <>
-          <div className="modal-overlay"></div>
+          
           <ViewQuestionsModal quiz={selectedQuiz} onClose={() => setShowViewQuestionsModal(false)} />
         </>
       )}
