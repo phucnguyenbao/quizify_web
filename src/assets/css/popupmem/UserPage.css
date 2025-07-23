@@ -1,24 +1,26 @@
+/* Import a cute, rounded font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
+/* Main container with pastel gradient background */
 .management-container {
-    background: linear-gradient(135deg, #f5e1ff, #d4e7ff);
-    background-image: url('https://images.pexels.com/photos/1766838/pexels-photo-1766838.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     padding: 25px;
+    background: linear-gradient(135deg, #f5e1ff, #d4e7ff);
     min-height: 100vh;
 }
 
 .management-title {
-    font-family: 'Fredoka One', cursive;
     text-align: center;
-    font-size: 3rem;
-    color: #fff;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-    margin-bottom: 30px;
+        font-size: 56px;
+        font-weight: 700;
+        color: #f8b4d9;
+        font-family: 'BubbleGum', cursive;
+        -webkit-text-stroke: 1px white;
+        text-shadow:
+            3px 3px 8px rgba(255, 255, 255, 0.8),
+            -3px -3px 8px rgba(255, 255, 255, 0.5),
+            2px 4px 12px rgba(0, 0, 0, 0.2);
+        letter-spacing: 2px;
 }
 
 .glass-card {
@@ -31,65 +33,81 @@
     padding: 25px;
 }
 
-/* === UPDATE: Style mới cho thanh tìm kiếm === */
+/* === CẬP NHẬT QUAN TRỌNG CHO THANH TÌM KIẾM === */
+/* === CẬP NHẬT CUỐI CÙNG CHO THANH TÌM KIẾM === */
 .filter-section {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    /* Giữ lại 4 cột */
-    gap: 15px;
-    align-items: center;
-
-    /* Xóa nền và padding từ thẻ cha */
-    background: transparent;
-    padding: 0;
-    box-shadow: none;
-    border-radius: 0;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 20px;
+        align-items: center;
 }
 
-.filter-input {
-    background: rgba(255, 255, 255, 0.9);
-    /* Nền trắng đục hơn */
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    /* Viền trắng mờ */
-    border-radius: 12px;
-    /* Bo góc mềm mại hơn */
-
-    padding: 12px 15px;
-    font-size: 14px;
-    color: #333;
-    outline: none;
-    transition: all 0.2s ease;
+/* Style chung cho cả input và select */
+.filter-input,
+.filter-select {
+    flex: 1 !important;
+    min-width: 180px !important;
+    padding: 12px 15px !important;
+    border: none !important;
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.7) !important;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    font-size: 14px !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-image: url("data:image/svg+xml,...") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 15px center !important;
+    background-size: 12px !important;
+    height: 44px !important;
+    line-height: 1.2 !important;
 }
 
-.filter-input:focus {
-    border-color: #a6c1ee;
-    box-shadow: 0 0 8px rgba(166, 193, 238, 0.5);
+/* Thêm mũi tên tùy chỉnh cho ô select */
+.filter-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
 }
-
-/* ============================================== */
 
 .filter-input::placeholder {
     color: #888;
 }
 
+/* Nhóm nút: luôn nằm cuối hàng */
 .button-group {
-    grid-column: 4 / 5;
-    justify-self: end;
-    display: flex;
+display: flex;
     gap: 10px;
-    align-items: center;
+    justify-content: flex-end;
+    grid-column: 1 / -1; /* Dàn nút chiếm toàn hàng, nằm cuối cùng */    /* Cho phép 2 nút nằm cùng hàng cuối */
 }
 
+/* Nút đẹp */
 .btn {
-    padding: 12px 25px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    color: white;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        height: 44px !important;
+            border-radius: 12px !important;
+            padding: 0 15px !important;
+            font-size: 14px !important;
+            font-family: 'Fredoka One', cursive !important;
+            box-sizing: border-box;
 }
+
+.btn-secondary {
+    background-color: #b2bec3;
+}
+
+/* ========================================================== */
+
+/* =============================================== */
+
+.filter-input::placeholder {
+    color: #888;
+}
+
+
+
 
 .btn:hover {
     transform: translateY(-2px);
@@ -100,9 +118,7 @@
     background: linear-gradient(135deg, #2CD8D5 0%, #6B8DD6 100%);
 }
 
-.btn-secondary {
-    background: linear-gradient(135deg, #46A3B4 0%, #89D4CF 100%);
-}
+
 
 .actions-toolbar {
     display: flex;
@@ -123,7 +139,7 @@
 }
 
 .action-link:hover {
-    color: #ff6a88;
+    color: #3e0a98;
     text-decoration: underline;
 }
 
@@ -175,4 +191,19 @@
 
 .btn-add {
     background: linear-gradient(135deg, #ff6a88, #ff9a8b);
+}
+.management-container {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    padding: 25px;
+    min-height: 100vh;
+
+    background: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15)),
+        url('/public/assets/images/anhnen.png') no-repeat center center fixed;
+    background-size: cover;
+    backdrop-filter: blur(6px);
+}
+/* === TIỆN ÍCH KHÓA CUỘN KHI POPUP MỞ === */
+/* Thêm lớp này vào thẻ <body> để ngăn trang chính bị cuộn */
+body.popup-open-no-scroll {
+    overflow: hidden;
 }

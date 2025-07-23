@@ -1,0 +1,133 @@
+/* src/assets/css/popupmem/GameHistory.css */
+
+.gh-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
+
+.gh-popup {
+    background-color: #f9f9f9;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    max-width: 950px;
+    height: 90vh;
+    overflow-y: auto;
+    font-family: Arial, sans-serif;
+    position: relative;
+}
+
+.gh-popup h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.gh-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.gh-table th,
+.gh-table td {
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.gh-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #555;
+}
+
+.gh-table tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.gh-table .action-link {
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.gh-details-section {
+    margin-top: 30px;
+}
+
+.gh-chart-container {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    text-align: center;
+}
+
+/* Đây là một placeholder cho biểu đồ, bạn có thể thay thế bằng thư viện biểu đồ */
+.gh-chart-placeholder {
+    width: 100%;
+    height: 250px;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYgAAADACAYAAACN/r3zAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZchAADsMAAA7DAcdvqGQAAARTSURBVHhe7d3NchxFFgbwJ/YqjoDIIbgoi4AgOAiH4AIcBAeRICgIAqIICK4guApBUIYIyCAg+AhBEPAj2dc9aepq3dXd1vVUd3VXV/3Tpqd7eu/1T9Xp6QGAnwD2GwmxAIgQCyBCbAASYoEQIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIRYgBUYIRYgBLYACbEASIgFQIbYgIZ+AfKxBw2lM9AdAAAAAElFTkSuQmCC');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.gh-footer {
+    text-align: right;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.gh-button-close {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s;
+}
+
+.gh-button-close:hover {
+    background-color: #0056b3;
+}
+.gh-table .action-link {
+    /* === UPDATE: Đổi màu link sang hồng và bỏ gạch chân === */
+    color: #E91E63;
+    /* Màu hồng đậm */
+    text-decoration: underline;
+    /* Giữ gạch chân như ảnh */
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* ... (giữ nguyên các class CSS khác) ... */
+
+.gh-chart-container {
+    margin-top: 30px;
+    /* Tăng khoảng cách */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    text-align: center;
+}

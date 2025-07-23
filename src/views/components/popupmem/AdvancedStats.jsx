@@ -1,16 +1,19 @@
+// src/views/components/popupmem/AdvancedStats.jsx
+
 import React, { useState } from 'react';
 import '../../../assets/css/popupmem/AdvancedStats.css';
 import ComparisonPieCharts from './ComparisonPieCharts';
-import DrilldownBarChart from './DrilldownBarChart'; // ĐÃ BỎ COMMENT
+import DrilldownBarChart from './DrilldownBarChart';
 
-// --- DỮ LIỆU MẪU (giữ nguyên) ---
+// ... (Dữ liệu mẫu không đổi) ...
 const mockGames = [{ id: 1, name: 'Onboarding Process' }, { id: 2, name: 'Security Training' }, { id: 3, name: 'Sales Techniques' }];
 const mockDepartments = [{ id: 'D1', name: 'ODD' }, { id: 'D2', name: 'ABD' }, { id: 'D3', name: 'HR' }];
 const mockTeams = [{ id: 'T1', name: 'Team 1', department: 'ODD' }, { id: 'T2', name: 'Team 2', department: 'ODD' }, { id: 'T3', name: 'Team 3', department: 'ODD' }, { id: 'T4', name: 'Team 4', department: 'ABD' }, { id: 'T5', name: 'Team 5', department: 'ABD' }, { id: 'T6', name: 'Team 6', department: 'HR' }];
 const mockDetailedScores = [{ memberId: '2301001', memberName: 'Minh Tuan', gameId: 1, department: 'ODD', team: 'Team 1', score: 8 }, { memberId: '2301003', memberName: 'Phuc Lam', gameId: 1, department: 'ODD', team: 'Team 1', score: 9 }, { memberId: '2301002', memberName: 'Khanh An', gameId: 1, department: 'ODD', team: 'Team 2', score: 7 }, { memberId: '2301004', memberName: 'Thu Trang', gameId: 1, department: 'ODD', team: 'Team 3', score: 8 }, { memberId: '2302001', memberName: 'Anh Thu', gameId: 1, department: 'ABD', team: 'Team 4', score: 10 }, { memberId: '2302002', memberName: 'Bao Han', gameId: 1, department: 'ABD', team: 'Team 4', score: 9 }, { memberId: '2302003', memberName: 'Gia Huy', gameId: 1, department: 'ABD', team: 'Team 5', score: 7 }, { memberId: '2303002', memberName: 'Manh Dung', gameId: 1, department: 'HR', team: 'Team 6', score: 6 }, { memberId: '2303001', memberName: 'Hoai An', gameId: 1, department: 'HR', team: 'Team 6', score: 8 }, { memberId: '2301001', memberName: 'Minh Tuan', gameId: 2, department: 'ODD', team: 'Team 1', score: 9 }, { memberId: '2301002', memberName: 'Khanh An', gameId: 2, department: 'ODD', team: 'Team 2', score: 9 }, { memberId: '2302001', memberName: 'Anh Thu', gameId: 2, department: 'ABD', team: 'Team 4', score: 8 }, { memberId: '2303001', memberName: 'Hoai An', gameId: 2, department: 'HR', team: 'Team 6', score: 10 }, { memberId: '2303003', memberName: 'Duc Minh', gameId: 2, department: 'HR', team: 'Team 6', score: 8 }, { memberId: '2302001', memberName: 'Anh Thu', gameId: 3, department: 'ABD', team: 'Team 4', score: 10 }, { memberId: '2302002', memberName: 'Bao Han', gameId: 3, department: 'ABD', team: 'Team 4', score: 9 }, { memberId: '2302003', memberName: 'Gia Huy', gameId: 3, department: 'ABD', team: 'Team 5', score: 8 }, { memberId: '2301001', memberName: 'Minh Tuan', gameId: 3, department: 'ODD', team: 'Team 1', score: 7 },];
 
 
-const AdvancedStats = () => {
+// === THAY ĐỔI: Nhận prop mới ===
+const AdvancedStats = ({ onOpenAddPopup }) => {
     const [selectedGameId, setSelectedGameId] = useState(mockGames[0].id);
     const pieChartData = mockDetailedScores.filter(score => score.gameId === selectedGameId);
 
@@ -20,29 +23,51 @@ const AdvancedStats = () => {
     return (
         <div className="stats-container">
             <div className="overview-stats-grid">
-                {/* CỘT TRÁI: CHỨA 2 BẢNG */}
                 <div className="tables-container">
                     <div className="stats-card">
                         <h3 className="stats-title">Department Statistics</h3>
                         <div className="stats-grid">
+                            {/* ... (phần bảng không đổi) */}
                             <div className="stats-header">Name</div><div className="stats-header">Leader</div><div className="stats-header">Members</div><div className="stats-header">Games</div>
                             {departmentData.map(dept => (<div className="stats-row" key={dept.name}><div className="stats-cell">{dept.name}</div><div className="stats-cell">{dept.leader}</div><div className="stats-cell">{dept.members}</div><div className="stats-cell">{dept.games}</div></div>))}
                         </div>
-                        <div className="card-footer"><span className="action-link">Edit</span><span className="action-link">Cancel</span></div>
+                        <div className="card-footer">
+                            {/* === THAY ĐỔI: Gọi hàm với mode 'department' === */}
+                            <span
+                                className="action-link"
+                                onClick={() => onOpenAddPopup('department')}
+                                style={{ color: '#8884d8' }}
+                            >
+                                Add Department
+                            </span>
+                            <span className="action-link">Edit</span>
+                            <span className="action-link">Cancel</span>
+                        </div>
                     </div>
                     <div className="stats-card">
                         <h3 className="stats-title">Team Statistics</h3>
                         <div className="stats-grid">
+                            {/* ... (phần bảng không đổi) */}
                             <div className="stats-header">Team</div><div className="stats-header">Leader</div><div className="stats-header">Members</div><div className="stats-header">Games</div>
                             {teamData.map(team => (<div className="stats-row" key={team.name}><div className="stats-cell">{team.name}</div><div className="stats-cell">{team.leader}</div><div className="stats-cell">{team.members}</div><div className="stats-cell">{team.games}</div></div>))}
                         </div>
-                        <div className="card-footer"><span className="action-link">Edit</span><span className="action-link">Cancel</span></div>
+                        <div className="card-footer">
+                            {/* === THAY ĐỔI: Gọi hàm với mode 'team' === */}
+                            <span
+                                className="action-link"
+                                onClick={() => onOpenAddPopup('team')}
+                                style={{ color: '#8884d8' }}
+                            >
+                                Add Team
+                            </span>
+                            <span className="action-link">Edit</span>
+                            <span className="action-link">Cancel</span>
+                        </div>
                     </div>
                 </div>
 
-                {/* CỘT PHẢI CHỨA CÁC BIỂU ĐỒ */}
+                {/* ... (Phần biểu đồ không đổi) ... */}
                 <div className="charts-column-container">
-                    {/* Thẻ chứa biểu đồ tròn */}
                     <div className="stats-card">
                         <div className="game-selector-container">
                             <h3 className="stats-title">Compare Scores by Game</h3>
@@ -52,8 +77,6 @@ const AdvancedStats = () => {
                         </div>
                         <ComparisonPieCharts gameData={pieChartData} />
                     </div>
-
-                    {/* Thẻ chứa biểu đồ cột (ĐÃ BỎ COMMENT) */}
                     <DrilldownBarChart
                         allScores={mockDetailedScores}
                         games={mockGames}

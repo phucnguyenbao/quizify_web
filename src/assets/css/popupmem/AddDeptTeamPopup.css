@@ -1,0 +1,147 @@
+/* Lớp phủ toàn màn hình */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+/* Container chính của popup, lớn hơn */
+.popup-container-large {
+    width: 85%;
+    max-width: 1200px;
+    height: auto;
+    background-color: #f4f7fa; /* Một màu nền xám rất nhạt */
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    overflow: hidden; /* Đảm bảo bo góc cho các thành phần con */
+}
+
+/* Thanh bên trái */
+.popup-sidebar {
+    flex-basis: 240px;
+    flex-shrink: 0;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-sidebar h2 {
+    font-size: 2.5rem;
+    color: #3b429f;
+    font-weight: 700;
+    margin: 0 0 30px 0;
+    line-height: 1.2;
+}
+
+.popup-sidebar a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.popup-sidebar a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Khu vực nội dung chính bên phải */
+.popup-main-content {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: #ffffff;
+}
+
+/* Form thêm phòng ban/nhóm */
+.add-dept-team-form {
+    background-color: #fdfdff; /* Màu trắng hơi ngả tím */
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+/* Lưới cho header và các dòng input */
+.form-header,
+.form-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr 1fr; /* Điều chỉnh tỉ lệ các cột */
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-header {
+    margin-bottom: 10px;
+}
+
+.header-cell {
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* Input styles */
+.form-row input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-row input[type="text"]:focus {
+    outline: none;
+    border-color: #8884d8;
+    box-shadow: 0 0 0 3px rgba(136, 132, 216, 0.2);
+}
+
+/* Khu vực import file */
+.import-section {
+    border: 2px dashed #aab0f2;
+    border-radius: 15px;
+    padding: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    background-color: #fdfdff;
+}
+
+.import-section p {
+    margin: 0 0 15px 0;
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
+.btn-browse {
+    padding: 12px 40px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    background: linear-gradient(45deg, #ff8fa4, #c5aaff, #a19fed);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px rgba(161, 159, 237, 0.4);
+}
+
+.btn-browse:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(161, 159, 237, 0.5);
+}
