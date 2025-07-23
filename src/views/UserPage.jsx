@@ -47,7 +47,7 @@ function UserPage() {
         setFilteredMembers(tempMembers);
     }, [filters, members]);
 
-    useEffect(() => {
+    useEffect(() => {1
         const handleKeyDown = (event) => {
             if (event.key === 'Escape') {
                 setShowWorkResultPopup(false);
