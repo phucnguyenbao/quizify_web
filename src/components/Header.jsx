@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase/services';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import { Settings, Gamepad2, Users, ListTodo, Shield } from 'lucide-react';
 import '../assets/css/Header.css';
 import ProfilePopup from './components/ProfilePopup';
+import { useAuth } from '../views/AuthContext';
 
 function Header() {
+  const { user } = useAuth();
   const [userData, setUserData] = useState(null);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
@@ -16,37 +18,35 @@ function Header() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        try {
-          const docRef = doc(db, 'user', '0001');
-          const docSnap = await getDoc(docRef);
+    const fetchUserData = async () => {
+      if (!user?.member_id) return;
 
-          if (docSnap.exists()) {
-            const data = docSnap.data();
-            const formatted = {
-              id: data.member_id,
-              firstName: data.middle_and_last_name,
-              lastName: data.member_name,
-              phone: data.phone_number,
-              email: data.email,
-              date: new Date(data.registration_date.seconds * 1000).toLocaleDateString('en-US'),
-              role: data.manager ? 'Manager' : (data.leader ? 'Leader' : 'Member'),
-              avatarId: data.avatar_id || 12
-            };
-            setUserData(formatted);
-            setEditData(formatted);
-          }
-        } catch (err) {
-          console.error('Error fetching user data:', err);
+      try {
+        const docRef = doc(db, 'user', user.member_id);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          const formatted = {
+            id: data.member_id,
+            firstName: data.middle_and_last_name,
+            lastName: data.member_name,
+            phone: data.phone_number,
+            email: data.email,
+            date: new Date(data.registration_date.seconds * 1000).toLocaleDateString('en-US'),
+            role: data.manager ? 'Manager' : (data.leader ? 'Leader' : 'Member'),
+            imageId: data.image_id || 'dolphin.png' // dùng ảnh mặc định nếu không có
+          };
+          setUserData(formatted);
+          setEditData(formatted);
         }
-      } else {
-        setUserData(null);
+      } catch (err) {
+        console.error('Error fetching user data:', err);
       }
-    });
+    };
 
-    return () => unsubscribe();
-  }, []);
+    fetchUserData();
+  }, [user?.member_id]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -69,23 +69,22 @@ function Header() {
     setEditData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleAvatarChange = (e) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const newAvatarId = Math.floor(Math.random() * 70) + 1;
-      setEditData(prev => ({ ...prev, avatarId: newAvatarId }));
+      setEditData(prev => ({ ...prev, imageId: file.name })); // lưu tên file, ví dụ: crocodile.png
     }
   };
 
   const handleSave = async () => {
     try {
-      const docRef = doc(db, 'user', '0001');
+      const docRef = doc(db, 'user', user.member_id);
       await updateDoc(docRef, {
         member_name: editData.lastName,
         middle_and_last_name: editData.firstName,
         phone_number: editData.phone,
         email: editData.email,
-        avatar_id: editData.avatarId
+        image_id: editData.imageId
       });
       setUserData(editData);
       setIsEditing(false);
@@ -103,11 +102,7 @@ function Header() {
 
   if (!userData) return null;
 
-const avatar = isEditing 
-  ? `/assets/images/avatar/${editData.avatarId}` 
-  : `/assets/images/avatar/${userData.avatarId}`;
-
-
+  const image = `/assets/images/image/${isEditing ? editData.imageId : userData.imageId}`;
 
   return (
     <header className="header">
@@ -146,11 +141,10 @@ const avatar = isEditing
                 </NavLink>
               </li>
             </div>
-              <div class="navbar-center">
-    <span class="welcome-text">Every click brings you closer to victory !</span>
-              </div>
 
-
+            <div className="navbar-center">
+              <span className="welcome-text">Every click brings you closer to victory !</span>
+            </div>
           </div>
 
           <div className="nav-right">
@@ -161,7 +155,12 @@ const avatar = isEditing
             </li>
 
             <li>
-              <img src={avatar} alt="Avatar" className="avatar" onClick={() => setShowPopup(prev => !prev)} />
+              <img
+                src={image}
+                alt="Avatar"
+                className="avatar"
+                onClick={() => setShowPopup(prev => !prev)}
+              />
               {showPopup && (
                 <div ref={popupRef}>
                   <ProfilePopup
@@ -173,7 +172,7 @@ const avatar = isEditing
                     handleEditChange={handleEditChange}
                     handleSave={handleSave}
                     handleCancel={handleCancel}
-                    handleAvatarChange={handleAvatarChange}
+                    handleImageChange={handleImageChange}
                     handleLogout={handleLogout}
                   />
                 </div>

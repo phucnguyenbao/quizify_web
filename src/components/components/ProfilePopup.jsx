@@ -1,14 +1,16 @@
 import React from 'react';
 import { Camera, LogOut } from 'lucide-react';
+import { useAuth } from '../../views/AuthContext';
 
 const ProfilePopup = ({
   userData, editData, isEditing,
   handleEditChange, handleSave, handleCancel,
   handleLogout, setIsEditing, setEditData
 }) => {
-  const avatar = editData.avatarId
-    ? `http://localhost:5000/images/${editData.avatarId}` // hiển thị ảnh từ backend
-    : 'https://i.pravatar.cc/150?u=default';
+  const { user } = useAuth();
+  const avatar = editData.imageId
+    ? `/assets/images/image/${editData.imageId}`
+    : '/assets/images/image/dolphin.png';
 
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
@@ -27,7 +29,7 @@ const ProfilePopup = ({
       if (data.success) {
         setEditData((prev) => ({
           ...prev,
-          avatarId: data.filename,
+          imageId: data.filename,
         }));
       }
     } catch (err) {
