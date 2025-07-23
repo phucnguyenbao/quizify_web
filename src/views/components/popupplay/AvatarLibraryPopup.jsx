@@ -6,10 +6,10 @@ import { doc, updateDoc, collection, query, where, getDocs } from 'firebase/fire
 import { db } from "../../../firebase/services";
 
 const avatarList = [
-  'bird.png', 'panda.png', 'cat.png', 'chicken.png', 'crocodile.png', 'dog.png',
+  'bear.png', 'bird.png', 'buffalo.png', 'panda.png', 'cat.png', 'cow.png', 'chicken.png', 'crocodile.png', 'dog.png',
   'dolphin.png', 'dragon.png', 'elephant.png', 'frog.png', 'hippo.png',
   'lion.png', 'monkey.png', 'nemo.png', 'otter.png', 'pig.png',
-  'snake.png', 'tiger.png', 'penguin.png', 'wolf.png'
+  'snake.png', 'tiger.png', 'penguin.png', 'wolf.png', 'eagle.png', 'giraffe.png', 'horse.png', 'rhino.png', 'shark.png', 'turtle.png', 'dinosaur.png'
 ];
 
 const AvatarLibraryPopup = ({ onSelect, onClose }) => {

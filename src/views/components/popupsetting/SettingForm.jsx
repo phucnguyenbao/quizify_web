@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase/services';
 import { useTranslation } from 'react-i18next';
@@ -11,16 +11,16 @@ const SettingForm = ({
   handleSubmitReport, handleUploadMusic
 }) => {
   const { t, i18n } = useTranslation();
+  const [availableSongs] = useState([
+    "yoursmile.mp3",
+    "simplelove.mp3",
+  ]);
 
-  // 🔁 Khi prop `language` thay đổi từ Firestore, đổi giao diện
+  // 🔁 Tự đổi ngôn ngữ khi chọn language
   useEffect(() => {
-    if (language === 'Vietnamese') {
-      i18n.changeLanguage('vi');
-    } else if (language === 'Japanese') {
-      i18n.changeLanguage('ja');
-    } else if (language === 'English') {
-      i18n.changeLanguage('en');
-    }
+    if (language === 'Vietnamese') i18n.changeLanguage('vi');
+    else if (language === 'Japanese') i18n.changeLanguage('ja');
+    else i18n.changeLanguage('en');
   }, [language, i18n]);
 
   const updateSetting = async (field, value) => {
@@ -49,44 +49,49 @@ const SettingForm = ({
       </div>
 
       <div className="setting-form">
+        {/* Sound select */}
         <div className="form-group">
           <label>{t('backgroundSound')}</label>
-          <select
-            value={sound || 'Off'}
-            onChange={(e) => {
-              const value = e.target.value;
-              setSound(value);
-              updateSetting('background_sound', value);
+          <button
+            onClick={() => {
+              const newSound = sound === 'On' ? 'Off' : 'On';
+              setSound(newSound);
+              updateSetting('background_sound', newSound);
             }}
+            className={`toggle-sound-btn ${sound === 'On' ? 'active' : ''}`}
           >
-            <option value="Off">{t('off')}</option>
-            <option value="On">{t('on')}</option>
-          </select>
+            {sound === 'On' ? t('on') : t('off')}
+          </button>
         </div>
 
+        {/* Music select */}
         <div className="form-group">
           <label>{t('music')}</label>
           <div className="music-select-group">
             <select
-              value={music || ''}
+              value={availableSongs.includes(music) ? music : ''}
               onChange={(e) => {
                 const value = e.target.value;
                 setMusic(value);
                 updateSetting('music', value);
               }}
             >
-              <option value="Thien Ly Oi">{t('thienLyOi')}</option>
-              <option value="Dom Dom">{t('domDom')}</option>
-              <option value="Hong Nhan">{t('hongNhan')}</option>
+              <option value="">{t('selectMusic')}</option>
+              {availableSongs.map((song) => (
+                <option key={song} value={song}>
+                  {song.replace('.mp3', '')}
+                </option>
+              ))}
             </select>
             <button onClick={handleUploadMusic}>{t('upload')}</button>
           </div>
         </div>
 
+        {/* Language select */}
         <div className="form-group">
           <label>{t('language')}</label>
           <select
-            value={language || 'Japanese'} // fallback khi Firestore chưa có
+            value={language || 'Japanese'}
             onChange={(e) => changeLanguage(e.target.value)}
           >
             <option value="Japanese">Japanese</option>
@@ -95,6 +100,7 @@ const SettingForm = ({
           </select>
         </div>
 
+        {/* Report input */}
         <div className="form-group">
           <label>{t('report')}</label>
           <input
@@ -105,6 +111,7 @@ const SettingForm = ({
           />
         </div>
 
+        {/* Submit buttons */}
         <div className="form-buttons">
           <button onClick={handleSubmitReport}>{t('submit')}</button>
           <button onClick={() => setReportContent('')}>{t('cancel')}</button>
