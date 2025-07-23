@@ -16,7 +16,7 @@ const ForgotPasswordForm = ({
         />
       </div>
 
-      <button className="link-button" onClick={onResendEmail}>Resend email</button>
+      <button className="link-button" onClick={onResendEmail}>Send email</button>
 
       <div className="action-group">
         <button className="secondary-btn" onClick={onCancel}>Cancel</button>

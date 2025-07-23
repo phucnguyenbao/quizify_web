@@ -5,7 +5,7 @@ const LoginForm = ({ email, setEmail, password, setPassword, onLogin, onForgot }
   return (
     <>
       <div className="form-group">
-        <label>Email / Phone</label>
+        <label>Email</label>
         <input
           value={email}
           onChange={e => setEmail(e.target.value)}

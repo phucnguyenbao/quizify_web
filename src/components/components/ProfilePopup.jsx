@@ -1,23 +1,42 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Camera, LogOut } from 'lucide-react';
-import AvatarLibraryPopup from './AvatarLibraryPopup';
 
 const ProfilePopup = ({
-  userData, editData, setEditData,
-  isEditing, setIsEditing,
+  userData, editData, isEditing,
   handleEditChange, handleSave, handleCancel,
-  handleAvatarChange, handleLogout
+  handleLogout, setIsEditing, setEditData
 }) => {
-  
-  const [showAvatarLibrary, setShowAvatarLibrary] = useState(false);
-
-  const avatar = editData.avatarId 
-    ? `/assets/images/avatar/${editData.avatarId}` 
+  const avatar = editData.avatarId
+    ? `http://localhost:5000/images/${editData.avatarId}` // hiển thị ảnh từ backend
     : 'https://i.pravatar.cc/150?u=default';
+
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("avatar", file);
+    formData.append("userId", userData.id);
+
+    try {
+      const res = await fetch("http://localhost:5000/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        setEditData((prev) => ({
+          ...prev,
+          avatarId: data.filename,
+        }));
+      }
+    } catch (err) {
+      console.error("Upload failed:", err);
+    }
+  };
 
   return (
     <div className="profile-popup">
-
       <div className="info-left">
         <h4>Profile Information</h4>
         <p><strong>Employee ID:</strong> {userData.id}</p>
@@ -57,26 +76,12 @@ const ProfilePopup = ({
         <p>Welcome <strong>{userData.lastName}</strong></p>
         <img src={avatar} alt="avatar" className="avatar-large" />
         {isEditing && (
-          <>
-            <div className="avatar-upload">
-              <input 
-                type="file" 
-                id="avatarUpload" 
-                onChange={handleAvatarChange} 
-                hidden 
-              />
-              <label htmlFor="avatarUpload" className="camera-icon">
-                <Camera size={24} />
-              </label>
-            </div>
-
-            <button
-              className="library-button"
-              onClick={() => setShowAvatarLibrary(true)}
-            >
-              Choose
-            </button>
-          </>
+          <div className="avatar-upload">
+            <input type="file" id="avatarUpload" onChange={handleAvatarChange} hidden />
+            <label htmlFor="avatarUpload" className="camera-icon">
+              <Camera size={24} />
+            </label>
+          </div>
         )}
       </div>
 
@@ -86,16 +91,6 @@ const ProfilePopup = ({
           Logout
         </button>
       </div>
-
-      {showAvatarLibrary && (
-        <AvatarLibraryPopup
-          onSelect={(filename) => {
-            setEditData(prev => ({ ...prev, avatarId: filename }));
-            setShowAvatarLibrary(false);
-          }}
-          onClose={() => setShowAvatarLibrary(false)}
-        />
-      )}
     </div>
   );
 };
