@@ -7,10 +7,20 @@
     background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
-    align-items: center;
+
+    /* THAY ĐỔI: Căn các pop-up lên phía trên thay vì ở giữa */
+    align-items: flex-start;
+
+    /* THÊM: Tạo một khoảng đệm để pop-up không dính sát vào mép trên */
+    padding-top: 5vh;
+    /* 5% chiều cao màn hình, bạn có thể đổi thành 50px hoặc 100px tùy ý */
+
     z-index: 1000;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
+
+    /* THÊM (Tùy chọn nhưng khuyến khích): Để đảm bảo an toàn nếu pop-up quá cao */
+    overflow-y: auto;
 }
 
 /* === UPDATE: Giao diện pop-up chi tiết thành viên nhỏ gọn === */
@@ -300,3 +310,4 @@
 .results-popup-table tbody tr:last-child td {
     border-bottom: none;
 }
+

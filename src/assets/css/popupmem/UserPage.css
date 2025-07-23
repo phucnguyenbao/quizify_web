@@ -202,3 +202,8 @@ display: flex;
     background-size: cover;
     backdrop-filter: blur(6px);
 }
+/* === TIỆN ÍCH KHÓA CUỘN KHI POPUP MỞ === */
+/* Thêm lớp này vào thẻ <body> để ngăn trang chính bị cuộn */
+body.popup-open-no-scroll {
+    overflow: hidden;
+}
