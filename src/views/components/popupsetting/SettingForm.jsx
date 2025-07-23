@@ -11,10 +11,23 @@ const SettingForm = ({
   handleSubmitReport, handleUploadMusic
 }) => {
   const { t, i18n } = useTranslation();
-  const [availableSongs] = useState([
-    "yoursmile.mp3",
-    "simplelove.mp3",
-  ]);
+const [availableSongs, setAvailableSongs] = useState([]);
+
+useEffect(() => {
+  const fetchSongs = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/music-list');
+      const data = await res.json();
+      if (data.success) {
+        setAvailableSongs(data.songs);
+      }
+    } catch (err) {
+      console.error('Failed to fetch music list:', err);
+    }
+  };
+
+  fetchSongs();
+}, []);
 
   // 🔁 Tự đổi ngôn ngữ khi chọn language
   useEffect(() => {
@@ -29,14 +42,26 @@ const SettingForm = ({
       const docRef = doc(db, 'user', uid);
       await updateDoc(docRef, { [field]: value });
     } catch (err) {
-      console.error(`Update failed:`, err);
+      console.error(`Update failed for ${field}:`, err);
     }
+  };
+
+  const handleToggleSound = async () => {
+    const newSound = sound === 'On' ? 'Off' : 'On';
+    setSound(newSound);
+    await updateSetting('background_sound', newSound);
+    window.location.reload(); // 🔁 Reload để áp dụng âm thanh mới
+  };
+
+  const handleMusicChange = async (value) => {
+    setMusic(value);
+    await updateSetting('music', value);
+    window.location.reload(); // 🔁 Reload để áp dụng nhạc nền mới
   };
 
   const changeLanguage = (lang) => {
     setLanguage(lang);
     updateSetting('language', lang);
-
     if (lang === 'Vietnamese') i18n.changeLanguage('vi');
     else if (lang === 'Japanese') i18n.changeLanguage('ja');
     else i18n.changeLanguage('en');
@@ -53,11 +78,7 @@ const SettingForm = ({
         <div className="form-group">
           <label>{t('backgroundSound')}</label>
           <button
-            onClick={() => {
-              const newSound = sound === 'On' ? 'Off' : 'On';
-              setSound(newSound);
-              updateSetting('background_sound', newSound);
-            }}
+            onClick={handleToggleSound}
             className={`toggle-sound-btn ${sound === 'On' ? 'active' : ''}`}
           >
             {sound === 'On' ? t('on') : t('off')}
@@ -70,11 +91,7 @@ const SettingForm = ({
           <div className="music-select-group">
             <select
               value={availableSongs.includes(music) ? music : ''}
-              onChange={(e) => {
-                const value = e.target.value;
-                setMusic(value);
-                updateSetting('music', value);
-              }}
+              onChange={(e) => handleMusicChange(e.target.value)}
             >
               <option value="">{t('selectMusic')}</option>
               {availableSongs.map((song) => (

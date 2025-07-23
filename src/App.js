@@ -31,7 +31,8 @@ function App() {
     <AuthProvider>
       <Router>
         {/* ✅ Phát nhạc nền toàn app */}
-        <BackgroundMusic music={music} sound={sound} />
+        <BackgroundMusic />
+
 
         <Header />
         <Routes>

@@ -1,4 +1,3 @@
-// AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, query, where, getDocs } from 'firebase/firestore';
@@ -21,26 +20,37 @@ export const AuthProvider = ({ children }) => {
         );
         const snapshot = await getDocs(q);
 
-        let member_id = null;
-
         if (!snapshot.empty) {
-          const docData = snapshot.docs[0].data();
-          member_id = docData.member_id ?? null;
-          console.log("✅ [Firestore] member_id:", member_id);
+          const docSnap = snapshot.docs[0];
+          const docData = docSnap.data();
+
+          setUser({
+            uid: firebaseUser.uid,
+            email: firebaseUser.email,
+            docId: docSnap.id,                 // ✅ Document ID thực sự trong Firestore
+            member_id: docData.member_id ?? null,
+            music: docData.music || '',
+            background_sound: docData.background_sound || '',
+            language: docData.language || ''
+          });
+
+          console.log("✅ [Firestore] member_id:", docData.member_id);
         } else {
           console.warn("⚠️ Không tìm thấy document với email:", firebaseUser.email);
+          setUser({
+            uid: firebaseUser.uid,
+            email: firebaseUser.email,
+            docId: null,
+            member_id: null,
+          });
         }
 
-        setUser({
-          uid: firebaseUser.uid,
-          email: firebaseUser.email,
-          member_id: member_id,
-        });
       } catch (error) {
         console.error("❌ Lỗi khi lấy member_id từ Firestore:", error);
         setUser({
           uid: firebaseUser.uid,
           email: firebaseUser.email,
+          docId: null,
           member_id: null,
         });
       }

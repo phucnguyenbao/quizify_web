@@ -2,55 +2,32 @@ import React, { useState, useEffect } from 'react';
 import SettingForm from './components/popupsetting/SettingForm';
 import ReportTable from './components/popupsetting/ReportTable';
 import '../assets/css/SettingPage.css';
-import { auth, db } from '../firebase/services';
-import { onAuthStateChanged } from 'firebase/auth';
-import { query, collection, where, getDocs } from 'firebase/firestore';
+import { db } from '../firebase/services';
+import { doc, updateDoc } from 'firebase/firestore';
+import { useAuth } from './AuthContext';
 
 const SettingPage = () => {
-  const [filterCreateDate, setFilterCreateDate] = useState('');
-  const [reportContent, setReportContent] = useState('');
+  const { user } = useAuth();
   const [music, setMusic] = useState('');
   const [language, setLanguage] = useState('');
   const [sound, setSound] = useState('Off');
-  const [theme, setTheme] = useState('Light');
+  const [reportContent, setReportContent] = useState('');
+  const [filterCreateDate, setFilterCreateDate] = useState('');
   const [searchReport, setSearchReport] = useState('');
   const [searchUser, setSearchUser] = useState('');
   const [searchBan, setSearchBan] = useState('');
   const [searchTeam, setSearchTeam] = useState('');
   const [filterReplyDate, setFilterReplyDate] = useState('');
-  const [memberId, setMemberId] = useState('');
 
-useEffect(() => {
-  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+  useEffect(() => {
+    // Nếu user có data thì set mặc định các giá trị
     if (user) {
-      try {
-        const q = query(
-          collection(db, 'user'),
-          where('email', '==', user.email) 
-        );
-
-        const querySnapshot = await getDocs(q);
-
-        if (!querySnapshot.empty) {
-          const userDoc = querySnapshot.docs[0];
-          const data = userDoc.data();
-          setMemberId(data.member_id); 
-          setMusic(data.music);
-          setSound(data.background_sound)
-          setLanguage(data.language)
-          console.log('Found member_id:', data.member_id);
-        } else {
-          console.error('❌ Không tìm thấy user có email này trong Firestore');
-        }
-
-      } catch (err) {
-        console.error('❌ Lỗi lấy dữ liệu Firestore:', err);
-      }
+      const { music: uMusic, background_sound, language: uLang } = user;
+      if (uMusic) setMusic(uMusic);
+      if (background_sound) setSound(background_sound);
+      if (uLang) setLanguage(uLang);
     }
-  });
-
-  return () => unsubscribe();
-}, []);
+  }, [user]);
 
   const reports = [
     { id: 1, title: 'Report 1', status: 'Processed', date: '23/06/2025', user: 'Minh', ban: 'Technical', team: 'ODD', replyDate: '2025-06-23' },
@@ -91,8 +68,45 @@ useEffect(() => {
     setReportContent('');
   };
 
-  const handleUploadMusic = () => {
-    alert('Music upload feature is under development!');
+  const handleUploadMusic = async () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.mp3';
+    input.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file || !user?.member_id) {
+        alert('⚠️ Hệ thống chưa tải xong thông tin người dùng.');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('music', file);
+
+      try {
+        const res = await fetch('http://localhost:5000/upload-music', {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await res.json();
+
+        if (data.success && data.filename) {
+          const newFilename = data.filename;
+          setMusic(newFilename);
+
+const docRef = doc(db, 'user', user.docId);
+await updateDoc(docRef, { music: newFilename });
+
+
+          window.location.reload();
+        } else {
+          alert('Upload failed');
+        }
+      } catch (err) {
+        console.error('Upload error:', err);
+        alert('Upload error');
+      }
+    };
+    input.click();
   };
 
   return (
@@ -100,7 +114,7 @@ useEffect(() => {
       <div className="section">
         <h3>Settings Management</h3>
         <SettingForm
-          uid={memberId}
+          uid={user?.member_id}
           sound={sound} setSound={setSound}
           music={music} setMusic={setMusic}
           language={language} setLanguage={setLanguage}

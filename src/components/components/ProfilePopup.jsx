@@ -8,11 +8,14 @@ const ProfilePopup = ({
   handleLogout, setIsEditing, setEditData
 }) => {
   const { user } = useAuth();
-  const avatar = editData.imageId
-    ? `/assets/images/image/${editData.imageId}`
-    : '/assets/images/image/dolphin.png';
+const avatar = editData.imageId
+  ? `http://localhost:5000/assets/images/image/${editData.imageId}?t=${Date.now()}`
+  : '/assets/images/image/dolphin.png';
+
+
 
   const handleAvatarChange = async (e) => {
+     e.preventDefault(); 
     const file = e.target.files[0];
     if (!file) return;
 
@@ -26,12 +29,19 @@ const ProfilePopup = ({
         body: formData,
       });
       const data = await res.json();
-      if (data.success) {
-        setEditData((prev) => ({
-          ...prev,
-          imageId: data.filename,
-        }));
-      }
+if (data.success) {
+  // Lưu tên file vào Firestore với trường `image_id`
+  await updateDoc(doc(firestore, 'users', userData.id), {
+    image_id: data.filename, // 🔁 dùng đúng tên trường
+  });
+
+  // Cập nhật state local (vẫn dùng imageId nếu state đang dùng camelCase)
+  setEditData((prev) => ({
+    ...prev,
+    imageId: data.filename, // đây là tên biến trong React, không cần đổi
+  }));
+}
+
     } catch (err) {
       console.error("Upload failed:", err);
     }

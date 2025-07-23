@@ -35,7 +35,7 @@ function Header() {
             email: data.email,
             date: new Date(data.registration_date.seconds * 1000).toLocaleDateString('en-US'),
             role: data.manager ? 'Manager' : (data.leader ? 'Leader' : 'Member'),
-            imageId: data.image_id || 'dolphin.png' // dùng ảnh mặc định nếu không có
+            imageId: data.image_id || 'dolphin.png'
           };
           setUserData(formatted);
           setEditData(formatted);
@@ -69,10 +69,29 @@ function Header() {
     setEditData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleImageChange = (e) => {
+  // ✅ Xử lý upload ảnh lên server + set imageId
+  const handleAvatarUpload = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setEditData(prev => ({ ...prev, imageId: file.name })); // lưu tên file, ví dụ: crocodile.png
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("avatar", file);
+    formData.append("userId", userData.id);
+
+    try {
+      const res = await fetch("http://localhost:5000/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        setEditData(prev => ({
+          ...prev,
+          imageId: data.filename
+        }));
+      }
+    } catch (err) {
+      console.error("Upload failed:", err);
     }
   };
 
@@ -172,8 +191,8 @@ function Header() {
                     handleEditChange={handleEditChange}
                     handleSave={handleSave}
                     handleCancel={handleCancel}
-                    handleImageChange={handleImageChange}
                     handleLogout={handleLogout}
+                    handleImageChange={handleAvatarUpload} // ✅ truyền function upload ảnh
                   />
                 </div>
               )}
