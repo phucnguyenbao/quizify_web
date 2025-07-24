@@ -1,7 +1,6 @@
 import React from 'react';
 import { Camera, LogOut } from 'lucide-react';
-import { useAuth } from '../../views/AuthContext';
-import { firestore, doc, updateDoc } from '../../firebase/services';
+import { db, doc, updateDoc } from '../../firebase/services';
 
 
 const ProfilePopup = ({
@@ -9,7 +8,7 @@ const ProfilePopup = ({
   handleEditChange, handleSave, handleCancel,
   handleLogout, setIsEditing, setEditData
 }) => {
-  const { user } = useAuth();
+
 const avatar = editData.imageId
   ? `http://localhost:5000/assets/images/image/${editData.imageId}?t=${Date.now()}`
   : '/assets/images/image/dolphin.png';
@@ -33,7 +32,7 @@ const avatar = editData.imageId
       const data = await res.json();
 if (data.success) {
   // Lưu tên file vào Firestore với trường `image_id`
-  await updateDoc(doc(firestore, 'user', userData.id), {
+  await updateDoc(doc(db, 'user', userData.id), {
     image_id: data.filename, // 🔁 dùng đúng tên trường
   });
 
