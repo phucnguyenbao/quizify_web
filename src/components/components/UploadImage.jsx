@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useAuth } from '../../views/AuthContext';
 
 const ImageUploader = ({ onUploadSuccess }) => {
+   const { user } = useAuth();
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (e) => {
