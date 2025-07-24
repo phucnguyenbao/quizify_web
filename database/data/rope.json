@@ -1,0 +1,986 @@
+[
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "LG01",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "LG01",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "LG01",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "LG01",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "AM01",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "AM01",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "AM01",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "AM01",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút chơi game",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút chơi game",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút chơi game",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút chơi game",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút open",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút open",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút open",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút open",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút details",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút details",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút details",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút details",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút edit",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút edit",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút edit",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút edit",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút select all",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút select all",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút select all",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút select all",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút fetch",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút fetch",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút fetch",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút fetch",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút tick",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút tick",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút tick",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút tick",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút add game",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút add game",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút add game",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút add game",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột avg score",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột avg score",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột avg score",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột avg score",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột max score",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột max score",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột max score",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột max score",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột quiz",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột quiz",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột quiz",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột quiz",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Search avg score",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Search avg score",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Search avg score",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Search avg score",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Search quiz",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Search quiz",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Search quiz",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Search quiz",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Search max score",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Search max score",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Search max score",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Search max score",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút chi tiết trong details",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút chi tiết trong details",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút chi tiết trong details",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút chi tiết trong details",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút chia sẻ trong details",
+    "page_id": "MG02",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút chia sẻ trong details",
+    "page_id": "MG02",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút chia sẻ trong details",
+    "page_id": "MG02",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút chia sẻ trong details",
+    "page_id": "MG02",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG03",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG03",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG03",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG03",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG04",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG04",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG04",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG04",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút upload",
+    "page_id": "MG04",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút upload",
+    "page_id": "MG04",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút upload",
+    "page_id": "MG04",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút upload",
+    "page_id": "MG04",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút report",
+    "page_id": "MG04",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút report",
+    "page_id": "MG04",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút report",
+    "page_id": "MG04",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút report",
+    "page_id": "MG04",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút submit",
+    "page_id": "MG04",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút submit",
+    "page_id": "MG04",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút submit",
+    "page_id": "MG04",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Nút submit",
+    "page_id": "MG04",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột status",
+    "page_id": "MG04",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột status",
+    "page_id": "MG04",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột status",
+    "page_id": "MG04",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột status",
+    "page_id": "MG04",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột người tạo",
+    "page_id": "MG04",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột người tạo",
+    "page_id": "MG04",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột người tạo",
+    "page_id": "MG04",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột người tạo",
+    "page_id": "MG04",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột mã người tạo",
+    "page_id": "MG04",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột mã người tạo",
+    "page_id": "MG04",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột mã người tạo",
+    "page_id": "MG04",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột mã người tạo",
+    "page_id": "MG04",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột người trả lời",
+    "page_id": "MG04",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột người trả lời",
+    "page_id": "MG04",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột người trả lời",
+    "page_id": "MG04",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột người trả lời",
+    "page_id": "MG04",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột mã người trả lời",
+    "page_id": "MG04",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột mã người trả lời",
+    "page_id": "MG04",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột mã người trả lời",
+    "page_id": "MG04",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột mã người trả lời",
+    "page_id": "MG04",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột department",
+    "page_id": "MG04",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột department",
+    "page_id": "MG04",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột department",
+    "page_id": "MG04",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột department",
+    "page_id": "MG04",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột team",
+    "page_id": "MG04",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột team",
+    "page_id": "MG04",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột team",
+    "page_id": "MG04",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột team",
+    "page_id": "MG04",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột nội dung câu trả lời",
+    "page_id": "MG04",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột nội dung câu trả lời",
+    "page_id": "MG04",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột nội dung câu trả lời",
+    "page_id": "MG04",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột nội dung câu trả lời",
+    "page_id": "MG04",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột nội dung báo cáo",
+    "page_id": "MG04",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột nội dung báo cáo",
+    "page_id": "MG04",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột nội dung báo cáo",
+    "page_id": "MG04",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột nội dung báo cáo",
+    "page_id": "MG04",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột reply content",
+    "page_id": "MG04",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột reply content",
+    "page_id": "MG04",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột reply content",
+    "page_id": "MG04",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột reply content",
+    "page_id": "MG04",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG01",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG01",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG01",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Màn hình chung",
+    "page_id": "MG01",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Mục quản lý phòng ban",
+    "page_id": "MG01",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Mục quản lý phòng ban",
+    "page_id": "MG01",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Mục quản lý phòng ban",
+    "page_id": "MG01",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Mục quản lý phòng ban",
+    "page_id": "MG01",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Mục quản lý team",
+    "page_id": "MG01",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Mục quản lý team",
+    "page_id": "MG01",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Mục quản lý team",
+    "page_id": "MG01",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Mục quản lý team",
+    "page_id": "MG01",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Lọc department",
+    "page_id": "MG01",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Lọc department",
+    "page_id": "MG01",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Lọc department",
+    "page_id": "MG01",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Lọc department",
+    "page_id": "MG01",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Lọc team",
+    "page_id": "MG01",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Lọc team",
+    "page_id": "MG01",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Lọc team",
+    "page_id": "MG01",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Lọc team",
+    "page_id": "MG01",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Lọc role",
+    "page_id": "MG01",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Lọc role",
+    "page_id": "MG01",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Lọc role",
+    "page_id": "MG01",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Lọc role",
+    "page_id": "MG01",
+    "role_id": "4",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột trạng thái active",
+    "page_id": "MG01",
+    "role_id": "1",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột trạng thái active",
+    "page_id": "MG01",
+    "role_id": "2",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột trạng thái active",
+    "page_id": "MG01",
+    "role_id": "3",
+    "permission": "Trống"
+  },
+  {
+    "component_description": "Cột trạng thái active",
+    "page_id": "MG01",
+    "role_id": "4",
+    "permission": "Trống"
+  }
+]
