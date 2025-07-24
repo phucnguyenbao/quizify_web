@@ -1,265 +1,167 @@
-/* Global */
+/* Font */
 @font-face {
   font-family: 'Bubblegum';
   src: url('/public/fonts/bubblegum/Bubblegum.ttf') format('truetype');
 }
 
+/* Container */
 .permission-container {
-  padding: 24px;
-  font-family: 'Segoe UI', Arial, sans-serif;
+  padding: 24px !important;
+  font-family: 'Segoe UI', Arial, sans-serif !important;
   background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), 
-  url('/public/assets/images/anhnen.png') no-repeat center center fixed;
-  background-size: cover;
-  backdrop-filter: blur(6px);
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
-  transition: box-shadow 0.3s ease;
+              url('/public/assets/images/anhnen.png') no-repeat center center fixed !important;
+  background-size: cover !important;
+  backdrop-filter: blur(6px) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.06) !important;
+  transition: box-shadow 0.3s ease !important;
 }
 
 .permission-container:hover {
-  box-shadow: 0 16px 36px rgba(0,0,0,0.08);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.08) !important;
 }
+
 .permission-container h2 {
-  text-align: center;
-  font-size: 56px;
-  font-weight: 700;
-  color: #f8b4d9;
-  font-family: 'BubbleGum', cursive;
-
-  /* Viền trắng xung quanh chữ */
-  -webkit-text-stroke: 1px white;
-  text-shadow: 1px white; /* Cho trình duyệt hỗ trợ chuẩn */
-
-  /* Bóng chữ */
+  text-align: center !important;
+  font-size: 56px !important;
+  font-weight: 700 !important;
+  color: #f8b4d9 !important;
+  font-family: 'Bubblegum', cursive !important;
+  -webkit-text-stroke: 1px white !important;
   text-shadow:
     3px 3px 8px rgba(255, 255, 255, 0.8),
     -3px -3px 8px rgba(255, 255, 255, 0.5),
-    2px 4px 12px rgba(0, 0, 0, 0.2);
-
-  letter-spacing: 2px;
+    2px 4px 12px rgba(0, 0, 0, 0.2) !important;
+  letter-spacing: 2px !important;
 }
 
 /* Table */
 .permission-table {
-  width: 100%;
-  border-collapse: collapse;  /* Gộp ô lại, bỏ border-spacing */
-  margin-top: 28px;
-
-  background: rgba(0, 0, 0, 0.4); /* giống màu overlay tối */ /* Trong suốt mềm mại */
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-
-  border-radius: 20px;
-  box-shadow: 0 12px 32px rgba(0,0,0,0.2), inset 0 0 8px rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.15);
-  transition: all 0.3s ease;
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin-top: 28px !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.2), inset 0 0 8px rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  overflow: hidden !important;
 }
 
-
-
-/* Header */
+/* Header ô */
 .permission-table th {
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  border-bottom: 1px solid rgba(255,255,255,0.25);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  padding: 16px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
 }
 
+/* Dữ liệu ô */
 .permission-table td {
-  padding: 14px 20px;
-  text-align: center;
-  color: #fff;
-  background: transparent;   /* Bỏ nền riêng cho mỗi ô */
-  box-shadow: none;           /* Không cần shadow từng ô */
-  transition: 0.3s;
+  padding: 14px 20px !important;
+  text-align: left !important;
+  color: #fff !important;
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  transition: background 0.3s ease !important;
 }
 
-
-/* Hover row */
+/* Hover cả dòng */
 .permission-table tr:hover td {
-  background: rgba(255,255,255,0.15);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 0 8px rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.15) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 0 8px rgba(255,255,255,0.2) !important;
 }
-
+.permission-table td:first-child,
+.permission-table td:nth-child(2),
+.permission-table th:first-child,
+.permission-table th:nth-child(2) {
+  text-align: left !important;
+  vertical-align: top !important;
+  padding-left: 24px !important;
+}
 
 /* Permission States */
-/* Global */
-@font-face {
-  font-family: 'Bubblegum';
-  src: url('/public/fonts/bubblegum/Bubblegum.ttf') format('truetype');
+.select-None,
+.select-View,
+.select-Edit {
+  padding: 8px 16px !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
 }
-
-.permission-container {
-  padding: 24px;
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), 
-  url('/public/assets/images/anhnen.png') no-repeat center center fixed;
-  background-size: cover;
-  backdrop-filter: blur(6px);
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
-  transition: box-shadow 0.3s ease;
-}
-
-.permission-container:hover {
-  box-shadow: 0 16px 36px rgba(0,0,0,0.08);
-}
-.permission-container h2 {
-  text-align: center;
-  font-size: 56px;
-  font-weight: 700;
-  color: #f8b4d9;
-  font-family: 'BubbleGum', cursive;
-
-  /* Viền trắng xung quanh chữ */
-  -webkit-text-stroke: 1px white;
-  text-shadow: 1px white; /* Cho trình duyệt hỗ trợ chuẩn */
-
-  /* Bóng chữ */
-  text-shadow:
-    3px 3px 8px rgba(255, 255, 255, 0.8),
-    -3px -3px 8px rgba(255, 255, 255, 0.5),
-    2px 4px 12px rgba(0, 0, 0, 0.2);
-
-  letter-spacing: 2px;
-}
-
-/* Table */
-.permission-table {
-  width: 100%;
-  border-collapse: collapse;  /* Gộp ô lại, bỏ border-spacing */
-  margin-top: 28px;
-
-  background: rgba(0, 0, 0, 0.4); /* giống màu overlay tối */ /* Trong suốt mềm mại */
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-
-  border-radius: 20px;
-  box-shadow: 0 12px 32px rgba(0,0,0,0.2), inset 0 0 8px rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.15);
-  transition: all 0.3s ease;
-}
-
-
-
-/* Header */
-.permission-table th {
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  border-bottom: 1px solid rgba(255,255,255,0.25);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-.permission-table td {
-  padding: 14px 20px;
-  text-align: center;
-  color: #fff;
-  background: transparent;   /* Bỏ nền riêng cho mỗi ô */
-  box-shadow: none;           /* Không cần shadow từng ô */
-  transition: 0.3s;
-}
-
-
-/* Hover row */
-.permission-table tr:hover td {
-  background: rgba(255,255,255,0.15);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 0 8px rgba(255,255,255,0.2);
-}
-
 
 .select-None {
-  background: white;
-  color: #222;
-  padding: 8px 16px;
-  border-radius: 12px;
-  font-weight: 600;
+  background: white !important;
+  color: #222 !important;
   box-shadow: inset 2px 2px 6px rgba(0,0,0,0.05),
-              inset -2px -2px 6px rgba(255,255,255,0.4);
-  border: none;
-  transition: all 0.3s ease;
+              inset -2px -2px 6px rgba(255,255,255,0.4) !important;
 }
 
 .select-View {
-  background: #34d399; /* xanh */
-  color: white;
-  padding: 8px 16px;
-  border-radius: 12px;
-  font-weight: 600;
-  box-shadow: 0 0 8px rgba(34,197,94,0.3);
-  border: none;
-  transition: all 0.3s ease;
+  background: #34d399 !important;
+  color: white !important;
+  box-shadow: 0 0 8px rgba(34,197,94,0.3) !important;
 }
 
 .select-Edit {
-  background: #f87171; /* đỏ */
-  color: white;
-  padding: 8px 16px;
-  border-radius: 12px;
-  font-weight: 600;
-  box-shadow: 0 0 8px rgba(239,68,68,0.3);
-  border: none;
-  transition: all 0.3s ease;
+  background: #f87171 !important;
+  color: white !important;
+  box-shadow: 0 0 8px rgba(239,68,68,0.3) !important;
 }
 
 .select-None:hover,
 .select-View:hover,
 .select-Edit:hover {
-  transform: scale(1.05);
-  filter: brightness(1.05);
+  transform: scale(1.05) !important;
+  filter: brightness(1.05) !important;
 }
 
-
-/* Save Button (giữ nguyên) */
+/* Save Button */
 .save-button-container {
-  text-align: right;
-  margin-top: 30px;
+  text-align: right !important;
+  margin-top: 30px !important;
 }
 
 .save-button {
-  position: relative;
-  padding: 14px 38px;
-background: linear-gradient(135deg, #6ee7b7, #3b82f6);
-  color: white;
-  border: none;
-  border-radius: 18px;
-  font-weight: 700;
-  font-size: 17px;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  overflow: hidden;
-  transition: all 0.4s ease;
+  position: relative !important;
+  padding: 14px 38px !important;
+  background: linear-gradient(135deg, #6ee7b7, #3b82f6) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 18px !important;
+  font-weight: 700 !important;
+  font-size: 17px !important;
+  cursor: pointer !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+  overflow: hidden !important;
+  transition: all 0.4s ease !important;
 }
 
 .save-button::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -75%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.4), rgba(255,255,255,0));
-  transform: skewX(-20deg);
-  transition: all 0.5s ease;
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important; 
+  left: -75% !important;
+  width: 50% !important;
+  height: 100% !important;
+  background: linear-gradient(120deg, rgba(255,255,255,0.4), rgba(255,255,255,0)) !important;
+  transform: skewX(-20deg) !important;
+  transition: all 0.5s ease !important;
 }
 
 .save-button:hover::before {
-  left: 130%;
+  left: 130% !important;
 }
 
 .save-button:hover {
-  background: linear-gradient(135deg, #34d399, #2563eb);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  background: linear-gradient(135deg, #34d399, #2563eb) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15) !important;
 }
-
-
-

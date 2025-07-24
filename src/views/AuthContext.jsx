@@ -27,14 +27,25 @@ export const AuthProvider = ({ children }) => {
           setUser({
             uid: firebaseUser.uid,
             email: firebaseUser.email,
-            docId: docSnap.id,                 // ✅ Document ID thực sự trong Firestore
+            docId: docSnap.id,
             member_id: docData.member_id ?? null,
+            member_name: docData.member_name ?? '',
+            middle_and_last_name: docData.middle_and_last_name ?? '',
+            phone_number: docData.phone_number ?? '',
+            supervisor_id: docData.supervisor_id ?? '',
+            team_id: docData.team_id ?? null,
+            theme: docData.theme ?? 'Light',
+
+            leader: docData.leader ?? false,
+            manager: docData.manager ?? false,
+            avatar_id: docData.image_id ?? '',
+
             music: docData.music || '',
             background_sound: docData.background_sound || '',
-            language: docData.language || ''
+            language: docData.language || '',
           });
 
-          console.log("✅ [Firestore] member_id:", docData.member_id);
+          console.log("✅ [Firestore] User loaded:", docData);
         } else {
           console.warn("⚠️ Không tìm thấy document với email:", firebaseUser.email);
           setUser({
@@ -46,7 +57,7 @@ export const AuthProvider = ({ children }) => {
         }
 
       } catch (error) {
-        console.error("❌ Lỗi khi lấy member_id từ Firestore:", error);
+        console.error("❌ Lỗi khi lấy user từ Firestore:", error);
         setUser({
           uid: firebaseUser.uid,
           email: firebaseUser.email,

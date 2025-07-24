@@ -20,11 +20,14 @@ const rolesMap = {
 const rolesList = ["User", "Leader", "Manager", "Admin"];
 const options = ["None", "View", "Edit"];
 
-// Permission mapping
+// Permission mapping (fix để đảm bảo mapping ngược cũng đúng)
 const permissionMap = {
   "Trống": "None",
   "Xem": "View",
   "Sửa": "Edit",
+  "None": "None",
+  "View": "View",
+  "Edit": "Edit",
 };
 
 const reversePermissionMap = {
@@ -68,30 +71,24 @@ const RolePage = () => {
         });
       });
 
-      // Default all permissions to "None"
-      Object.values(copoData).forEach((screen) => {
-        screen.components.forEach((comp) => {
-          rolesList.forEach((role) => {
-            comp.permissions[role] = "None";
-          });
-        });
-      });
-
       // Assign permissions from rope
-      ropeSnap.forEach((docSnap) => {
-        const { component_description, role_id, permission } = docSnap.data();
-        const roleName = rolesMap[role_id];
+ropeSnap.forEach((docSnap) => {
+  const { component_description, role_id, permission, page_id } = docSnap.data();
+  const roleName = rolesMap[role_id];
 
-        Object.values(copoData).forEach((screen) => {
-          const comp = screen.components.find(
-            (c) => c.name.trim() === component_description.trim()
-          );
-          if (comp) {
-            comp.permissions[roleName] =
-              permissionMap[permission] || "None";
-          }
-        });
-      });
+  const screen = copoData[page_id];
+  if (!screen) return;
+
+  const comp = screen.components.find(
+    (c) =>
+      (c.name || "").trim() === (component_description || "").trim()
+  );
+
+  if (comp && roleName && permissionMap[permission]) {
+    comp.permissions[roleName] = permissionMap[permission];
+  }
+});
+
 
       setData(Object.values(copoData));
     } catch (err) {
@@ -170,10 +167,10 @@ const RolePage = () => {
               <tr key={`${i}-${j}`}>
                 {j === 0 && (
                   <>
-                    <td rowSpan={screen.components.length}>
+                    <td rowSpan={screen.components.length} className="align-left-top">
                       {screen.screenCode}
                     </td>
-                    <td rowSpan={screen.components.length}>
+                    <td rowSpan={screen.components.length} className="align-left-top">
                       {screen.screenTitle}
                     </td>
                   </>

@@ -10,6 +10,8 @@ import { useAuth } from '../views/AuthContext';
 
 function Header() {
   const { user } = useAuth();
+  const isManager = user?.manager === true;
+  const isLeader = user?.leader === true;
   const [userData, setUserData] = useState(null);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
@@ -144,11 +146,13 @@ function Header() {
                   <Gamepad2 size={16}/> Game
                 </NavLink>
               </li>
-              <li>
-                <NavLink to="/quiz" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
-                  <ListTodo size={16}/> Quiz
-                </NavLink>
-              </li>
+                {(isManager || isLeader) && (
+                  <li>
+                    <NavLink to="/quiz" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
+                      <ListTodo size={16}/> Quiz
+                    </NavLink>
+                  </li>
+                )}
               <li>
                 <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}>
                   <Users size={16}/> Members

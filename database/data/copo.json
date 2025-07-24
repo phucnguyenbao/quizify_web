@@ -1,50 +1,112 @@
 [
-  { "component_description": "Màn hình chung", "page_id": "LG01", "page_description": "Màn hình đăng nhập" },
-
-  { "component_description": "Màn hình chung", "page_id": "AM01", "page_description": "Màn hình setup quyền hệ thống" },
-  
-    { "component_description": "Màn hình chung", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Nút chơi game", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Nút open", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Nút details", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Nút edit", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Nút select all", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Nút fetch", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Nút tick", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Nút add game", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Cột avg score", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Cột max score", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Cột quiz", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Search avg score", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Search quiz", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Search max score", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Nút chi tiết trong details", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-  { "component_description": "Nút chia sẻ trong details", "page_id": "MG02", "page_description": "Màn hình quản lý game" },
-
-  { "component_description": "Màn hình chung", "page_id": "MG03", "page_description": "Màn hình quản lý quiz" },
-
-{ "component_description": "Màn hình chung", "page_id": "MG04", "page_description": "Màn hình quản lý cài đặt" },
-  { "component_description": "Nút upload", "page_id": "MG04", "page_description": "Màn hình quản lý cài đặt" },
-  { "component_description": "Nút report", "page_id": "MG04", "page_description": "Màn hình quản lý cài đặt" },
-  { "component_description": "Nút submit", "page_id": "MG04", "page_description": "Màn hình quản lý cài đặt" },
-  { "component_description": "Cột status", "page_id": "MG04", "page_description": "Màn hình quản lý cài đặt" },
-  { "component_description": "Cột người tạo", "page_id": "MG04", "page_description": "Màn hình quản lý cài đặt" },
-  { "component_description": "Cột mã người tạo", "page_id": "MG04", "page_description": "Màn hình quản lý cài đặt" },
-  { "component_description": "Cột người trả lời", "page_id": "MG04", "page_description": "Màn hình quản lý cài đặt" },
-  { "component_description": "Cột mã người trả lời", "page_id": "MG04", "page_description": "Màn hình quản lý cài đặt" },
-  { "component_description": "Cột department", "page_id": "MG04", "page_description": "Màn hình quản lý cài đặt" },
-  { "component_description": "Cột team", "page_id": "MG04", "page_description": "Màn hình quản lý cài đặt" },
-  { "component_description": "Cột nội dung câu trả lời", "page_id": "MG04", "page_description": "Màn hình quản lý cài đặt" },
-  { "component_description": "Cột nội dung báo cáo", "page_id": "MG04", "page_description": "Màn hình quản lý cài đặt" },
-  { "component_description": "Cột reply content", "page_id": "MG04", "page_description": "Màn hình quản lý cài đặt" },
-
-  
-    { "component_description": "Màn hình chung", "page_id": "MG01", "page_description": "Màn hình quản lý thành viên" },
-  { "component_description": "Mục quản lý phòng ban", "page_id": "MG01", "page_description": "Màn hình quản lý thành viên" },
-  { "component_description": "Mục quản lý team", "page_id": "MG01", "page_description": "Màn hình quản lý thành viên" },
-  { "component_description": "Lọc department", "page_id": "MG01", "page_description": "Màn hình quản lý thành viên" },
-  { "component_description": "Lọc team", "page_id": "MG01", "page_description": "Màn hình quản lý thành viên" },
-  { "component_description": "Lọc role", "page_id": "MG01", "page_description": "Màn hình quản lý thành viên" },
-  { "component_description": "Cột trạng thái active", "page_id": "MG01", "page_description": "Màn hình quản lý thành viên" }
-
+    {
+    "page_id": "H01",
+    "page_description": "Màn hình chờ vào game",
+    "component_description": ""
+  },
+  {
+    "page_id": "H01",
+    "page_description": "Màn hình chờ vào game",
+    "component_description": "Pop up chơi game"
+  },
+    {
+    "page_id": "LG01",
+    "page_description": "Màn hình đăng nhập",
+    "component_description": ""
+  },
+  {
+    "page_id": "LG01",
+    "page_description": "Màn hình đăng nhập",
+    "component_description": "Màn hình quên mật khẩu"
+  },
+    {
+    "page_id": "MG01",
+    "page_description": "Màn hình quản lý thành viên",
+    "component_description": ""
+  },
+  {
+    "page_id": "MG01",
+    "page_description": "Màn hình quản lý thành viên",
+    "component_description": "Pop up xem thông tin thành viên"
+  },
+  {
+    "page_id": "MG01",
+    "page_description": "Màn hình quản lý thành viên",
+    "component_description": "Pop up thêm thành viên thủ công/file"
+  },
+  {
+    "page_id": "MG01",
+    "page_description": "Màn hình quản lý thành viên",
+    "component_description": "Pop up thêm phòng ban/nhóm"
+  },
+  {
+    "page_id": "MG01",
+    "page_description": "Màn hình quản lý thành viên",
+    "component_description": "Pop up xem chi tiết các lần làm bài trong trường hợp quản lý vào xem các lần làm bài của chủ game"
+  },
+    {
+    "page_id": "MG02",
+    "page_description": "Màn hình quản lý game",
+    "component_description": ""
+  },
+  {
+    "page_id": "MG02",
+    "page_description": "Màn hình quản lý game",
+    "component_description": "Pop up xem chi tiết các lần làm bài trong trường hợp làm game cá nhân"
+  },
+  {
+    "page_id": "MG02",
+    "page_description": "Màn hình quản lý game",
+    "component_description": "Nút chọn xóa, sửa, thêm game, tạo quiz, Nút đóng mở game"
+  },
+  {
+    "page_id": "MG02",
+    "page_description": "Màn hình quản lý game",
+    "component_description": "Pop up nhập file excel và pop up nhập prompt AI"
+  },
+    {
+    "page_id": "MG03",
+    "page_description": "Màn hình quản lý quiz",
+    "component_description": ""
+  },
+  {
+    "page_id": "MG03",
+    "page_description": "Màn hình quản lý quiz",
+    "component_description": "Pop up tạo quiz bằng AI"
+  },
+  {
+    "page_id": "MG03",
+    "page_description": "Màn hình quản lý quiz",
+    "component_description": "Pop up xem câu hỏi quiz"
+  },
+  {
+    "page_id": "MG03",
+    "page_description": "Màn hình quản lý quiz",
+    "component_description": "Pop up nhập file excel tạo quiz"
+  },
+    {
+    "page_id": "MG04",
+    "page_description": "Mục quản lý cài đặt",
+    "component_description": ""
+  },
+  {
+    "page_id": "MG04",
+    "page_description": "Mục quản lý cài đặt",
+    "component_description": "Nút thêm nhạc"
+  },
+  {
+    "page_id": "MG04",
+    "page_description": "Mục quản lý cài đặt",
+    "component_description": "Mục quản lý báo cáo"
+  },
+  {
+    "page_id": "MG04",
+    "page_description": "Mục quản lý cài đặt",
+    "component_description": "Mục nhập báo cáo và gửi"
+  },
+  {
+    "page_id": "AM01",
+    "page_description": "Màn hình setup quyền hệ thống",
+    "component_description": ""
+  }
 ]

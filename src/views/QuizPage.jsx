@@ -4,21 +4,32 @@ import AddOptionModal from './components/popupquiz/AddOptionModal';
 import UploadQuizModal from './components/popupquiz/UploadQuizModal';
 import AIQuizModal from './components/popupquiz/AIQuizModal';
 import ViewQuestionsModal from './components/popupquiz/ViewQuestionsModal';
+import { useAuth } from './AuthContext';
+import { Navigate } from 'react-router-dom';
 
 const QuizManagement = () => {
+  const { user } = useAuth();
+
   const initialFilters = {
     name: '', code: '', topic: '', date: '',
     score: '', count: '', numUsers: '', numChoices: ''
   };
 
   const [quizzes, setQuizzes] = useState([
-    { name: 'Quiz 1', code: '234', topic: 'Animals', date: '2025-07-23', score: 8, count: 15, numUsers: 30, numChoices: 120, questions: ['What is a cat?', 'What is this?'] },
-    { name: 'Quiz 2', code: '343', topic: 'Security', date: '2025-07-23', score: 8, count: 12, numUsers: 20, numChoices: 95, questions: ['What is HTTPS?', 'What is XSS?'] }
+    {
+      name: 'Quiz 1', code: '234', topic: 'Animals', date: '2025-07-23',
+      score: 8, count: 15, numUsers: 30, numChoices: 120,
+      questions: ['What is a cat?', 'What is this?']
+    },
+    {
+      name: 'Quiz 2', code: '343', topic: 'Security', date: '2025-07-23',
+      score: 8, count: 12, numUsers: 20, numChoices: 95,
+      questions: ['What is HTTPS?', 'What is XSS?']
+    }
   ]);
 
   const [filters, setFilters] = useState(initialFilters);
   const [tempFilter, setTempFilter] = useState(initialFilters);
-
   const [selectedIndexes, setSelectedIndexes] = useState([]);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
 
@@ -26,6 +37,11 @@ const QuizManagement = () => {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showAIModal, setShowAIModal] = useState(false);
   const [showViewQuestionsModal, setShowViewQuestionsModal] = useState(false);
+
+  // ❗ Chỉ return sau khi hook đã gọi đầy đủ
+  if (!user || (!user.manager && !user.leader)) {
+    return <Navigate to="/" />;
+  }
 
   // ====== Filter & Actions ======
   const handleFilterChange = (field, value) => {
@@ -57,7 +73,6 @@ const QuizManagement = () => {
     alert(`Exporting ${selected.length} quiz(es).`);
   };
 
-  // ====== Filtered Data ======
   const filteredQuizzes = quizzes.filter(q => (
     q.name.toLowerCase().includes(filters.name.toLowerCase()) &&
     q.code.toLowerCase().includes(filters.code.toLowerCase()) &&
@@ -68,6 +83,7 @@ const QuizManagement = () => {
     (filters.numUsers === '' || q.numUsers.toString().includes(filters.numUsers)) &&
     (filters.numChoices === '' || q.numChoices.toString().includes(filters.numChoices))
   ));
+
   return (
     <div className="quiz-management">
       <h2>Quiz Management</h2>
@@ -86,26 +102,25 @@ const QuizManagement = () => {
         <button onClick={handleCancel}>Reset</button>
       </div>
 
-
       {/* Table */}
       <table>
-  <thead>
-    <tr>
-      <th colSpan="10" style={{ textAlign: 'right', padding: '10px 20px' }}>
-        <div className="table-action-buttons">
-          <span className="action-link" onClick={selectAll}>Select All</span>
-          <span className="action-link" onClick={deleteSelected}>Delete</span>
-          <span className="action-link" onClick={() => alert("Fetching quiz!")}>Fetch</span>
-          <span className="action-link" onClick={exportSelected}>Export</span>
-        </div>
-      </th>
-    </tr>
-    <tr>
-      <th>Name</th><th>Code</th><th>Topic</th><th>Date</th>
-      <th>Score</th><th>Questions</th><th>Participants</th><th>Total Choices</th>
-      <th>Actions</th><th>✓</th>
-    </tr>
-  </thead>
+        <thead>
+          <tr>
+            <th colSpan="10" style={{ textAlign: 'right', padding: '10px 20px' }}>
+              <div className="table-action-buttons">
+                <span className="action-link" onClick={selectAll}>Select All</span>
+                <span className="action-link" onClick={deleteSelected}>Delete</span>
+                <span className="action-link" onClick={() => alert("Fetching quiz!")}>Fetch</span>
+                <span className="action-link" onClick={exportSelected}>Export</span>
+              </div>
+            </th>
+          </tr>
+          <tr>
+            <th>Name</th><th>Code</th><th>Topic</th><th>Date</th>
+            <th>Score</th><th>Questions</th><th>Participants</th><th>Total Choices</th>
+            <th>Actions</th><th>✓</th>
+          </tr>
+        </thead>
         <tbody>
           {filteredQuizzes.map((quiz, idx) => (
             <tr key={idx}>
@@ -134,43 +149,27 @@ const QuizManagement = () => {
       </table>
 
       {/* Add Quiz */}
-      <br/>
-      <button className="save-button"  onClick={() => setShowAddOptionModal(true)}>Add Quiz</button>
+      <br />
+      <button className="save-button" onClick={() => setShowAddOptionModal(true)}>Add Quiz</button>
 
-      {/* === Popups with overlay === */}
+      {/* === Popups === */}
       {showAddOptionModal && (
-        <>
-          
-          <AddOptionModal
-            onClose={() => setShowAddOptionModal(false)}
-            onSelect={(type) => {
-              setShowAddOptionModal(false);
-              if (type === 'upload') setShowUploadModal(true);
-              if (type === 'ai') setShowAIModal(true);
-            }}
-          />
-        </>
+        <AddOptionModal
+          onClose={() => setShowAddOptionModal(false)}
+          onSelect={(type) => {
+            setShowAddOptionModal(false);
+            if (type === 'upload') setShowUploadModal(true);
+            if (type === 'ai') setShowAIModal(true);
+          }}
+        />
       )}
-
-      {showUploadModal && (
-        <>
-          
-          <UploadQuizModal onClose={() => setShowUploadModal(false)} />
-        </>
-      )}
-
-      {showAIModal && (
-        <>
-          
-          <AIQuizModal onClose={() => setShowAIModal(false)} />
-        </>
-      )}
-
+      {showUploadModal && <UploadQuizModal onClose={() => setShowUploadModal(false)} />}
+      {showAIModal && <AIQuizModal onClose={() => setShowAIModal(false)} />}
       {showViewQuestionsModal && selectedQuiz && (
-        <>
-          
-          <ViewQuestionsModal quiz={selectedQuiz} onClose={() => setShowViewQuestionsModal(false)} />
-        </>
+        <ViewQuestionsModal
+          quiz={selectedQuiz}
+          onClose={() => setShowViewQuestionsModal(false)}
+        />
       )}
     </div>
   );

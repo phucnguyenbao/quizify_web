@@ -10,7 +10,7 @@ copoData.forEach((item) => {
   roleIds.forEach((role_id) => {
     ropeSeed.push({
       component_description: item.component_description,
-      page_id: item.page_id, // ✅ thêm page_id tương ứng
+      page_id: item.page_id, 
       role_id: role_id,
       permission: "Trống"
     });
