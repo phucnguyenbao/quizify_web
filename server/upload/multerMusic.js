@@ -5,11 +5,10 @@ const musicStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, '../../public/assets/images/music'));
   },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const filename = `${Date.now()}-${Math.round(Math.random() * 1E9)}${ext}`;
-    cb(null, filename);
-  },
+filename: (req, file, cb) => {
+  cb(null, file.originalname); // ✅ giữ nguyên tên gốc
+}
+,
 });
 
 const uploadMusic = multer({ storage: musicStorage });

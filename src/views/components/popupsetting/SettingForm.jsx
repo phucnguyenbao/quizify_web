@@ -50,7 +50,6 @@ useEffect(() => {
     const newSound = sound === 'On' ? 'Off' : 'On';
     setSound(newSound);
     await updateSetting('background_sound', newSound);
-    window.location.reload(); // 🔁 Reload để áp dụng âm thanh mới
   };
 
   const handleMusicChange = async (value) => {

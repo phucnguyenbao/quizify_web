@@ -9,6 +9,7 @@ import {
     getDocs,
     doc,
     deleteDoc,
+    updateDoc,
     runTransaction, // <--- THÊM MỚI
     increment // <--- THÊM MỚI
 } from 'firebase/firestore';
@@ -25,6 +26,7 @@ export {
     getDocs,
     doc,
     deleteDoc,
+    updateDoc,
     runTransaction,
     increment
 };

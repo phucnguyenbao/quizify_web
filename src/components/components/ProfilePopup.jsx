@@ -1,6 +1,8 @@
 import React from 'react';
 import { Camera, LogOut } from 'lucide-react';
 import { useAuth } from '../../views/AuthContext';
+import { firestore, doc, updateDoc } from '../../firebase/services';
+
 
 const ProfilePopup = ({
   userData, editData, isEditing,
@@ -31,7 +33,7 @@ const avatar = editData.imageId
       const data = await res.json();
 if (data.success) {
   // Lưu tên file vào Firestore với trường `image_id`
-  await updateDoc(doc(firestore, 'users', userData.id), {
+  await updateDoc(doc(firestore, 'user', userData.id), {
     image_id: data.filename, // 🔁 dùng đúng tên trường
   });
 

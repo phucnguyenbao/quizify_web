@@ -10,7 +10,6 @@ import LoginPage from './views/LoginPage';
 import UserPage from './views/UserPage';
 import PrivateRoute from './views/components/popuplogin/PrivateRouter';
 import { AuthProvider } from './views/AuthContext';
-import BackgroundMusic from './views/components/share/BackgroundMusic';
 
 const AppContent = () => {
   const location = useLocation();
@@ -31,10 +30,9 @@ const AppContent = () => {
 
   return (
     <>
-      {/* ✅ Chỉ phát nhạc nếu KHÔNG phải trang login */}
-      {!isLoginPage && <BackgroundMusic />}
+      {/* ✅ Hiển thị Header nếu KHÔNG phải trang login */}
+      {!isLoginPage && <Header />}
 
-      <Header />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
 
@@ -94,7 +92,9 @@ const AppContent = () => {
           }
         />
       </Routes>
-      <Footer />
+
+      {/* ✅ Footer cũng ẩn ở trang login nếu muốn */}
+      {!isLoginPage && <Footer />}
     </>
   );
 };
