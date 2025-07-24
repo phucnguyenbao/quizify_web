@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import '../assets/css/GamePage.css';
-import { WaitingRoom, QuizScreen } from './PlayPage';
+import { GameContainer } from './PlayPage';
 import GameDetails from './components/popupgame/GameDetails';
 import AddGameModal from './components/popupgame/AddGame';
 
@@ -151,10 +151,8 @@ const GamePage = () => {
   // View switching
   const handlePlayGame = (game) => {
     setSelectedGame(game);
-    setCurrentView('waitingRoom');
+    setCurrentView('play');
   };
-
-  const handleStartQuiz = () => setCurrentView('quiz');
   const handleExitToLobby = () => {
     setSelectedGame(null);
     setCurrentView('list');
@@ -267,20 +265,7 @@ const GamePage = () => {
         </>
       )}
 
-      {currentView === 'waitingRoom' && (
-        <WaitingRoom
-          game={selectedGame}
-          onStartQuiz={handleStartQuiz}
-          onExit={handleExitToLobby}
-        />
-      )}
-
-      {currentView === 'quiz' && (
-        <QuizScreen
-          game={selectedGame}
-          onFinish={handleExitToLobby}
-        />
-      )}
+     {currentView === 'play' && <GameContainer game={selectedGame} onExit={handleExitToLobby} />}
 
 {detailGame && (
   <GameDetails

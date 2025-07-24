@@ -1,32 +1,70 @@
-// src/components/SettingForm.jsx
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase/services';
+import { useTranslation } from 'react-i18next';
 
 const SettingForm = ({
-  uid, 
-  sound, setSound,
-  theme, setTheme,
+  uid, sound, setSound,
   music, setMusic,
+  language, setLanguage,
   reportContent, setReportContent,
   handleSubmitReport, handleUploadMusic
 }) => {
-  const [language, setLanguage] = useState('Japanese');
+  const { t, i18n } = useTranslation();
+const [availableSongs, setAvailableSongs] = useState([]);
 
-  // Hàm cập nhật Firestore
-  const updateSetting = async (field, value) => {
-    if (!uid) {
-      console.error('No member_id provided. Cannot update Firestore.');
-      return;
-    }
+useEffect(() => {
+  const fetchSongs = async () => {
     try {
-      const docRef = doc(db, 'user', uid); // Dùng đúng collection + member_id làm doc id
-      await updateDoc(docRef, { [field]: value });
-      console.log(`✅ Updated ${field} to ${value} in Firestore`);
+      const res = await fetch('http://localhost:5000/music-list');
+      const data = await res.json();
+      if (data.success) {
+        setAvailableSongs(data.songs);
+      }
     } catch (err) {
-      console.error(`❌ Failed to update ${field}:`, err);
+      console.error('Failed to fetch music list:', err);
     }
+  };
+
+  fetchSongs();
+}, []);
+
+  // 🔁 Tự đổi ngôn ngữ khi chọn language
+  useEffect(() => {
+    if (language === 'Vietnamese') i18n.changeLanguage('vi');
+    else if (language === 'Japanese') i18n.changeLanguage('ja');
+    else i18n.changeLanguage('en');
+  }, [language, i18n]);
+
+  const updateSetting = async (field, value) => {
+    if (!uid) return;
+    try {
+      const docRef = doc(db, 'user', uid);
+      await updateDoc(docRef, { [field]: value });
+    } catch (err) {
+      console.error(`Update failed for ${field}:`, err);
+    }
+  };
+
+  const handleToggleSound = async () => {
+    const newSound = sound === 'On' ? 'Off' : 'On';
+    setSound(newSound);
+    await updateSetting('background_sound', newSound);
+    window.location.reload(); // 🔁 Reload để áp dụng âm thanh mới
+  };
+
+  const handleMusicChange = async (value) => {
+    setMusic(value);
+    await updateSetting('music', value);
+    window.location.reload(); // 🔁 Reload để áp dụng nhạc nền mới
+  };
+
+  const changeLanguage = (lang) => {
+    setLanguage(lang);
+    updateSetting('language', lang);
+    if (lang === 'Vietnamese') i18n.changeLanguage('vi');
+    else if (lang === 'Japanese') i18n.changeLanguage('ja');
+    else i18n.changeLanguage('en');
   };
 
   return (
@@ -36,87 +74,64 @@ const SettingForm = ({
       </div>
 
       <div className="setting-form">
+        {/* Sound select */}
         <div className="form-group">
-          <label>Background Sound</label>
-          <select
-            value={sound}
-            onChange={(e) => {
-              const value = e.target.value;
-              setSound(value);
-              updateSetting('background_sound', value);
-            }}
-            className={`select-sound ${sound === 'On' ? 'sound-on' : 'sound-off'}`}
+          <label>{t('backgroundSound')}</label>
+          <button
+            onClick={handleToggleSound}
+            className={`toggle-sound-btn ${sound === 'On' ? 'active' : ''}`}
           >
-            <option value="Off">Off</option>
-            <option value="On">On</option>
-          </select>
+            {sound === 'On' ? t('on') : t('off')}
+          </button>
         </div>
 
+        {/* Music select */}
         <div className="form-group">
-          <label>Music</label>
+          <label>{t('music')}</label>
           <div className="music-select-group">
             <select
-              value={music}
-              onChange={(e) => {
-                const value = e.target.value;
-                setMusic(value);
-                updateSetting('music', value);
-              }}
-              className="music-select"
+              value={availableSongs.includes(music) ? music : ''}
+              onChange={(e) => handleMusicChange(e.target.value)}
             >
-              <option value="Thien Ly Oi">Thien Ly Oi</option>
-              <option value="Dom Dom">Dom Dom</option>
-              <option value="Hong Nhan">Hong Nhan</option>
+              <option value="">{t('selectMusic')}</option>
+              {availableSongs.map((song) => (
+                <option key={song} value={song}>
+                  {song.replace('.mp3', '')}
+                </option>
+              ))}
             </select>
-            <button className="upload-music-btn" onClick={handleUploadMusic}>Upload</button>
+            <button onClick={handleUploadMusic}>{t('upload')}</button>
           </div>
         </div>
 
+        {/* Language select */}
         <div className="form-group">
-          <label>Language</label>
+          <label>{t('language')}</label>
           <select
-            value={language}
-            onChange={(e) => {
-              const value = e.target.value;
-              setLanguage(value);
-              updateSetting('language', value);
-            }}
-            className="language-select"
+            value={language || 'Japanese'}
+            onChange={(e) => changeLanguage(e.target.value)}
           >
             <option value="Japanese">Japanese</option>
             <option value="Vietnamese">Vietnamese</option>
+            <option value="English">English</option>
           </select>
         </div>
 
+        {/* Report input */}
         <div className="form-group">
-          <label>Theme</label>
-          <select
-            value={theme}
-            onChange={(e) => {
-              const value = e.target.value;
-              setTheme(value);
-              updateSetting('theme', value);
-            }}
-            className={`select-theme ${theme === 'Light' ? 'theme-white' : 'theme-black'}`}
-          >
-            <option value="Dark">Dark</option>
-            <option value="Light">Light</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label>Report</label>
+          <label>{t('report')}</label>
           <input
             type="text"
             value={reportContent}
             onChange={(e) => setReportContent(e.target.value)}
-            placeholder="Enter report content"
+            placeholder={t('enterReport')}
           />
         </div>
 
+        {/* Submit buttons */}
         <div className="form-buttons">
-          <button className="button-submit" onClick={handleSubmitReport}>Submit</button>
-          <button className="button-cancel" onClick={() => setReportContent('')}>Cancel</button>
+          <button onClick={handleSubmitReport}>{t('submit')}</button>
+          <button onClick={() => setReportContent('')}>{t('cancel')}</button>
         </div>
       </div>
     </div>
