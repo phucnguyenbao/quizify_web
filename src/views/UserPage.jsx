@@ -1,37 +1,115 @@
 // src/views/UserPage.jsx
-
 import React, { useState, useEffect, useMemo } from 'react';
 import '../assets/css/popupmem/UserPage.css';
-// === THAY ĐỔI: Đổi tên import ===
 import AddDeptTeamPopup from './components/popupmem/AddDeptTeamPopup';
 import AddMemberPopup from './components/popupmem/AddMemberPopup';
 import MemberDetailPopup from './components/popupmem/MemberDetailPopup';
-import WorkResultPopup from './components/popupmem/WorkResultPopup';
 import AdvancedStats from './components/popupmem/AdvancedStats';
 import GameHistory from './components/popupmem/GameHistory';
 
-// ... (Dữ liệu mẫu không đổi) ...
-const mockMembersData = [{ id: '2301001', name: 'Minh Tuan', department: 'ODD', team: 'Team 1', role: 'Leader' }, { id: '2301002', name: 'Khanh An', department: 'ODD', team: 'Team 2', role: 'Manager' }, { id: '2301003', name: 'Phuc Lam', department: 'ODD', team: 'Team 1', role: 'User' }, { id: '2301004', name: 'Thu Trang', department: 'ODD', team: 'Team 3', role: 'Leader' }, { id: '2302001', name: 'Anh Thu', department: 'ABD', team: 'Team 4', role: 'Leader' }, { id: '2302002', name: 'Bao Han', department: 'ABD', team: 'Team 4', role: 'User' }, { id: '2302003', name: 'Gia Huy', department: 'ABD', team: 'Team 5', role: 'Leader' }, { id: '2303001', name: 'Hoai An', department: 'HR', team: 'Team 6', role: 'Leader' }, { id: '2303002', name: 'Manh Dung', department: 'HR', team: 'Team 6', role: 'User' }, { id: '2303003', name: 'Duc Minh', department: 'HR', team: 'Team 7', role: 'User' },];
-const mockWorkResults = { '2301001': { name: 'Minh Tuan', completedGames: [/*...*/], attemptDetails: [/*...*/] }, '2302001': { name: 'Anh Thu', completedGames: [/*...*/], attemptDetails: [/*...*/] }, };
-
+// NEW: Import các hàm của Firebase
+import { db, collection, getDocs, doc, deleteDoc, runTransaction, increment } from '../firebase/services';
 
 function UserPage() {
-    // ... (các state khác không đổi)
-    const [members, setMembers] = useState(mockMembersData);
-    const [filteredMembers, setFilteredMembers] = useState(mockMembersData);
+    // UPDATE: Khởi tạo state rỗng, sẽ được load từ Firebase
+    const [members, setMembers] = useState([]);
+    const [filteredMembers, setFilteredMembers] = useState([]);
+
+    // Các state khác giữ nguyên
     const [selectedMemberIds, setSelectedMemberIds] = useState([]);
     const [filters, setFilters] = useState({ name: '', code: '', department: '', team: '', role: '' });
     const [viewingMember, setViewingMember] = useState(null);
-    const [showWorkResultPopup, setShowWorkResultPopup] = useState(false);
-    const [popupMemberInfo, setPopupMemberInfo] = useState(null);
     const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
-
-    // === THAY ĐỔI: Quản lý popup thêm phòng ban/nhóm ===
     const [showAddDeptTeamPopup, setShowAddDeptTeamPopup] = useState(false);
-    const [popupMode, setPopupMode] = useState('department'); // 'department' hoặc 'team'
-
+    const [popupMode, setPopupMode] = useState('department');
     const [showGameHistory, setShowGameHistory] = useState(false);
     const [viewingUserForHistory, setViewingUserForHistory] = useState(null);
+
+    // NEW: Hàm tải danh sách thành viên từ Firestore
+    const fetchMembers = async () => {
+        try {
+            const usersCollectionRef = collection(db, 'user');
+            const querySnapshot = await getDocs(usersCollectionRef);
+            const membersData = querySnapshot.docs.map(doc => ({
+                id: doc.id, // Sử dụng doc.id của Firestore
+                ...doc.data(),
+                // Ánh xạ lại các trường để phù hợp với bảng
+                name: doc.data().member_name,
+                department: doc.data().department || 'N/A', // Giả sử có trường department
+                team: `Team ${doc.data().team_id}`,
+                role: doc.data().manager ? 'Manager' : (doc.data().leader ? 'Leader' : 'User'),
+            }));
+            setMembers(membersData);
+            setFilteredMembers(membersData);
+        } catch (error) {
+            console.error("Error fetching users: ", error);
+            alert("Không thể tải danh sách thành viên.");
+        }
+    };
+    // UPDATE: Hoàn thiện hàm xóa các thành viên đã chọn
+    const handleDeleteSelected = async () => {
+        if (selectedMemberIds.length === 0) {
+            alert("Vui lòng chọn thành viên để xóa.");
+            return;
+        }
+
+        // Thêm hộp thoại xác nhận để tránh xóa nhầm
+        if (window.confirm(`Bạn có chắc chắn muốn xóa ${selectedMemberIds.length} thành viên đã chọn?`)) {
+            try {
+                // Tạo một mảng các promise xóa
+                const deletePromises = selectedMemberIds.map(id => {
+                    const userDocRef = doc(db, 'user', id);
+                    return deleteDoc(userDocRef);
+                });
+
+                // Chờ tất cả các promise hoàn thành
+                await Promise.all(deletePromises);
+
+                alert(`Đã xóa thành công ${selectedMemberIds.length} thành viên.`);
+                fetchMembers(); // Tải lại danh sách thành viên
+                setSelectedMemberIds([]); // Reset lại danh sách đã chọn
+            } catch (error) {
+                console.error("Error deleting users: ", error);
+                alert("Đã xảy ra lỗi trong quá trình xóa thành viên.");
+            }
+        }
+    };
+
+    // NEW: Hàm xóa một thành viên duy nhất
+    const handleDeleteSingleMember = async (memberId, memberName) => {
+        if (window.confirm(`Bạn có chắc chắn muốn xóa thành viên "${memberName}"?`)) {
+            try {
+                const userDocRef = doc(db, 'user', memberId);
+                await deleteDoc(userDocRef);
+
+                alert(`Đã xóa thành công thành viên ${memberName}.`);
+                fetchMembers(); // Tải lại danh sách
+            } catch (error) {
+                console.error("Error deleting single user: ", error);
+                alert("Đã xảy ra lỗi khi xóa thành viên.");
+            }
+        }
+    };
+
+    // NEW: Tải dữ liệu khi component được mount
+    useEffect(() => {
+        fetchMembers();
+    }, []);
+
+    // ... các hàm xử lý khác giữ nguyên ...
+
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape') {
+                setViewingMember(null);
+                setShowAddMemberPopup(false);
+                setShowAddDeptTeamPopup(false);
+                setShowGameHistory(false);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
 
     const { departments, teams, roles } = useMemo(() => {
         const departments = [...new Set(members.map(m => m.department))];
@@ -40,7 +118,6 @@ function UserPage() {
         return { departments, teams, roles };
     }, [members]);
 
-    // === THAY ĐỔI: Hàm mở popup linh hoạt ===
     const handleOpenAddPopup = (mode) => {
         setPopupMode(mode);
         setShowAddDeptTeamPopup(true);
@@ -48,48 +125,50 @@ function UserPage() {
     };
 
     useEffect(() => {
-        const handleKeyDown = (event) => {
-            if (event.key === 'Escape') {
-                setShowWorkResultPopup(false);
-                setViewingMember(null);
-                setShowAddMemberPopup(false);
-                setShowAddDeptTeamPopup(false); // Cập nhật state mới
-                setShowGameHistory(false);
-            }
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, []);
+        setFilteredMembers(members);
+    }, [members]);
 
-    // ... (các hàm xử lý khác không đổi) ...
+    // ... các hàm handleFilterChange, resetFilters, handleSearch, handleSelectMember, ... giữ nguyên
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
         setFilters(prev => ({ ...prev, [name]: value }));
     };
+
     const resetFilters = () => {
         setFilters({ name: '', code: '', department: '', team: '', role: '' });
+        setFilteredMembers(members);
     };
+
+    const handleSearch = () => {
+        const { name, code, department, team, role } = filters;
+        const filtered = members.filter(m =>
+            (name === '' || m.name.toLowerCase().includes(name.toLowerCase())) &&
+            (code === '' || m.id.includes(code)) &&
+            (department === '' || m.department === department) &&
+            (team === '' || m.team === team) &&
+            (role === '' || m.role === role)
+        );
+        setFilteredMembers(filtered);
+    };
+
     const handleSelectMember = (memberId) => {
-        setSelectedMemberIds(prev => prev.includes(memberId) ? prev.filter(id => id !== memberId) : [...prev, memberId]);
+        setSelectedMemberIds(prev =>
+            prev.includes(memberId) ? prev.filter(id => id !== memberId) : [...prev, memberId]
+        );
     };
+
     const handleSelectAll = (e) => {
         setSelectedMemberIds(e.target.checked ? filteredMembers.map(m => m.id) : []);
     };
-    const handleDeleteSelected = () => {
-        if (selectedMemberIds.length === 0) return alert("Please select members to delete.");
-        setMembers(prev => prev.filter(m => !selectedMemberIds.includes(m.id)));
-        setSelectedMemberIds([]);
-    };
+
+
+
     const handleShowHistory = (member) => {
         window.scrollTo(0, 0);
         setViewingUserForHistory(member);
         setShowGameHistory(true);
     };
-    const handleFetch = () => {
-        alert('Fetching latest data...');
-        setMembers(mockMembersData);
-        resetFilters();
-    };
+
     const handleExport = () => {
         if (selectedMemberIds.length === 0) {
             alert('Please select members to export.');
@@ -97,25 +176,66 @@ function UserPage() {
         }
         alert(`Exporting data for ${selectedMemberIds.length} selected member(s)...`);
     };
-    const handleSaveMember = (updatedMember) => {
-        setMembers(prevMembers =>
-            prevMembers.map(m => (m.id === updatedMember.id ? updatedMember : m))
-        );
-        setViewingMember(null);
-    };
 
+    // NEW: Hàm xử lý thêm thành viên từ file
+    const handleAddMembersFromFile = async (membersData) => {
+        if (!membersData || membersData.length === 0) {
+            alert("Không có dữ liệu hợp lệ để thêm.");
+            return;
+        }
+
+        // Tham chiếu đến document bộ đếm mà chúng ta đã tạo ở Bước 1
+        const counterDocRef = doc(db, 'counters', 'userCounter');
+
+        try {
+            // Chạy một giao dịch để đảm bảo tính toàn vẹn dữ liệu
+            await runTransaction(db, async (transaction) => {
+                const counterDoc = await transaction.get(counterDocRef);
+                if (!counterDoc.exists()) {
+                    throw "Tài liệu bộ đếm không tồn tại! Vui lòng tạo collection 'counters' và document 'userCounter'.";
+                }
+
+                let lastId = counterDoc.data().lastId;
+
+                // Lặp qua từng thành viên trong file CSV để thêm vào transaction
+                membersData.forEach(member => {
+                    // Tăng ID lên 1
+                    lastId++;
+                    const newMemberId = String(lastId).padStart(6, '0');
+
+                    const newUserDocRef = doc(collection(db, 'user'));
+
+                    const newMemberData = {
+                        ...member,
+                        member_id: newMemberId // Gán ID đã được định dạng
+                    };
+
+                    // Thêm thao tác 'set' (tạo mới) user vào transaction
+                    transaction.set(newUserDocRef, newMemberData);
+                });
+
+                // Sau khi đã thêm tất cả user, cập nhật lại bộ đếm trong transaction
+                transaction.update(counterDocRef, { lastId: lastId });
+            });
+
+            alert(`Hoàn thành! Đã thêm thành công ${membersData.length} thành viên.`);
+            setShowAddMemberPopup(false);
+            fetchMembers(); // Tải lại danh sách thành viên sau khi thêm
+
+        } catch (error) {
+            console.error("Lỗi khi thêm thành viên bằng transaction: ", error);
+            alert("Đã xảy ra lỗi trong quá trình thêm thành viên. Vui lòng thử lại.");
+        }
+    };
 
     return (
         <div className="management-container">
             <h1 className="management-title">USER MANAGEMENT</h1>
-
-            {/* === THAY ĐỔI: Truyền hàm mới xuống === */}
-            <AdvancedStats
-                onOpenAddPopup={handleOpenAddPopup}
-            />
-
+            <AdvancedStats onOpenAddPopup={handleOpenAddPopup} />
             <div className="glass-card" style={{ marginTop: '20px' }}>
-                {/* ... (Filter, Toolbar, Table không đổi) ... */}
+                {/* ...Phần filter và table giữ nguyên... */}
+                {/* JSX for filters, table header, table body remains the same */}
+
                 <div className="filter-section">
                     <input type="text" name="name" value={filters.name} onChange={handleFilterChange} placeholder="Name" className="filter-input" />
                     <input type="text" name="code" value={filters.code} onChange={handleFilterChange} placeholder="Code" className="filter-input" />
@@ -123,7 +243,6 @@ function UserPage() {
                     <select name="department" value={filters.department} onChange={handleFilterChange} className="filter-select">
                         <option value="">Department</option>
                         {departments.map(dept => <option key={dept} value={dept}>{dept}</option>)}
-
                     </select>
 
                     <select name="team" value={filters.team} onChange={handleFilterChange} className="filter-select">
@@ -137,30 +256,40 @@ function UserPage() {
                     </select>
 
                     <div className="button-group">
-                        <button className="btn btn-primary">Search</button>
+                        <button className="btn btn-primary" onClick={handleSearch}>Search</button>
                         <button className="btn btn-secondary" onClick={resetFilters}>Reset</button>
                     </div>
                 </div>
 
                 <div className="actions-toolbar">
-                    <span className="action-link" onClick={(e) => { e.preventDefault(); const cb = document.getElementById('select-all-cb'); cb.checked = !cb.checked; handleSelectAll({ target: cb }); }}>Select All</span>
                     <span className="action-link" onClick={handleDeleteSelected}>Delete</span>
-                    <span className="action-link" onClick={handleFetch}>Fetch</span>
                     <span className="action-link" onClick={handleExport}>Export</span>
                 </div>
 
                 <table className="management-table">
                     <thead>
                         <tr>
-                            <th>Name</th><th>Code</th><th>Department</th><th>Team</th><th>Role</th><th>Actions</th>
-                            <th><input id="select-all-cb" type="checkbox" onChange={handleSelectAll} checked={filteredMembers.length > 0 && selectedMemberIds.length === filteredMembers.length} /></th>
+                            <th>STT</th>
+                            <th>Name</th>
+                            <th>Code</th>
+                            <th>Department</th>
+                            <th>Team</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                            <th>
+                                <input id="select-all-cb" type="checkbox" onChange={handleSelectAll}
+                                    checked={filteredMembers.length > 0 && selectedMemberIds.length === filteredMembers.length} />
+                            </th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        {filteredMembers.map(member => (
+                        {filteredMembers.map((member, index) => (
                             <tr key={member.id}>
+                                <td>{index + 1}</td>
                                 <td><span className="action-link" onClick={() => setViewingMember(member)}>{member.name}</span></td>
-                                <td>{member.id}</td>
+                                {/* Sử dụng member.id thay vì member.code từ mock */}
+                                <td>{member.member_id}</td>
                                 <td>{member.department}</td>
                                 <td>{member.team}</td>
                                 <td>{member.role}</td>
@@ -170,6 +299,7 @@ function UserPage() {
                         ))}
                     </tbody>
                 </table>
+                {/* ...Kết thúc phần table... */}
 
                 <div className="table-actions-footer">
                     <button className="btn btn-add" onClick={() => {
@@ -181,9 +311,9 @@ function UserPage() {
                 </div>
             </div>
 
-            {/* === THAY ĐỔI: Render popup linh hoạt === */}
-            {viewingMember && <MemberDetailPopup member={viewingMember} onClose={() => setViewingMember(null)} onSave={handleSaveMember} />}
-            {showAddMemberPopup && <AddMemberPopup onClose={() => setShowAddMemberPopup(false)} onAddMember={() => { alert('Add member functionality in development'); setShowAddMemberPopup(false); }} />}
+            {viewingMember && <MemberDetailPopup member={viewingMember} onClose={() => setViewingMember(null)} onSave={() => { }} />}
+            {/* UPDATE: Truyền hàm handleAddMembersFromFile vào popup */}
+            {showAddMemberPopup && <AddMemberPopup onClose={() => setShowAddMemberPopup(false)} onAddMember={handleAddMembersFromFile} />}
             {showAddDeptTeamPopup && <AddDeptTeamPopup mode={popupMode} onClose={() => setShowAddDeptTeamPopup(false)} onAdd={() => { alert('Add functionality in development'); setShowAddDeptTeamPopup(false); }} />}
             {showGameHistory && <GameHistory user={viewingUserForHistory} onClose={() => setShowGameHistory(false)} />}
         </div>
