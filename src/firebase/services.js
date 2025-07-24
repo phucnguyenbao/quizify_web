@@ -1,7 +1,8 @@
 // src/firebase/services.js
+
+// Import 'app' MỘT LẦN DUY NHẤT từ file config
 import app from './config';
 import { getAuth } from 'firebase/auth';
-// UPDATE: Thêm các hàm cần thiết cho transaction
 import {
     getFirestore,
     collection,
@@ -9,22 +10,30 @@ import {
     getDocs,
     doc,
     deleteDoc,
-    runTransaction, // <--- THÊM MỚI
-    increment // <--- THÊM MỚI
+    updateDoc, // Thêm updateDoc để dùng ở các component khác
+    query,
+    orderBy,
+    limit,
+    writeBatch
 } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
+// Khởi tạo các service
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+export const db = getFirestore(app); // Sử dụng 'db' thay vì 'firestore' để đồng nhất
 export const storage = getStorage(app);
+export const firestore = getFirestore(app); // Thêm dòng này
 
-// UPDATE: Export thêm các hàm mới
+// Export các hàm để sử dụng trong toàn bộ dự án
 export {
     collection,
     addDoc,
     getDocs,
     doc,
     deleteDoc,
-    runTransaction,
-    increment
+    updateDoc, // Thêm updateDoc vào export
+    query,
+    orderBy,
+    limit,
+    writeBatch
 };

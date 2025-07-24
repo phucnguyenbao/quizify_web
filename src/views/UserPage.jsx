@@ -8,8 +8,17 @@ import AdvancedStats from './components/popupmem/AdvancedStats';
 import GameHistory from './components/popupmem/GameHistory';
 
 // NEW: Import các hàm của Firebase
-import { db, collection, getDocs, doc, deleteDoc, runTransaction, increment } from '../firebase/services';
-
+import {
+    db,
+    collection,
+    getDocs,
+    doc,
+    deleteDoc,
+    query,       // <- Mới
+    orderBy,     // <- Mới
+    limit,       // <- Mới
+    writeBatch   // <- Mới
+} from '../firebase/services';
 function UserPage() {
     // UPDATE: Khởi tạo state rỗng, sẽ được load từ Firebase
     const [members, setMembers] = useState([]);
@@ -24,7 +33,56 @@ function UserPage() {
     const [popupMode, setPopupMode] = useState('department');
     const [showGameHistory, setShowGameHistory] = useState(false);
     const [viewingUserForHistory, setViewingUserForHistory] = useState(null);
+    const handleAddMembersFromFile = async (membersData) => {
+        if (!membersData || membersData.length === 0) {
+            alert("Không có dữ liệu hợp lệ để thêm.");
+            return;
+        }
 
+        try {
+            // 1. Tìm member_id lớn nhất hiện có
+            const usersRef = collection(db, 'user');
+            const q = query(usersRef, orderBy("member_id", "desc"), limit(1));
+            const querySnapshot = await getDocs(q);
+
+            let lastId = 0; // Mặc định là 0 nếu collection rỗng
+            if (!querySnapshot.empty) {
+                const lastUser = querySnapshot.docs[0].data();
+                // Chuyển đổi chuỗi "0000xx" thành số
+                lastId = parseInt(lastUser.member_id, 10);
+            }
+
+            // 2. Chuẩn bị ghi hàng loạt (Write Batch)
+            const batch = writeBatch(db);
+
+            membersData.forEach(member => {
+                // Tăng và định dạng ID
+                lastId++;
+                const newMemberId = String(lastId).padStart(6, '0');
+
+                // Dữ liệu thành viên mới
+                const newMemberData = {
+                    ...member,
+                    member_id: newMemberId
+                };
+
+                // Tạo một tham chiếu document mới và thêm vào batch
+                const newUserRef = doc(collection(db, 'user'));
+                batch.set(newUserRef, newMemberData);
+            });
+
+            // 3. Thực thi ghi hàng loạt
+            await batch.commit();
+
+            alert(`Hoàn thành! Đã thêm thành công ${membersData.length} thành viên.`);
+            setShowAddMemberPopup(false);
+            fetchMembers(); // Tải lại danh sách
+
+        } catch (error) {
+            console.error("Lỗi khi thêm thành viên: ", error);
+            alert("Đã xảy ra lỗi trong quá trình thêm thành viên. Vui lòng thử lại.");
+        }
+    };
     // NEW: Hàm tải danh sách thành viên từ Firestore
     const fetchMembers = async () => {
         try {
@@ -178,55 +236,7 @@ function UserPage() {
     };
 
     // NEW: Hàm xử lý thêm thành viên từ file
-    const handleAddMembersFromFile = async (membersData) => {
-        if (!membersData || membersData.length === 0) {
-            alert("Không có dữ liệu hợp lệ để thêm.");
-            return;
-        }
-
-        // Tham chiếu đến document bộ đếm mà chúng ta đã tạo ở Bước 1
-        const counterDocRef = doc(db, 'counters', 'userCounter');
-
-        try {
-            // Chạy một giao dịch để đảm bảo tính toàn vẹn dữ liệu
-            await runTransaction(db, async (transaction) => {
-                const counterDoc = await transaction.get(counterDocRef);
-                if (!counterDoc.exists()) {
-                    throw "Tài liệu bộ đếm không tồn tại! Vui lòng tạo collection 'counters' và document 'userCounter'.";
-                }
-
-                let lastId = counterDoc.data().lastId;
-
-                // Lặp qua từng thành viên trong file CSV để thêm vào transaction
-                membersData.forEach(member => {
-                    // Tăng ID lên 1
-                    lastId++;
-                    const newMemberId = String(lastId).padStart(6, '0');
-
-                    const newUserDocRef = doc(collection(db, 'user'));
-
-                    const newMemberData = {
-                        ...member,
-                        member_id: newMemberId // Gán ID đã được định dạng
-                    };
-
-                    // Thêm thao tác 'set' (tạo mới) user vào transaction
-                    transaction.set(newUserDocRef, newMemberData);
-                });
-
-                // Sau khi đã thêm tất cả user, cập nhật lại bộ đếm trong transaction
-                transaction.update(counterDocRef, { lastId: lastId });
-            });
-
-            alert(`Hoàn thành! Đã thêm thành công ${membersData.length} thành viên.`);
-            setShowAddMemberPopup(false);
-            fetchMembers(); // Tải lại danh sách thành viên sau khi thêm
-
-        } catch (error) {
-            console.error("Lỗi khi thêm thành viên bằng transaction: ", error);
-            alert("Đã xảy ra lỗi trong quá trình thêm thành viên. Vui lòng thử lại.");
-        }
-    };
+    
 
     return (
         <div className="management-container">

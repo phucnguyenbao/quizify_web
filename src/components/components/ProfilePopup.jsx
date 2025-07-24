@@ -1,6 +1,8 @@
 import React from 'react';
 import { Camera, LogOut } from 'lucide-react';
 import { useAuth } from '../../views/AuthContext';
+import { updateDoc, doc } from "firebase/firestore";
+import { firestore } from "../../firebase/services"; // sửa đường dẫn nếu cần
 
 const ProfilePopup = ({
   userData, editData, isEditing,
