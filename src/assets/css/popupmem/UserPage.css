@@ -37,9 +37,10 @@
 /* === CẬP NHẬT CUỐI CÙNG CHO THANH TÌM KIẾM === */
 .filter-section {
     display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 20px;
-        align-items: center;
+    grid-template-columns: repeat(5, 1fr);
+    /* 5 cột bằng nhau */
+    gap: 20px;
+    align-items: center;
 }
 
 /* Style chung cho cả input và select */
@@ -47,12 +48,17 @@
 .filter-select {
     flex: 1 !important;
     min-width: 180px !important;
-    padding: 12px 15px !important;
+    height: 48px !important;
+    /* đảm bảo chiều cao bằng nhau */
+    padding: 0 15px !important;
+    /* bỏ padding top/bottom để không tăng chiều cao */
     border: none !important;
     border-radius: 12px !important;
     background: rgba(255, 255, 255, 0.7) !important;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
     font-size: 14px !important;
+    line-height: 48px !important;
+    /* căn giữa văn bản theo chiều dọc */
     appearance: none !important;
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
@@ -60,8 +66,6 @@
     background-repeat: no-repeat !important;
     background-position: right 15px center !important;
     background-size: 12px !important;
-    height: 44px !important;
-    line-height: 1.2 !important;
 }
 
 /* Thêm mũi tên tùy chỉnh cho ô select */
@@ -122,11 +126,12 @@ display: flex;
 
 .actions-toolbar {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
-    gap: 25px;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
+    gap: 10px;
+    padding-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 }
 
