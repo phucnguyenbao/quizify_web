@@ -1,0 +1,35 @@
+[
+  {
+    "Quiz_id": "000001",
+    "Quiz_name": "JavaScript Basics",
+    "Topic": "Programming",
+    "Average_score": 7.5,
+    "Question_count": 10,
+    "Attempted_users": 120,
+    "Selection_count": 300,
+    "Creator_id": "0001",
+    "Creation_date": "2025-07-25"
+  },
+  {
+    "Quiz_id": "000002",
+    "Quiz_name": "Python Introduction",
+    "Topic": "Programming",
+    "Average_score": 8.2,
+    "Question_count": 12,
+    "Attempted_users": 150,
+    "Selection_count": 310,
+    "Creator_id": "0001",
+    "Creation_date": "2025-07-25"
+  },
+  {
+    "Quiz_id": "000003",
+    "Quiz_name": "Basic HTML & CSS",
+    "Topic": "Web Development",
+    "Average_score": 6.8,
+    "Question_count": 8,
+    "Attempted_users": 90,
+    "Selection_count": 200,
+    "Creator_id": "0001",
+    "Creation_date": "2025-07-25"
+  }
+]
