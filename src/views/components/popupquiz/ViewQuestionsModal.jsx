@@ -55,7 +55,7 @@ useEffect(() => {
             </tr>
           </tbody>
         </table>
- <div class="table-wrapper">
+ <div className="table-wrapper">
         <table className="detail-table">
           <thead>
             <tr>

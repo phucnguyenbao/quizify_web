@@ -365,4 +365,7 @@
               inset -2px -2px 6px rgba(255,255,255,0.4);
 }
 
-
+.highlight-row {
+  background-color: #ffe3c4; /* Vàng nhạt */
+  font-weight: bold;
+}

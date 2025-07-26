@@ -37,7 +37,7 @@ const GameDetails = ({ game, onClose }) => {
             </thead>
           </table>
 
-         <div class="table-wrapper">
+         <div className="table-wrapper">
             <table className="detail-table">
               <tbody>
                 {game.players.length > 0 ? (
